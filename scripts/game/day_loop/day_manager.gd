@@ -2,10 +2,13 @@ extends Node
 
 const BRIEFING_SCENE_PATH := "res://scenes/briefing/BriefingScreen.tscn"
 const SAVE_MANAGER_SCRIPT := preload("res://scripts/save/save_manager.gd")
+const DATA_MANAGER_SCRIPT := preload("res://scripts/data/data_manager.gd")
+const DELAY_PENALTY_DELTA := -1
 
 
 func end_day_minimal(scene_tree: SceneTree) -> void:
 	_increase_delay_for_uncompleted_active_reports()
+	_apply_delay_penalties()
 	_process_pending_completed_choices()
 	GameState.tick_scheduled_reports()
 	GameState.advance_day()
@@ -31,6 +34,25 @@ func _increase_delay_for_uncompleted_active_reports() -> void:
 			GameState.increase_delay_for_report(case_id, node_id)
 
 
+func _apply_delay_penalties() -> void:
+	for report_key in GameState.delayed_reports.keys():
+		var key_parts: PackedStringArray = str(report_key).split(":")
+		if key_parts.size() != 2:
+			continue
+
+		var case_id: String = key_parts[0]
+		var node_id: String = key_parts[1]
+		var delay_days: int = int(GameState.delayed_reports.get(report_key, 0))
+		if delay_days <= 0:
+			continue
+
+		if GameState.has_delay_penalty_been_applied(case_id, node_id, delay_days):
+			continue
+
+		GameState.apply_anomaly_state_delta(case_id, DELAY_PENALTY_DELTA)
+		GameState.mark_delay_penalty_applied(case_id, node_id, delay_days)
+
+
 func _process_pending_completed_choices() -> void:
 	for completed_choice in GameState.pending_completed_choices:
 		if typeof(completed_choice) != TYPE_DICTIONARY:
@@ -39,8 +61,10 @@ func _process_pending_completed_choices() -> void:
 		var completed_choice_data: Dictionary = completed_choice as Dictionary
 		var case_id: String = str(completed_choice_data.get("case_id", ""))
 		var node_id: String = str(completed_choice_data.get("node_id", ""))
+		var choice_id: String = str(completed_choice_data.get("choice_id", ""))
 		var next_node_id: String = str(completed_choice_data.get("next_node_id", ""))
 
+		_apply_choice_state_delta(case_id, node_id, choice_id)
 		GameState.remove_active_report(case_id, node_id)
 		if not next_node_id.is_empty():
 			GameState.schedule_report(case_id, next_node_id, 1)
@@ -58,3 +82,42 @@ func _is_report_pending_completion(case_id: String, node_id: String) -> bool:
 			return true
 
 	return false
+
+
+func _apply_choice_state_delta(case_id: String, node_id: String, choice_id: String) -> void:
+	if case_id.is_empty() or node_id.is_empty() or choice_id.is_empty():
+		return
+
+	var state_delta: int = _get_choice_state_delta(case_id, node_id, choice_id)
+	GameState.apply_anomaly_state_delta(case_id, state_delta)
+
+
+func _get_choice_state_delta(case_id: String, node_id: String, choice_id: String) -> int:
+	var data_manager: Variant = DATA_MANAGER_SCRIPT.new()
+	var case_reports: Dictionary = data_manager.load_case_reports(case_id)
+	data_manager.free()
+
+	var nodes: Array = case_reports.get("nodes", []) as Array
+	for node in nodes:
+		if typeof(node) != TYPE_DICTIONARY:
+			continue
+
+		var report_node: Dictionary = node as Dictionary
+		if str(report_node.get("node_id", "")) != node_id:
+			continue
+
+		var choices: Array = report_node.get("choices", []) as Array
+		for choice in choices:
+			if typeof(choice) != TYPE_DICTIONARY:
+				continue
+
+			var choice_data: Dictionary = choice as Dictionary
+			if str(choice_data.get("choice_id", "")) != choice_id:
+				continue
+
+			var state_delta: Variant = choice_data.get("state_delta", 0)
+			if typeof(state_delta) == TYPE_INT:
+				return state_delta
+			return 0
+
+	return 0

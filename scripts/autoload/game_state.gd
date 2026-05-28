@@ -10,6 +10,8 @@ var active_reports: Array = [{"case_id": "case_001", "node_id": "report_001"}]
 var scheduled_reports: Array = []
 var pending_completed_choices: Array = []
 var delayed_reports: Dictionary = {}
+var anomaly_states: Dictionary = {"case_001": 0}
+var applied_delay_penalties: Dictionary = {}
 
 
 func reset_for_new_run() -> void:
@@ -21,6 +23,8 @@ func reset_for_new_run() -> void:
 	scheduled_reports = []
 	pending_completed_choices = []
 	delayed_reports = {}
+	anomaly_states = {"case_001": 0}
+	applied_delay_penalties = {}
 
 
 func reset_actions_for_new_day() -> void:
@@ -70,6 +74,30 @@ func get_report_delay_days(case_id: String, node_id: String) -> int:
 
 func clear_delay_for_report(case_id: String, node_id: String) -> void:
 	delayed_reports.erase(make_report_key(case_id, node_id))
+
+
+func get_anomaly_state(case_id: String) -> int:
+	return int(anomaly_states.get(case_id, 0))
+
+
+func apply_anomaly_state_delta(case_id: String, delta: int) -> void:
+	anomaly_states[case_id] = get_anomaly_state(case_id) + delta
+
+
+func set_anomaly_state(case_id: String, value: int) -> void:
+	anomaly_states[case_id] = value
+
+
+func make_delay_penalty_key(case_id: String, node_id: String, delay_days: int) -> String:
+	return "%s:%s:%d" % [case_id, node_id, delay_days]
+
+
+func has_delay_penalty_been_applied(case_id: String, node_id: String, delay_days: int) -> bool:
+	return applied_delay_penalties.has(make_delay_penalty_key(case_id, node_id, delay_days))
+
+
+func mark_delay_penalty_applied(case_id: String, node_id: String, delay_days: int) -> void:
+	applied_delay_penalties[make_delay_penalty_key(case_id, node_id, delay_days)] = true
 
 
 func record_completed_choice_for_end_day(case_id: String, node_id: String, choice_id: String, next_node_id: String) -> void:

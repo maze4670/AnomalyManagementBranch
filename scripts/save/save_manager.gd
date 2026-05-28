@@ -13,7 +13,9 @@ func save_current_run() -> bool:
 		"active_reports": GameState.active_reports,
 		"scheduled_reports": GameState.scheduled_reports,
 		"pending_completed_choices": GameState.pending_completed_choices,
-		"delayed_reports": GameState.delayed_reports
+		"delayed_reports": GameState.delayed_reports,
+		"anomaly_states": GameState.anomaly_states,
+		"applied_delay_penalties": GameState.applied_delay_penalties
 	}
 	var json_text: String = JSON.stringify(save_data)
 	var file: FileAccess = FileAccess.open(CURRENT_RUN_SAVE_PATH, FileAccess.WRITE)
@@ -88,4 +90,14 @@ func apply_current_run_to_game_state() -> bool:
 		GameState.delayed_reports = delayed_reports as Dictionary
 	else:
 		GameState.delayed_reports = {}
+	var anomaly_states: Variant = save_data.get("anomaly_states", {"case_001": 0})
+	if typeof(anomaly_states) == TYPE_DICTIONARY:
+		GameState.anomaly_states = anomaly_states as Dictionary
+	else:
+		GameState.anomaly_states = {"case_001": 0}
+	var applied_delay_penalties: Variant = save_data.get("applied_delay_penalties", {})
+	if typeof(applied_delay_penalties) == TYPE_DICTIONARY:
+		GameState.applied_delay_penalties = applied_delay_penalties as Dictionary
+	else:
+		GameState.applied_delay_penalties = {}
 	return true
