@@ -11,26 +11,57 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_report")
 
-[node name="CenterContainer" type="CenterContainer" parent="."]
+[node name="RootContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = -16.0
+offset_bottom = -16.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="ContentContainer" type="VBoxContainer" parent="CenterContainer"]
-layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="TitleLabel" type="Label" parent="CenterContainer/ContentContainer"]
+[node name="TitleLabel" type="Label" parent="RootContainer"]
 layout_mode = 2
 text = "보고서 확인"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="GuideLabel" type="Label" parent="CenterContainer/ContentContainer"]
+[node name="ContentContainer" type="HBoxContainer" parent="RootContainer"]
 layout_mode = 2
-text = "보고서 목록은 이후 단계에서 표시됩니다."
-horizontal_alignment = 1
-vertical_alignment = 1
+size_flags_vertical = 3
+theme_override_constants/separation = 16
+
+[node name="ReportListContainer" type="VBoxContainer" parent="RootContainer/ContentContainer"]
+custom_minimum_size = Vector2(260, 0)
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="ReportListLabel" type="Label" parent="RootContainer/ContentContainer/ReportListContainer"]
+layout_mode = 2
+text = "보고서 목록"
+
+[node name="ReportButton" type="Button" parent="RootContainer/ContentContainer/ReportListContainer"]
+custom_minimum_size = Vector2(260, 40)
+layout_mode = 2
+text = "보고서 불러오는 중"
+
+[node name="DetailContainer" type="VBoxContainer" parent="RootContainer/ContentContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="DetailLabel" type="Label" parent="RootContainer/ContentContainer/DetailContainer"]
+layout_mode = 2
+text = "보고서 상세"
+
+[node name="DetailText" type="RichTextLabel" parent="RootContainer/ContentContainer/DetailContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "보고서 목록에서 항목을 선택해 주세요."
+fit_content = true
+
+[connection signal="pressed" from="RootContainer/ContentContainer/ReportListContainer/ReportButton" to="." method="_on_report_button_pressed"]
