@@ -1,8 +1,11 @@
 extends Node
 
 const BRIEFING_SCENE_PATH := "res://scenes/briefing/BriefingScreen.tscn"
+const ENDING_SCENE_PATH := "res://scenes/ending/EndingScreen.tscn"
 const SAVE_MANAGER_SCRIPT := preload("res://scripts/save/save_manager.gd")
 const DATA_MANAGER_SCRIPT := preload("res://scripts/data/data_manager.gd")
+const TRUST_MANAGER_SCRIPT := preload("res://scripts/game/trust/trust_manager.gd")
+const ENDING_MANAGER_SCRIPT := preload("res://scripts/game/endings/ending_manager.gd")
 const DELAY_PENALTY_DELTA := -1
 
 
@@ -11,9 +14,16 @@ func end_day_minimal(scene_tree: SceneTree) -> void:
 	_apply_delay_penalties()
 	_process_pending_completed_choices()
 	GameState.tick_scheduled_reports()
+	_update_trust_value()
+	var save_manager: Variant = SAVE_MANAGER_SCRIPT.new()
+	if _should_move_to_bad_ending():
+		save_manager.delete_current_run_save()
+		save_manager.free()
+		scene_tree.change_scene_to_file(ENDING_SCENE_PATH)
+		return
+
 	GameState.advance_day()
 	GameState.reset_actions_for_new_day()
-	var save_manager: Variant = SAVE_MANAGER_SCRIPT.new()
 	save_manager.save_current_run()
 	save_manager.free()
 	scene_tree.change_scene_to_file(BRIEFING_SCENE_PATH)
@@ -121,3 +131,17 @@ func _get_choice_state_delta(case_id: String, node_id: String, choice_id: String
 			return 0
 
 	return 0
+
+
+func _update_trust_value() -> void:
+	var trust_manager: Variant = TRUST_MANAGER_SCRIPT.new()
+	var calculated_trust: int = trust_manager.calculate_trust_from_anomaly_states(GameState.anomaly_states)
+	trust_manager.free()
+	GameState.set_trust_value(calculated_trust)
+
+
+func _should_move_to_bad_ending() -> bool:
+	var ending_manager: Variant = ENDING_MANAGER_SCRIPT.new()
+	var should_end: bool = ending_manager.is_bad_ending(GameState.get_trust_value())
+	ending_manager.free()
+	return should_end

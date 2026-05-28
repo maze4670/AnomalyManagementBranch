@@ -1,3 +1,4 @@
 extends Node
 
-# Coordinates ending selection flow.
+func is_bad_ending(trust_value: int) -> bool:
+	return trust_value <= 0

@@ -15,7 +15,8 @@ func save_current_run() -> bool:
 		"pending_completed_choices": GameState.pending_completed_choices,
 		"delayed_reports": GameState.delayed_reports,
 		"anomaly_states": GameState.anomaly_states,
-		"applied_delay_penalties": GameState.applied_delay_penalties
+		"applied_delay_penalties": GameState.applied_delay_penalties,
+		"trust_value": GameState.trust_value
 	}
 	var json_text: String = JSON.stringify(save_data)
 	var file: FileAccess = FileAccess.open(CURRENT_RUN_SAVE_PATH, FileAccess.WRITE)
@@ -28,6 +29,17 @@ func save_current_run() -> bool:
 
 func current_run_save_exists() -> bool:
 	return FileAccess.file_exists(CURRENT_RUN_SAVE_PATH)
+
+
+func delete_current_run_save() -> bool:
+	if not current_run_save_exists():
+		return true
+
+	var user_dir: DirAccess = DirAccess.open("user://")
+	if user_dir == null:
+		return false
+
+	return user_dir.remove("current_run_save.json") == OK
 
 
 func load_current_run_minimal() -> Dictionary:
@@ -100,4 +112,9 @@ func apply_current_run_to_game_state() -> bool:
 		GameState.applied_delay_penalties = applied_delay_penalties as Dictionary
 	else:
 		GameState.applied_delay_penalties = {}
+	var trust_value: Variant = save_data.get("trust_value", 100)
+	if typeof(trust_value) == TYPE_INT:
+		GameState.set_trust_value(int(trust_value))
+	else:
+		GameState.set_trust_value(100)
 	return true

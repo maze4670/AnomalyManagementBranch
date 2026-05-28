@@ -12,6 +12,7 @@ var pending_completed_choices: Array = []
 var delayed_reports: Dictionary = {}
 var anomaly_states: Dictionary = {"case_001": 0}
 var applied_delay_penalties: Dictionary = {}
+var trust_value: int = 100
 
 
 func reset_for_new_run() -> void:
@@ -25,6 +26,7 @@ func reset_for_new_run() -> void:
 	delayed_reports = {}
 	anomaly_states = {"case_001": 0}
 	applied_delay_penalties = {}
+	trust_value = 100
 
 
 func reset_actions_for_new_day() -> void:
@@ -86,6 +88,14 @@ func apply_anomaly_state_delta(case_id: String, delta: int) -> void:
 
 func set_anomaly_state(case_id: String, value: int) -> void:
 	anomaly_states[case_id] = value
+
+
+func set_trust_value(value: int) -> void:
+	trust_value = value
+
+
+func get_trust_value() -> int:
+	return trust_value
 
 
 func make_delay_penalty_key(case_id: String, node_id: String, delay_days: int) -> String:
