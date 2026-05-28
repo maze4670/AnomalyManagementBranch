@@ -19,7 +19,8 @@ func _build_briefing_text() -> String:
 		return "금일 신규 보고는 없습니다."
 
 	var data_manager: Variant = DATA_MANAGER_SCRIPT.new()
-	var target_lines := PackedStringArray()
+	var delayed_report_count: int = 0
+	var new_report_lines := PackedStringArray()
 
 	for active_report in GameState.active_reports:
 		if typeof(active_report) != TYPE_DICTIONARY:
@@ -27,7 +28,12 @@ func _build_briefing_text() -> String:
 
 		var active_report_data: Dictionary = active_report as Dictionary
 		var case_id: String = str(active_report_data.get("case_id", ""))
-		if case_id.is_empty():
+		var node_id: String = str(active_report_data.get("node_id", ""))
+		if case_id.is_empty() or node_id.is_empty():
+			continue
+
+		if GameState.get_report_delay_days(case_id, node_id) > 0:
+			delayed_report_count += 1
 			continue
 
 		var case_document: Dictionary = data_manager.load_case_document(case_id)
@@ -36,11 +42,21 @@ func _build_briefing_text() -> String:
 		if display_id.is_empty() or alias.is_empty():
 			continue
 
-		target_lines.append("대상: %s / %s" % [display_id, alias])
+		new_report_lines.append("대상: %s / %s" % [display_id, alias])
 
 	data_manager.free()
 
-	if target_lines.is_empty():
+	var briefing_lines := PackedStringArray()
+	if delayed_report_count > 0:
+		briefing_lines.append("현재 처리 지연 보고: %d개" % delayed_report_count)
+
+	if not new_report_lines.is_empty():
+		if not briefing_lines.is_empty():
+			briefing_lines.append("")
+		briefing_lines.append("금일 신규 보고가 접수되었습니다.")
+		briefing_lines.append_array(new_report_lines)
+
+	if briefing_lines.is_empty():
 		return "금일 신규 보고는 없습니다."
 
-	return "금일 신규 보고가 접수되었습니다.\n%s" % "\n".join(target_lines)
+	return "\n".join(briefing_lines)

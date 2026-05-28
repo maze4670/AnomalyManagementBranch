@@ -9,6 +9,7 @@ var completed_reports: Dictionary = {}
 var active_reports: Array = [{"case_id": "case_001", "node_id": "report_001"}]
 var scheduled_reports: Array = []
 var pending_completed_choices: Array = []
+var delayed_reports: Dictionary = {}
 
 
 func reset_for_new_run() -> void:
@@ -19,6 +20,7 @@ func reset_for_new_run() -> void:
 	active_reports = [{"case_id": "case_001", "node_id": "report_001"}]
 	scheduled_reports = []
 	pending_completed_choices = []
+	delayed_reports = {}
 
 
 func reset_actions_for_new_day() -> void:
@@ -55,6 +57,19 @@ func is_report_completed(case_id: String, node_id: String) -> bool:
 
 func get_completed_report_choice(case_id: String, node_id: String) -> String:
 	return str(completed_reports.get(make_report_key(case_id, node_id), ""))
+
+
+func increase_delay_for_report(case_id: String, node_id: String) -> void:
+	var report_key: String = make_report_key(case_id, node_id)
+	delayed_reports[report_key] = int(delayed_reports.get(report_key, 0)) + 1
+
+
+func get_report_delay_days(case_id: String, node_id: String) -> int:
+	return int(delayed_reports.get(make_report_key(case_id, node_id), 0))
+
+
+func clear_delay_for_report(case_id: String, node_id: String) -> void:
+	delayed_reports.erase(make_report_key(case_id, node_id))
 
 
 func record_completed_choice_for_end_day(case_id: String, node_id: String, choice_id: String, next_node_id: String) -> void:

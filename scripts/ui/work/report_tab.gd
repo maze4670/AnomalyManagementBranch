@@ -49,7 +49,12 @@ func _update_report_list() -> void:
 		report_button.disabled = true
 		return
 
-	report_button.text = "[%s: %s]" % [display_id, alias]
+	var active_node_id: String = str(current_report_node.get("node_id", ""))
+	var delayed_label: String = _get_delayed_label(CASE_ID, active_node_id)
+	if delayed_label.is_empty():
+		report_button.text = "[%s: %s]" % [display_id, alias]
+	else:
+		report_button.text = "[%s: %s] %s" % [display_id, alias, delayed_label]
 	report_button.disabled = false
 
 
@@ -60,14 +65,19 @@ func _on_report_button_pressed() -> void:
 
 	var report_node: Dictionary = current_report_node
 	current_node_id = str(report_node.get("node_id", ""))
+	var delayed_label: String = _get_delayed_label(CASE_ID, current_node_id)
 	var detail_lines := PackedStringArray([
 		str(case_document.get("display_id", "")),
-		str(case_document.get("alias", "")),
+		str(case_document.get("alias", ""))
+	])
+	if not delayed_label.is_empty():
+		detail_lines.append(delayed_label)
+	detail_lines.append_array(PackedStringArray([
 		"",
 		str(case_document.get("basic_description", "")),
 		"",
 		str(report_node.get("report_text", ""))
-	])
+	]))
 	detail_text.text = "\n".join(detail_lines)
 	current_choices = report_node.get("choices", []) as Array
 	report_completed = GameState.is_report_completed(CASE_ID, current_node_id)
@@ -137,6 +147,7 @@ func _on_confirm_button_pressed() -> void:
 	var selected_choice_id := str(selected_choice.get("choice_id", ""))
 	var next_node_id := str(selected_choice.get("next_node_id", ""))
 	GameState.mark_report_completed(CASE_ID, current_node_id, selected_choice_id)
+	GameState.clear_delay_for_report(CASE_ID, current_node_id)
 	GameState.record_completed_choice_for_end_day(CASE_ID, current_node_id, selected_choice_id, next_node_id)
 	report_completed = true
 	status_label.text = str(ui_messages.get(
@@ -145,6 +156,7 @@ func _on_confirm_button_pressed() -> void:
 	))
 	completed_stamp_label.text = str(ui_messages.get("completed_stamp", "[처리 완료]"))
 	_update_choice_buttons()
+	_update_report_list()
 	_update_work_screen_action_label()
 
 
@@ -206,3 +218,10 @@ func _find_report_node(node_id: String) -> Dictionary:
 				return report_node
 
 	return {}
+
+
+func _get_delayed_label(case_id: String, node_id: String) -> String:
+	if GameState.get_report_delay_days(case_id, node_id) <= 0:
+		return ""
+
+	return str(ui_messages.get("delayed_label", "[처리 지연]"))
