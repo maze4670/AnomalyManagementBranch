@@ -77,6 +77,14 @@ custom_minimum_size = Vector2(220, 40)
 layout_mode = 2
 text = "보통"
 
+[node name="TextPreviewLabel" type="Label" parent="CenterContainer/ContentContainer"]
+custom_minimum_size = Vector2(420, 40)
+layout_mode = 2
+text = "텍스트 크기 미리보기입니다."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
 [node name="CreditsLabel" type="Label" parent="CenterContainer/ContentContainer"]
 custom_minimum_size = Vector2(420, 40)
 layout_mode = 2
