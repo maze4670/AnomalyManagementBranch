@@ -21,6 +21,7 @@ func _on_main_menu_button_pressed() -> void:
 func _load_archive_list() -> void:
 	_clear_archive_list()
 	detail_label.text = "기록을 선택해 주세요."
+	detail_label.visible = true
 
 	var save_manager: Variant = SAVE_MANAGER_SCRIPT.new()
 	var archive_data: Dictionary = save_manager.load_archive_save()
@@ -60,7 +61,8 @@ func _show_empty_archive() -> void:
 	empty_label.visible = true
 	archive_list_title_label.visible = false
 	archive_list_container.visible = false
-	detail_label.text = "기록을 선택해 주세요."
+	detail_label.text = ""
+	detail_label.visible = false
 
 
 func _get_archive_case_label(case_id: String) -> String:
@@ -77,6 +79,7 @@ func _get_archive_case_label(case_id: String) -> String:
 
 
 func _on_archive_case_pressed(case_id: String, case_archive_data: Dictionary) -> void:
+	detail_label.visible = true
 	detail_label.text = _build_archive_detail_text(case_id, case_archive_data)
 
 
@@ -98,19 +101,17 @@ func _build_archive_detail_text(case_id: String, case_archive_data: Dictionary) 
 		for description in (additional_descriptions as Array):
 			lines.append("- %s" % str(description))
 
-	lines.append("")
-	lines.append("[보고 기록]")
 	var report_texts: Array[String] = _get_visible_report_texts(case_id, case_archive_data, case_reports)
-	if report_texts.is_empty():
-		lines.append("표시할 보고 기록이 없습니다.")
-	else:
+	if not report_texts.is_empty():
+		lines.append("")
+		lines.append("[보고 기록]")
 		lines.append_array(report_texts)
 
 	return "\n".join(PackedStringArray(lines))
 
 
 func _get_visible_report_texts(case_id: String, case_archive_data: Dictionary, case_reports: Dictionary) -> Array[String]:
-	var unlock_level: String = str(case_archive_data.get("unlock_level", "partial"))
+	var archive_level: String = str(case_archive_data.get("unlock_level", "partial"))
 	var visible_node_ids: Array[String] = _get_visible_node_ids(case_id, case_archive_data)
 	var report_texts: Array[String] = []
 	var nodes: Variant = case_reports.get("nodes", [])
@@ -123,8 +124,7 @@ func _get_visible_report_texts(case_id: String, case_archive_data: Dictionary, c
 
 		var node_data: Dictionary = node as Dictionary
 		var node_id: String = str(node_data.get("node_id", ""))
-		# 기능 확인용 full 처리에서는 저장된 키가 비어 있어도 테스트 보고 노드를 모두 표시한다.
-		if unlock_level != "full" or not visible_node_ids.is_empty():
+		if archive_level != "full" or not visible_node_ids.is_empty():
 			if not visible_node_ids.has(node_id):
 				continue
 
@@ -137,12 +137,12 @@ func _get_visible_report_texts(case_id: String, case_archive_data: Dictionary, c
 
 
 func _get_visible_node_ids(case_id: String, case_archive_data: Dictionary) -> Array[String]:
-	var unlocked_report_keys: Variant = case_archive_data.get("unlocked_report_keys", [])
+	var report_keys: Variant = case_archive_data.get("unlocked_report_keys", [])
 	var node_ids: Array[String] = []
-	if typeof(unlocked_report_keys) != TYPE_ARRAY:
+	if typeof(report_keys) != TYPE_ARRAY:
 		return node_ids
 
-	for report_key in (unlocked_report_keys as Array):
+	for report_key in (report_keys as Array):
 		var key_parts: PackedStringArray = str(report_key).split(":")
 		if key_parts.size() != 2:
 			continue
