@@ -11,19 +11,35 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_briefing")
 
-[node name="Label" type="Label" parent="."]
+[node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -96.0
-offset_top = -12.0
-offset_right = 96.0
-offset_bottom = 12.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "Briefing Screen"
+
+[node name="BriefingContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="TitleLabel" type="Label" parent="CenterContainer/BriefingContainer"]
+layout_mode = 2
+text = "브리핑"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="BodyLabel" type="Label" parent="CenterContainer/BriefingContainer"]
+custom_minimum_size = Vector2(420, 80)
+layout_mode = 2
+text = "금일 신규 보고가 접수되었습니다.
+대상: CASE-XX(지명)-001 / 돌아오는 길"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StartWorkButton" type="Button" parent="CenterContainer/BriefingContainer"]
+custom_minimum_size = Vector2(240, 40)
+layout_mode = 2
+text = "근무 시작"
+
+[connection signal="pressed" from="CenterContainer/BriefingContainer/StartWorkButton" to="." method="_on_start_work_button_pressed"]
