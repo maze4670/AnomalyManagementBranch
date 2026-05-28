@@ -23,6 +23,7 @@ func end_day_minimal(scene_tree: SceneTree) -> void:
 		_move_to_ending(scene_tree, "bad")
 		return
 
+	_try_introduce_new_test_case()
 	GameState.advance_day()
 	GameState.reset_actions_for_new_day()
 	var save_manager: Variant = SAVE_MANAGER_SCRIPT.new()
@@ -154,6 +155,20 @@ func _should_move_to_good_ending() -> bool:
 	var should_end: bool = ending_manager.is_good_ending(GameState.current_day)
 	ending_manager.free()
 	return should_end
+
+
+func _try_introduce_new_test_case() -> void:
+	if GameState.current_day < 1:
+		return
+
+	var next_case_report: Dictionary = GameState.get_next_test_case_to_introduce()
+	if next_case_report.is_empty():
+		return
+
+	GameState.introduce_case_report(
+		str(next_case_report.get("case_id", "")),
+		str(next_case_report.get("node_id", ""))
+	)
 
 
 func _move_to_ending(scene_tree: SceneTree, ending_type: String) -> void:

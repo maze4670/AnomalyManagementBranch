@@ -13,6 +13,7 @@ var delayed_reports: Dictionary = {}
 var anomaly_states: Dictionary = get_default_anomaly_states()
 var applied_delay_penalties: Dictionary = {}
 var trust_value: int = 100
+var known_cases: Array = ["case_001"]
 
 
 func reset_for_new_run() -> void:
@@ -27,6 +28,7 @@ func reset_for_new_run() -> void:
 	anomaly_states = get_default_anomaly_states()
 	applied_delay_penalties = {}
 	trust_value = 100
+	known_cases = ["case_001"]
 
 
 func reset_actions_for_new_day() -> void:
@@ -51,8 +53,7 @@ func get_action_label() -> String:
 
 func get_default_active_reports() -> Array:
 	return [
-		{"case_id": "case_001", "node_id": "report_001"},
-		{"case_id": "case_002", "node_id": "report_001"}
+		{"case_id": "case_001", "node_id": "report_001"}
 	]
 
 
@@ -61,6 +62,46 @@ func get_default_anomaly_states() -> Dictionary:
 		"case_001": 0,
 		"case_002": 0
 	}
+
+
+func has_known_case(case_id: String) -> bool:
+	return known_cases.has(case_id)
+
+
+func mark_case_known(case_id: String) -> void:
+	if case_id.is_empty():
+		return
+	if not has_known_case(case_id):
+		known_cases.append(case_id)
+
+
+func get_next_test_case_to_introduce() -> Dictionary:
+	if has_known_case("case_002"):
+		return {}
+
+	return {
+		"case_id": "case_002",
+		"node_id": "report_001"
+	}
+
+
+func introduce_case_report(case_id: String, node_id: String) -> void:
+	if case_id.is_empty() or node_id.is_empty():
+		return
+	if is_report_active(case_id, node_id):
+		mark_case_known(case_id)
+		return
+	if is_report_completed(case_id, node_id):
+		mark_case_known(case_id)
+		return
+
+	active_reports.append({
+		"case_id": case_id,
+		"node_id": node_id
+	})
+	mark_case_known(case_id)
+	if not anomaly_states.has(case_id):
+		anomaly_states[case_id] = 0
 
 
 func make_report_key(case_id: String, node_id: String) -> String:

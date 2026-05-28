@@ -18,7 +18,8 @@ func save_current_run() -> bool:
 		"delayed_reports": GameState.delayed_reports,
 		"anomaly_states": GameState.anomaly_states,
 		"applied_delay_penalties": GameState.applied_delay_penalties,
-		"trust_value": GameState.trust_value
+		"trust_value": GameState.trust_value,
+		"known_cases": GameState.known_cases
 	}
 	var json_text: String = JSON.stringify(save_data)
 	var file: FileAccess = FileAccess.open(CURRENT_RUN_SAVE_PATH, FileAccess.WRITE)
@@ -283,11 +284,18 @@ func apply_current_run_to_game_state() -> bool:
 		GameState.completed_reports = completed_reports as Dictionary
 	else:
 		GameState.completed_reports = {}
+	var known_cases: Variant = save_data.get("known_cases", ["case_001"])
+	if typeof(known_cases) == TYPE_ARRAY:
+		GameState.known_cases = known_cases as Array
+	else:
+		GameState.known_cases = ["case_001"]
+	_ensure_known_cases_for_loaded_reports()
 	var active_reports: Variant = save_data.get("active_reports", GameState.get_default_active_reports())
 	if typeof(active_reports) == TYPE_ARRAY:
 		GameState.active_reports = active_reports as Array
 	else:
 		GameState.active_reports = GameState.get_default_active_reports()
+	_ensure_known_cases_for_loaded_reports()
 	var scheduled_reports: Variant = save_data.get("scheduled_reports", [])
 	if typeof(scheduled_reports) == TYPE_ARRAY:
 		GameState.scheduled_reports = scheduled_reports as Array
@@ -327,3 +335,16 @@ func _ensure_default_anomaly_states() -> void:
 	for case_id in default_anomaly_states.keys():
 		if not GameState.anomaly_states.has(case_id):
 			GameState.anomaly_states[case_id] = default_anomaly_states[case_id]
+
+
+func _ensure_known_cases_for_loaded_reports() -> void:
+	for report_key in GameState.completed_reports.keys():
+		var key_parts: PackedStringArray = str(report_key).split(":")
+		if key_parts.size() == 2:
+			GameState.mark_case_known(key_parts[0])
+	for active_report in GameState.active_reports:
+		if typeof(active_report) != TYPE_DICTIONARY:
+			continue
+
+		var active_report_data: Dictionary = active_report as Dictionary
+		GameState.mark_case_known(str(active_report_data.get("case_id", "")))
