@@ -16,6 +16,7 @@ var anomaly_states: Dictionary = get_default_anomaly_states()
 var applied_delay_penalties: Dictionary = {}
 var trust_value: int = 100
 var known_cases: Array = get_default_known_cases()
+var pending_special_events: Array = []
 
 
 func reset_for_new_run() -> void:
@@ -31,6 +32,7 @@ func reset_for_new_run() -> void:
 	applied_delay_penalties = {}
 	trust_value = 100
 	known_cases = get_default_known_cases()
+	pending_special_events = []
 
 
 func reset_actions_for_new_day() -> void:
@@ -150,6 +152,33 @@ func introduce_case_report(case_id: String, node_id: String) -> void:
 	mark_case_known(case_id)
 	if not anomaly_states.has(case_id):
 		anomaly_states[case_id] = 0
+
+
+func has_pending_special_event(event_id: String) -> bool:
+	for special_event in pending_special_events:
+		if typeof(special_event) != TYPE_DICTIONARY:
+			continue
+
+		var special_event_data: Dictionary = special_event as Dictionary
+		if str(special_event_data.get("event_id", "")) == event_id:
+			return true
+
+	return false
+
+
+func add_pending_special_event(event_id: String, event_type: String, created_day: int) -> void:
+	if event_id.is_empty() or has_pending_special_event(event_id):
+		return
+
+	pending_special_events.append({
+		"event_id": event_id,
+		"event_type": event_type,
+		"created_day": created_day
+	})
+
+
+func clear_pending_special_events() -> void:
+	pending_special_events = []
 
 
 func _load_case_pool() -> Dictionary:

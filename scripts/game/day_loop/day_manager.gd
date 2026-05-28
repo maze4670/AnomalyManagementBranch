@@ -23,6 +23,7 @@ func end_day_minimal(scene_tree: SceneTree) -> void:
 		_move_to_ending(scene_tree, "bad")
 		return
 
+	_check_internal_special_event_candidates()
 	_try_introduce_new_test_case()
 	GameState.advance_day()
 	GameState.reset_actions_for_new_day()
@@ -168,6 +169,17 @@ func _try_introduce_new_test_case() -> void:
 	GameState.introduce_case_report(
 		str(next_case_report.get("case_id", "")),
 		str(next_case_report.get("node_id", ""))
+	)
+
+
+func _check_internal_special_event_candidates() -> void:
+	if GameState.delayed_reports.is_empty():
+		return
+
+	GameState.add_pending_special_event(
+		"test_internal_delay_event",
+		"internal_test",
+		GameState.current_day
 	)
 
 
