@@ -10,20 +10,22 @@ const DELAY_PENALTY_DELTA := -1
 
 
 func end_day_minimal(scene_tree: SceneTree) -> void:
+	if _should_move_to_good_ending():
+		_move_to_ending(scene_tree, "good")
+		return
+
 	_increase_delay_for_uncompleted_active_reports()
 	_apply_delay_penalties()
 	_process_pending_completed_choices()
 	GameState.tick_scheduled_reports()
 	_update_trust_value()
-	var save_manager: Variant = SAVE_MANAGER_SCRIPT.new()
 	if _should_move_to_bad_ending():
-		save_manager.delete_current_run_save()
-		save_manager.free()
-		scene_tree.change_scene_to_file(ENDING_SCENE_PATH)
+		_move_to_ending(scene_tree, "bad")
 		return
 
 	GameState.advance_day()
 	GameState.reset_actions_for_new_day()
+	var save_manager: Variant = SAVE_MANAGER_SCRIPT.new()
 	save_manager.save_current_run()
 	save_manager.free()
 	scene_tree.change_scene_to_file(BRIEFING_SCENE_PATH)
@@ -145,3 +147,18 @@ func _should_move_to_bad_ending() -> bool:
 	var should_end: bool = ending_manager.is_bad_ending(GameState.get_trust_value())
 	ending_manager.free()
 	return should_end
+
+
+func _should_move_to_good_ending() -> bool:
+	var ending_manager: Variant = ENDING_MANAGER_SCRIPT.new()
+	var should_end: bool = ending_manager.is_good_ending(GameState.current_day)
+	ending_manager.free()
+	return should_end
+
+
+func _move_to_ending(scene_tree: SceneTree, ending_type: String) -> void:
+	var save_manager: Variant = SAVE_MANAGER_SCRIPT.new()
+	save_manager.delete_current_run_save()
+	save_manager.free()
+	scene_tree.set_meta("ending_type", ending_type)
+	scene_tree.change_scene_to_file(ENDING_SCENE_PATH)
