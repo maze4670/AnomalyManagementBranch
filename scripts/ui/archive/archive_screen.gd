@@ -42,8 +42,12 @@ func _load_archive_list() -> void:
 			continue
 
 		var case_archive_dictionary: Dictionary = case_archive_data as Dictionary
+		var case_document: Dictionary = _get_case_document(str(case_id))
+		if case_document.is_empty():
+			continue
+
 		var item_button: Button = Button.new()
-		item_button.text = _get_archive_case_label(str(case_id))
+		item_button.text = _get_archive_case_label(case_document)
 		item_button.pressed.connect(_on_archive_case_pressed.bind(str(case_id), case_archive_dictionary))
 		archive_list_container.add_child(item_button)
 
@@ -65,17 +69,20 @@ func _show_empty_archive() -> void:
 	detail_label.visible = false
 
 
-func _get_archive_case_label(case_id: String) -> String:
-	var data_manager: Variant = DATA_MANAGER_SCRIPT.new()
-	var case_document: Dictionary = data_manager.load_case_document(case_id)
-	data_manager.free()
-
-	var display_id: String = str(case_document.get("display_id", case_id))
+func _get_archive_case_label(case_document: Dictionary) -> String:
+	var display_id: String = str(case_document.get("display_id", ""))
 	var alias: String = str(case_document.get("alias", ""))
 	if alias.is_empty():
 		return display_id
 
 	return "%s / %s" % [display_id, alias]
+
+
+func _get_case_document(case_id: String) -> Dictionary:
+	var data_manager: Variant = DATA_MANAGER_SCRIPT.new()
+	var case_document: Dictionary = data_manager.load_case_document(case_id)
+	data_manager.free()
+	return case_document
 
 
 func _on_archive_case_pressed(case_id: String, case_archive_data: Dictionary) -> void:
@@ -88,6 +95,8 @@ func _build_archive_detail_text(case_id: String, case_archive_data: Dictionary) 
 	var case_document: Dictionary = data_manager.load_case_document(case_id)
 	var case_reports: Dictionary = data_manager.load_case_reports(case_id)
 	data_manager.free()
+	if case_document.is_empty():
+		return ""
 
 	var lines: Array[String] = []
 	lines.append("식별명: %s" % str(case_document.get("display_id", "")))

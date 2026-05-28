@@ -107,33 +107,34 @@ func apply_ending_to_archive(ending_type: String, run_data: Dictionary) -> bool:
 	archive_data["endings_seen"] = endings_seen
 
 	var unlocked_cases: Dictionary = archive_data.get("unlocked_cases", {}) as Dictionary
-	var existing_case_data: Dictionary = {}
-	if typeof(unlocked_cases.get("case_001", {})) == TYPE_DICTIONARY:
-		existing_case_data = unlocked_cases.get("case_001", {}) as Dictionary
+	var report_keys_by_case_id: Dictionary = _get_completed_report_keys_by_case_id(run_data)
+	for case_id in report_keys_by_case_id.keys():
+		var case_report_keys: Array = report_keys_by_case_id[case_id] as Array
+		var existing_case_data: Dictionary = {}
+		if typeof(unlocked_cases.get(case_id, {})) == TYPE_DICTIONARY:
+			existing_case_data = unlocked_cases.get(case_id, {}) as Dictionary
 
-	if str(existing_case_data.get("unlock_level", "")) == "full" and ending_type == "bad":
-		return save_archive_save(archive_data)
+		if str(existing_case_data.get("unlock_level", "")) == "full" and ending_type == "bad":
+			continue
 
-	var completed_report_keys: Array = _get_completed_report_keys(run_data)
-	if ending_type == "good":
-		var full_report_keys: Array = _get_existing_unlocked_report_keys(existing_case_data)
-		for report_key in completed_report_keys:
-			if not full_report_keys.has(report_key):
-				full_report_keys.append(report_key)
-		unlocked_cases["case_001"] = {
-			"unlock_level": "full",
-			"unlocked_report_keys": full_report_keys
-		}
-	else:
-		var partial_report_keys: Array = _get_existing_unlocked_report_keys(existing_case_data)
-		if completed_report_keys.size() > 0:
-			var first_report_key: String = str(completed_report_keys[0])
-			if not partial_report_keys.has(first_report_key):
-				partial_report_keys.append(first_report_key)
-		unlocked_cases["case_001"] = {
-			"unlock_level": "partial",
-			"unlocked_report_keys": partial_report_keys
-		}
+		var merged_report_keys: Array = _get_existing_unlocked_report_keys(existing_case_data)
+		if ending_type == "good":
+			for report_key in case_report_keys:
+				if not merged_report_keys.has(report_key):
+					merged_report_keys.append(report_key)
+			unlocked_cases[case_id] = {
+				"unlock_level": "full",
+				"unlocked_report_keys": merged_report_keys
+			}
+		else:
+			if case_report_keys.size() > 0:
+				var first_report_key: String = str(case_report_keys[0])
+				if not merged_report_keys.has(first_report_key):
+					merged_report_keys.append(first_report_key)
+			unlocked_cases[case_id] = {
+				"unlock_level": "partial",
+				"unlocked_report_keys": merged_report_keys
+			}
 
 	archive_data["unlocked_cases"] = unlocked_cases
 	return save_archive_save(archive_data)
@@ -191,6 +192,29 @@ func _get_completed_report_keys(run_data: Dictionary) -> Array:
 		report_keys.append(str(report_key))
 
 	return report_keys
+
+
+func _get_completed_report_keys_by_case_id(run_data: Dictionary) -> Dictionary:
+	var completed_reports: Variant = run_data.get("completed_reports", {})
+	if typeof(completed_reports) != TYPE_DICTIONARY:
+		return {}
+
+	var report_keys_by_case_id: Dictionary = {}
+	for report_key in (completed_reports as Dictionary).keys():
+		var report_key_text: String = str(report_key)
+		var key_parts: PackedStringArray = report_key_text.split(":")
+		if key_parts.size() != 2:
+			continue
+
+		var case_id: String = key_parts[0]
+		if not report_keys_by_case_id.has(case_id):
+			report_keys_by_case_id[case_id] = []
+
+		var case_report_keys: Array = report_keys_by_case_id[case_id] as Array
+		case_report_keys.append(report_key_text)
+		report_keys_by_case_id[case_id] = case_report_keys
+
+	return report_keys_by_case_id
 
 
 func _get_existing_unlocked_report_keys(case_archive_data: Dictionary) -> Array:
