@@ -283,11 +283,11 @@ func apply_current_run_to_game_state() -> bool:
 		GameState.completed_reports = completed_reports as Dictionary
 	else:
 		GameState.completed_reports = {}
-	var active_reports: Variant = save_data.get("active_reports", _get_default_active_reports())
+	var active_reports: Variant = save_data.get("active_reports", GameState.get_default_active_reports())
 	if typeof(active_reports) == TYPE_ARRAY:
 		GameState.active_reports = active_reports as Array
 	else:
-		GameState.active_reports = _get_default_active_reports()
+		GameState.active_reports = GameState.get_default_active_reports()
 	var scheduled_reports: Variant = save_data.get("scheduled_reports", [])
 	if typeof(scheduled_reports) == TYPE_ARRAY:
 		GameState.scheduled_reports = scheduled_reports as Array
@@ -303,11 +303,11 @@ func apply_current_run_to_game_state() -> bool:
 		GameState.delayed_reports = delayed_reports as Dictionary
 	else:
 		GameState.delayed_reports = {}
-	var anomaly_states: Variant = save_data.get("anomaly_states", _get_default_anomaly_states())
+	var anomaly_states: Variant = save_data.get("anomaly_states", GameState.get_default_anomaly_states())
 	if typeof(anomaly_states) == TYPE_DICTIONARY:
 		GameState.anomaly_states = anomaly_states as Dictionary
 	else:
-		GameState.anomaly_states = _get_default_anomaly_states()
+		GameState.anomaly_states = GameState.get_default_anomaly_states()
 	_ensure_default_anomaly_states()
 	var applied_delay_penalties: Variant = save_data.get("applied_delay_penalties", {})
 	if typeof(applied_delay_penalties) == TYPE_DICTIONARY:
@@ -322,22 +322,8 @@ func apply_current_run_to_game_state() -> bool:
 	return true
 
 
-func _get_default_active_reports() -> Array:
-	return [
-		{"case_id": "case_001", "node_id": "report_001"},
-		{"case_id": "case_002", "node_id": "report_001"}
-	]
-
-
-func _get_default_anomaly_states() -> Dictionary:
-	return {
-		"case_001": 0,
-		"case_002": 0
-	}
-
-
 func _ensure_default_anomaly_states() -> void:
-	var default_anomaly_states: Dictionary = _get_default_anomaly_states()
+	var default_anomaly_states: Dictionary = GameState.get_default_anomaly_states()
 	for case_id in default_anomaly_states.keys():
 		if not GameState.anomaly_states.has(case_id):
 			GameState.anomaly_states[case_id] = default_anomaly_states[case_id]
