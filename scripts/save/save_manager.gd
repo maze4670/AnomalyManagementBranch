@@ -36,3 +36,26 @@ func load_current_run_minimal() -> Dictionary:
 		return {}
 
 	return parsed
+
+
+func apply_current_run_to_game_state() -> bool:
+	var save_data: Dictionary = load_current_run_minimal()
+	if save_data.is_empty():
+		return false
+
+	if not save_data.has("save_version"):
+		return false
+	if int(save_data.get("save_version")) != 1:
+		return false
+
+	if not save_data.has("current_day"):
+		return false
+	if not save_data.has("remaining_actions"):
+		return false
+	if not save_data.has("max_actions_per_day"):
+		return false
+
+	GameState.current_day = int(save_data.get("current_day"))
+	GameState.remaining_actions = int(save_data.get("remaining_actions"))
+	GameState.max_actions_per_day = int(save_data.get("max_actions_per_day"))
+	return true
