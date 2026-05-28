@@ -1,6 +1,7 @@
 extends Node
 
 const CURRENT_RUN_SAVE_PATH := "user://current_run_save.json"
+const SETTINGS_SAVE_PATH := "user://settings_save.json"
 
 
 func save_current_run() -> bool:
@@ -40,6 +41,61 @@ func delete_current_run_save() -> bool:
 		return false
 
 	return user_dir.remove("current_run_save.json") == OK
+
+
+func save_settings(settings_data: Dictionary) -> bool:
+	var json_text: String = JSON.stringify(settings_data)
+	var file: FileAccess = FileAccess.open(SETTINGS_SAVE_PATH, FileAccess.WRITE)
+	if file == null:
+		return false
+
+	file.store_string(json_text)
+	return true
+
+
+func load_settings() -> Dictionary:
+	var default_settings: Dictionary = _get_default_settings()
+	if not FileAccess.file_exists(SETTINGS_SAVE_PATH):
+		return default_settings
+
+	var file: FileAccess = FileAccess.open(SETTINGS_SAVE_PATH, FileAccess.READ)
+	if file == null:
+		return default_settings
+
+	var parsed: Variant = JSON.parse_string(file.get_as_text())
+	if typeof(parsed) != TYPE_DICTIONARY:
+		return default_settings
+
+	var settings_data: Dictionary = parsed as Dictionary
+	return {
+		"save_version": int(settings_data.get("save_version", default_settings["save_version"])),
+		"volume": int(settings_data.get("volume", default_settings["volume"])),
+		"screen_mode": _normalize_screen_mode(str(settings_data.get("screen_mode", default_settings["screen_mode"]))),
+		"text_size": _normalize_text_size(str(settings_data.get("text_size", default_settings["text_size"])))
+	}
+
+
+func _get_default_settings() -> Dictionary:
+	return {
+		"save_version": 1,
+		"volume": 100,
+		"screen_mode": "windowed",
+		"text_size": "normal"
+	}
+
+
+func _normalize_screen_mode(screen_mode: String) -> String:
+	if screen_mode == "fullscreen":
+		return screen_mode
+
+	return "windowed"
+
+
+func _normalize_text_size(text_size: String) -> String:
+	if text_size == "small" or text_size == "large":
+		return text_size
+
+	return "normal"
 
 
 func load_current_run_minimal() -> Dictionary:
