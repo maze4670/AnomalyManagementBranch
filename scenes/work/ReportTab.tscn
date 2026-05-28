@@ -64,4 +64,43 @@ size_flags_vertical = 3
 text = "보고서 목록에서 항목을 선택해 주세요."
 fit_content = true
 
+[node name="CompletedStampLabel" type="Label" parent="RootContainer/ContentContainer/DetailContainer"]
+visible = false
+layout_mode = 2
+text = ""
+
+[node name="StatusLabel" type="Label" parent="RootContainer/ContentContainer/DetailContainer"]
+visible = false
+layout_mode = 2
+text = ""
+
+[node name="ChoiceContainer" type="VBoxContainer" parent="RootContainer/ContentContainer/DetailContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="ChoiceButtonA" type="Button" parent="RootContainer/ContentContainer/DetailContainer/ChoiceContainer"]
+custom_minimum_size = Vector2(320, 40)
+layout_mode = 2
+toggle_mode = true
+disabled = true
+text = "대응 선택지 1"
+
+[node name="ChoiceButtonB" type="Button" parent="RootContainer/ContentContainer/DetailContainer/ChoiceContainer"]
+custom_minimum_size = Vector2(320, 40)
+layout_mode = 2
+toggle_mode = true
+disabled = true
+text = "대응 선택지 2"
+
+[node name="ConfirmButton" type="Button" parent="RootContainer/ContentContainer/DetailContainer"]
+visible = false
+custom_minimum_size = Vector2(160, 40)
+layout_mode = 2
+disabled = true
+text = "대응 확정"
+
 [connection signal="pressed" from="RootContainer/ContentContainer/ReportListContainer/ReportButton" to="." method="_on_report_button_pressed"]
+[connection signal="pressed" from="RootContainer/ContentContainer/DetailContainer/ChoiceContainer/ChoiceButtonA" to="." method="_on_choice_button_a_pressed"]
+[connection signal="pressed" from="RootContainer/ContentContainer/DetailContainer/ChoiceContainer/ChoiceButtonB" to="." method="_on_choice_button_b_pressed"]
+[connection signal="pressed" from="RootContainer/ContentContainer/DetailContainer/ConfirmButton" to="." method="_on_confirm_button_pressed"]
