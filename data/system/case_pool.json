@@ -1,0 +1,16 @@
+{
+  "is_test_data": true,
+  "note": "기능 확인용 테스트 case 목록이며 최종 콘텐츠 구조가 아닙니다.",
+  "starting_cases": [
+    {
+      "case_id": "case_001",
+      "start_node_id": "report_001"
+    }
+  ],
+  "introducible_cases": [
+    {
+      "case_id": "case_002",
+      "start_node_id": "report_001"
+    }
+  ]
+}

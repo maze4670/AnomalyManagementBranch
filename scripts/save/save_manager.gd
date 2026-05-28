@@ -284,11 +284,11 @@ func apply_current_run_to_game_state() -> bool:
 		GameState.completed_reports = completed_reports as Dictionary
 	else:
 		GameState.completed_reports = {}
-	var known_cases: Variant = save_data.get("known_cases", ["case_001"])
+	var known_cases: Variant = save_data.get("known_cases", GameState.get_default_known_cases())
 	if typeof(known_cases) == TYPE_ARRAY:
 		GameState.known_cases = known_cases as Array
 	else:
-		GameState.known_cases = ["case_001"]
+		GameState.known_cases = GameState.get_default_known_cases()
 	_ensure_known_cases_for_loaded_reports()
 	var active_reports: Variant = save_data.get("active_reports", GameState.get_default_active_reports())
 	if typeof(active_reports) == TYPE_ARRAY:

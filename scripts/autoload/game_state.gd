@@ -2,6 +2,8 @@ extends Node
 
 # Stores the minimal shared run state.
 
+const DATA_MANAGER_SCRIPT := preload("res://scripts/data/data_manager.gd")
+
 var current_day: int = 1
 var max_actions_per_day: int = 3
 var remaining_actions: int = 3
@@ -13,7 +15,7 @@ var delayed_reports: Dictionary = {}
 var anomaly_states: Dictionary = get_default_anomaly_states()
 var applied_delay_penalties: Dictionary = {}
 var trust_value: int = 100
-var known_cases: Array = ["case_001"]
+var known_cases: Array = get_default_known_cases()
 
 
 func reset_for_new_run() -> void:
@@ -28,7 +30,7 @@ func reset_for_new_run() -> void:
 	anomaly_states = get_default_anomaly_states()
 	applied_delay_penalties = {}
 	trust_value = 100
-	known_cases = ["case_001"]
+	known_cases = get_default_known_cases()
 
 
 func reset_actions_for_new_day() -> void:
@@ -52,16 +54,46 @@ func get_action_label() -> String:
 
 
 func get_default_active_reports() -> Array:
-	return [
-		{"case_id": "case_001", "node_id": "report_001"}
-	]
+	var case_pool: Dictionary = _load_case_pool()
+	var starting_cases: Variant = case_pool.get("starting_cases", [])
+	var default_reports: Array = _case_pool_entries_to_reports(starting_cases)
+	if default_reports.is_empty():
+		return [{"case_id": "case_001", "node_id": "report_001"}]
+
+	return default_reports
 
 
 func get_default_anomaly_states() -> Dictionary:
-	return {
-		"case_001": 0,
-		"case_002": 0
-	}
+	var anomaly_state_defaults: Dictionary = {}
+	var case_pool: Dictionary = _load_case_pool()
+	_add_case_pool_entries_to_anomaly_states(anomaly_state_defaults, case_pool.get("starting_cases", []))
+	_add_case_pool_entries_to_anomaly_states(anomaly_state_defaults, case_pool.get("introducible_cases", []))
+	if anomaly_state_defaults.is_empty():
+		return {
+			"case_001": 0,
+			"case_002": 0
+		}
+
+	return anomaly_state_defaults
+
+
+func get_default_known_cases() -> Array:
+	var known_case_defaults: Array = []
+	var case_pool: Dictionary = _load_case_pool()
+	var starting_cases: Variant = case_pool.get("starting_cases", [])
+	if typeof(starting_cases) == TYPE_ARRAY:
+		for case_entry in (starting_cases as Array):
+			if typeof(case_entry) != TYPE_DICTIONARY:
+				continue
+
+			var case_id: String = str((case_entry as Dictionary).get("case_id", ""))
+			if not case_id.is_empty() and not known_case_defaults.has(case_id):
+				known_case_defaults.append(case_id)
+
+	if known_case_defaults.is_empty():
+		return ["case_001"]
+
+	return known_case_defaults
 
 
 func has_known_case(case_id: String) -> bool:
@@ -76,13 +108,29 @@ func mark_case_known(case_id: String) -> void:
 
 
 func get_next_test_case_to_introduce() -> Dictionary:
-	if has_known_case("case_002"):
+	var case_pool: Dictionary = _load_case_pool()
+	var introducible_cases: Variant = case_pool.get("introducible_cases", [])
+	if typeof(introducible_cases) != TYPE_ARRAY:
 		return {}
 
-	return {
-		"case_id": "case_002",
-		"node_id": "report_001"
-	}
+	for case_entry in (introducible_cases as Array):
+		if typeof(case_entry) != TYPE_DICTIONARY:
+			continue
+
+		var case_entry_data: Dictionary = case_entry as Dictionary
+		var case_id: String = str(case_entry_data.get("case_id", ""))
+		var node_id: String = str(case_entry_data.get("start_node_id", ""))
+		if case_id.is_empty() or node_id.is_empty():
+			continue
+		if has_known_case(case_id):
+			continue
+
+		return {
+			"case_id": case_id,
+			"node_id": node_id
+		}
+
+	return {}
 
 
 func introduce_case_report(case_id: String, node_id: String) -> void:
@@ -102,6 +150,49 @@ func introduce_case_report(case_id: String, node_id: String) -> void:
 	mark_case_known(case_id)
 	if not anomaly_states.has(case_id):
 		anomaly_states[case_id] = 0
+
+
+func _load_case_pool() -> Dictionary:
+	var data_manager: Variant = DATA_MANAGER_SCRIPT.new()
+	var case_pool: Dictionary = data_manager.load_case_pool()
+	data_manager.free()
+	return case_pool
+
+
+func _case_pool_entries_to_reports(case_entries: Variant) -> Array:
+	var reports: Array = []
+	if typeof(case_entries) != TYPE_ARRAY:
+		return reports
+
+	for case_entry in (case_entries as Array):
+		if typeof(case_entry) != TYPE_DICTIONARY:
+			continue
+
+		var case_entry_data: Dictionary = case_entry as Dictionary
+		var case_id: String = str(case_entry_data.get("case_id", ""))
+		var node_id: String = str(case_entry_data.get("start_node_id", ""))
+		if case_id.is_empty() or node_id.is_empty():
+			continue
+
+		reports.append({
+			"case_id": case_id,
+			"node_id": node_id
+		})
+
+	return reports
+
+
+func _add_case_pool_entries_to_anomaly_states(anomaly_state_defaults: Dictionary, case_entries: Variant) -> void:
+	if typeof(case_entries) != TYPE_ARRAY:
+		return
+
+	for case_entry in (case_entries as Array):
+		if typeof(case_entry) != TYPE_DICTIONARY:
+			continue
+
+		var case_id: String = str((case_entry as Dictionary).get("case_id", ""))
+		if not case_id.is_empty():
+			anomaly_state_defaults[case_id] = 0
 
 
 func make_report_key(case_id: String, node_id: String) -> String:
