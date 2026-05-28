@@ -1,0 +1,11 @@
+{
+  "is_test_data": true,
+  "note": "기능 확인용 내부 특수 이벤트 판정 규칙이며 최종 콘텐츠가 아닙니다.",
+  "rules": [
+    {
+      "event_id": "test_internal_delay_event",
+      "event_type": "internal_test",
+      "condition_type": "has_delayed_reports"
+    }
+  ]
+}

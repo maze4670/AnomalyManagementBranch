@@ -173,14 +173,34 @@ func _try_introduce_new_test_case() -> void:
 
 
 func _check_internal_special_event_candidates() -> void:
-	if GameState.delayed_reports.is_empty():
+	var data_manager: Variant = DATA_MANAGER_SCRIPT.new()
+	var special_event_rules: Dictionary = data_manager.load_special_event_rules()
+	data_manager.free()
+
+	var rules: Variant = special_event_rules.get("rules", [])
+	if typeof(rules) != TYPE_ARRAY:
 		return
 
-	GameState.add_pending_special_event(
-		"test_internal_delay_event",
-		"internal_test",
-		GameState.current_day
-	)
+	for rule in (rules as Array):
+		if typeof(rule) != TYPE_DICTIONARY:
+			continue
+
+		var rule_data: Dictionary = rule as Dictionary
+		if not _is_special_event_condition_met(str(rule_data.get("condition_type", ""))):
+			continue
+
+		GameState.add_pending_special_event(
+			str(rule_data.get("event_id", "")),
+			str(rule_data.get("event_type", "")),
+			GameState.current_day
+		)
+
+
+func _is_special_event_condition_met(condition_type: String) -> bool:
+	if condition_type == "has_delayed_reports":
+		return not GameState.delayed_reports.is_empty()
+
+	return false
 
 
 func _move_to_ending(scene_tree: SceneTree, ending_type: String) -> void:

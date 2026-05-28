@@ -31,6 +31,10 @@ func load_case_pool() -> Dictionary:
 	return load_json_file("res://data/system/case_pool.json")
 
 
+func load_special_event_rules() -> Dictionary:
+	return load_json_file("res://data/system/special_event_rules.json")
+
+
 func load_briefing_messages() -> Dictionary:
 	return load_json_file("res://data/text/briefing_messages.json")
 
