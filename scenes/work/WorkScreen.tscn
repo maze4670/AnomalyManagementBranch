@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/work/work_screen.gd" id="1_work"]
+[ext_resource type="PackedScene" path="res://scenes/work/ReportTab.tscn" id="2_report_tab"]
+[ext_resource type="PackedScene" path="res://scenes/work/CurrentAnomaliesTab.tscn" id="3_current_tab"]
+[ext_resource type="PackedScene" path="res://scenes/work/EndDayTab.tscn" id="4_end_day_tab"]
 
 [node name="WorkScreen" type="Control"]
 layout_mode = 3
@@ -11,19 +14,91 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_work")
 
-[node name="Label" type="Label" parent="."]
+[node name="RootContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -80.0
-offset_top = -12.0
-offset_right = 80.0
-offset_bottom = 12.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 32.0
+offset_top = 24.0
+offset_right = -32.0
+offset_bottom = -24.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "Work Screen"
+theme_override_constants/separation = 16
+
+[node name="HeaderContainer" type="VBoxContainer" parent="RootContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="TitleLabel" type="Label" parent="RootContainer/HeaderContainer"]
+layout_mode = 2
+text = "근무 화면"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="StatusContainer" type="HBoxContainer" parent="RootContainer/HeaderContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="CurrentDayLabel" type="Label" parent="RootContainer/HeaderContainer/StatusContainer"]
+layout_mode = 2
+text = "1일차"
+
+[node name="ActionLabel" type="Label" parent="RootContainer/HeaderContainer/StatusContainer"]
+layout_mode = 2
+text = "[잔여 대응 절차 3/3]"
+
+[node name="TabButtonContainer" type="HBoxContainer" parent="RootContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="ReportTabButton" type="Button" parent="RootContainer/TabButtonContainer"]
+custom_minimum_size = Vector2(160, 40)
+layout_mode = 2
+text = "보고서 확인"
+
+[node name="CurrentAnomaliesTabButton" type="Button" parent="RootContainer/TabButtonContainer"]
+custom_minimum_size = Vector2(220, 40)
+layout_mode = 2
+text = "현재 관리 중인 이상현상"
+
+[node name="EndDayTabButton" type="Button" parent="RootContainer/TabButtonContainer"]
+custom_minimum_size = Vector2(160, 40)
+layout_mode = 2
+text = "하루 종료"
+
+[node name="TabContent" type="Control" parent="RootContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ReportTab" parent="RootContainer/TabContent" instance=ExtResource("2_report_tab")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CurrentAnomaliesTab" parent="RootContainer/TabContent" instance=ExtResource("3_current_tab")]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="EndDayTab" parent="RootContainer/TabContent" instance=ExtResource("4_end_day_tab")]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[connection signal="pressed" from="RootContainer/TabButtonContainer/ReportTabButton" to="." method="_on_report_tab_button_pressed"]
+[connection signal="pressed" from="RootContainer/TabButtonContainer/CurrentAnomaliesTabButton" to="." method="_on_current_anomalies_tab_button_pressed"]
+[connection signal="pressed" from="RootContainer/TabButtonContainer/EndDayTabButton" to="." method="_on_end_day_tab_button_pressed"]

@@ -11,19 +11,26 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_end_day")
 
-[node name="Label" type="Label" parent="."]
+[node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -80.0
-offset_top = -12.0
-offset_right = 80.0
-offset_bottom = 12.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "End Day Tab"
+
+[node name="ContentContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="TitleLabel" type="Label" parent="CenterContainer/ContentContainer"]
+layout_mode = 2
+text = "하루 종료"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GuideLabel" type="Label" parent="CenterContainer/ContentContainer"]
+layout_mode = 2
+text = "하루 종료 기능은 이후 단계에서 구현됩니다."
 horizontal_alignment = 1
 vertical_alignment = 1
