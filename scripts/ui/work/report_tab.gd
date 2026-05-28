@@ -17,6 +17,7 @@ var case_reports: Dictionary = {}
 var ui_messages: Dictionary = {}
 var current_choices: Array = []
 var current_node_id: String = ""
+var current_report_node: Dictionary = {}
 var selected_choice_index: int = -1
 var report_completed: bool = false
 
@@ -35,6 +36,14 @@ func _update_report_list() -> void:
 	var display_id := str(case_document.get("display_id", ""))
 	var alias := str(case_document.get("alias", ""))
 
+	current_report_node = _get_first_active_report_node()
+	if current_report_node.is_empty():
+		report_button.text = "현재 도착한 보고가 없습니다."
+		report_button.disabled = true
+		detail_text.text = "현재 도착한 보고가 없습니다."
+		_set_report_controls_visible(false)
+		return
+
 	if display_id.is_empty() or alias.is_empty():
 		report_button.text = "표시할 보고서가 없습니다."
 		report_button.disabled = true
@@ -45,12 +54,11 @@ func _update_report_list() -> void:
 
 
 func _on_report_button_pressed() -> void:
-	var nodes: Array = case_reports.get("nodes", []) as Array
-	if nodes.is_empty() or typeof(nodes[0]) != TYPE_DICTIONARY:
+	if current_report_node.is_empty():
 		detail_text.text = "보고서 상세를 표시할 수 없습니다."
 		return
 
-	var report_node: Dictionary = nodes[0] as Dictionary
+	var report_node: Dictionary = current_report_node
 	current_node_id = str(report_node.get("node_id", ""))
 	var detail_lines := PackedStringArray([
 		str(case_document.get("display_id", "")),
@@ -127,7 +135,9 @@ func _on_confirm_button_pressed() -> void:
 
 	var selected_choice: Dictionary = current_choices[selected_choice_index] as Dictionary
 	var selected_choice_id := str(selected_choice.get("choice_id", ""))
+	var next_node_id := str(selected_choice.get("next_node_id", ""))
 	GameState.mark_report_completed(CASE_ID, current_node_id, selected_choice_id)
+	GameState.record_completed_choice_for_end_day(CASE_ID, current_node_id, selected_choice_id, next_node_id)
 	report_completed = true
 	status_label.text = str(ui_messages.get(
 		"choice_confirmed",
@@ -168,3 +178,31 @@ func _find_choice_index(choice_id: String) -> int:
 				return index
 
 	return -1
+
+
+func _get_first_active_report_node() -> Dictionary:
+	for active_report in GameState.active_reports:
+		if typeof(active_report) != TYPE_DICTIONARY:
+			continue
+
+		var active_report_data: Dictionary = active_report as Dictionary
+		if str(active_report_data.get("case_id", "")) != CASE_ID:
+			continue
+
+		var node_id: String = str(active_report_data.get("node_id", ""))
+		var report_node: Dictionary = _find_report_node(node_id)
+		if not report_node.is_empty():
+			return report_node
+
+	return {}
+
+
+func _find_report_node(node_id: String) -> Dictionary:
+	var nodes: Array = case_reports.get("nodes", []) as Array
+	for node in nodes:
+		if typeof(node) == TYPE_DICTIONARY:
+			var report_node: Dictionary = node as Dictionary
+			if str(report_node.get("node_id", "")) == node_id:
+				return report_node
+
+	return {}

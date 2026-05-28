@@ -9,7 +9,10 @@ func save_current_run() -> bool:
 		"current_day": GameState.current_day,
 		"remaining_actions": GameState.remaining_actions,
 		"max_actions_per_day": GameState.max_actions_per_day,
-		"completed_reports": GameState.completed_reports
+		"completed_reports": GameState.completed_reports,
+		"active_reports": GameState.active_reports,
+		"scheduled_reports": GameState.scheduled_reports,
+		"pending_completed_choices": GameState.pending_completed_choices
 	}
 	var json_text: String = JSON.stringify(save_data)
 	var file: FileAccess = FileAccess.open(CURRENT_RUN_SAVE_PATH, FileAccess.WRITE)
@@ -64,4 +67,19 @@ func apply_current_run_to_game_state() -> bool:
 		GameState.completed_reports = completed_reports as Dictionary
 	else:
 		GameState.completed_reports = {}
+	var active_reports: Variant = save_data.get("active_reports", [{"case_id": "case_001", "node_id": "report_001"}])
+	if typeof(active_reports) == TYPE_ARRAY:
+		GameState.active_reports = active_reports as Array
+	else:
+		GameState.active_reports = [{"case_id": "case_001", "node_id": "report_001"}]
+	var scheduled_reports: Variant = save_data.get("scheduled_reports", [])
+	if typeof(scheduled_reports) == TYPE_ARRAY:
+		GameState.scheduled_reports = scheduled_reports as Array
+	else:
+		GameState.scheduled_reports = []
+	var pending_completed_choices: Variant = save_data.get("pending_completed_choices", [])
+	if typeof(pending_completed_choices) == TYPE_ARRAY:
+		GameState.pending_completed_choices = pending_completed_choices as Array
+	else:
+		GameState.pending_completed_choices = []
 	return true
