@@ -1,8 +1,9 @@
 extends Control
 
-const CASE_ID := "case_001"
 const DATA_MANAGER_SCRIPT := preload("res://scripts/data/data_manager.gd")
 
+@onready var report_list_container: VBoxContainer = $RootContainer/ContentContainer/ReportListContainer
+@onready var report_list_label: Label = $RootContainer/ContentContainer/ReportListContainer/ReportListLabel
 @onready var report_button: Button = $RootContainer/ContentContainer/ReportListContainer/ReportButton
 @onready var detail_text: RichTextLabel = $RootContainer/ContentContainer/DetailContainer/DetailText
 @onready var completed_stamp_label: Label = $RootContainer/ContentContainer/DetailContainer/CompletedStampLabel
@@ -12,77 +13,136 @@ const DATA_MANAGER_SCRIPT := preload("res://scripts/data/data_manager.gd")
 @onready var choice_button_b: Button = $RootContainer/ContentContainer/DetailContainer/ChoiceContainer/ChoiceButtonB
 @onready var confirm_button: Button = $RootContainer/ContentContainer/DetailContainer/ConfirmButton
 
-var case_document: Dictionary = {}
-var case_reports: Dictionary = {}
+var case_documents: Dictionary = {}
+var case_reports_by_id: Dictionary = {}
 var ui_messages: Dictionary = {}
-var current_choices: Array = []
+var current_case_id: String = ""
 var current_node_id: String = ""
 var current_report_node: Dictionary = {}
+var current_choices: Array = []
 var selected_choice_index: int = -1
 var report_completed: bool = false
 
 
 func _ready() -> void:
 	var data_manager: Variant = DATA_MANAGER_SCRIPT.new()
-	case_document = data_manager.load_case_document(CASE_ID)
-	case_reports = data_manager.load_case_reports(CASE_ID)
 	ui_messages = data_manager.load_ui_messages()
 	data_manager.free()
+
+	report_button.visible = false
 	_update_report_list()
 	_set_report_controls_visible(false)
 
 
 func _update_report_list() -> void:
-	var display_id := str(case_document.get("display_id", ""))
-	var alias := str(case_document.get("alias", ""))
+	_clear_report_list_buttons()
+	var visible_report_count: int = 0
 
-	current_report_node = _get_first_active_report_node()
-	if current_report_node.is_empty():
-		report_button.text = "현재 도착한 보고가 없습니다."
-		report_button.disabled = true
+	for active_report in GameState.active_reports:
+		if typeof(active_report) != TYPE_DICTIONARY:
+			continue
+
+		var active_report_data: Dictionary = active_report as Dictionary
+		var case_id: String = str(active_report_data.get("case_id", ""))
+		var node_id: String = str(active_report_data.get("node_id", ""))
+		if case_id.is_empty() or node_id.is_empty():
+			continue
+
+		var report_node: Dictionary = _find_report_node(case_id, node_id)
+		if report_node.is_empty():
+			continue
+
+		var report_list_button: Button = Button.new()
+		report_list_button.custom_minimum_size = report_button.custom_minimum_size
+		report_list_button.text = _get_report_list_label(case_id, node_id)
+		report_list_button.pressed.connect(_on_report_list_button_pressed.bind(case_id, node_id))
+		report_list_container.add_child(report_list_button)
+		visible_report_count += 1
+
+	if visible_report_count == 0:
 		detail_text.text = "현재 도착한 보고가 없습니다."
 		_set_report_controls_visible(false)
 		return
 
-	if display_id.is_empty() or alias.is_empty():
-		report_button.text = "표시할 보고서가 없습니다."
-		report_button.disabled = true
-		return
+	if current_case_id.is_empty() or not _is_active_report(current_case_id, current_node_id):
+		detail_text.text = "보고서 목록에서 항목을 선택해 주세요."
+		_set_report_controls_visible(false)
 
-	var active_node_id: String = str(current_report_node.get("node_id", ""))
-	var delayed_label: String = _get_delayed_label(CASE_ID, active_node_id)
-	if delayed_label.is_empty():
-		report_button.text = "[%s: %s]" % [display_id, alias]
-	else:
-		report_button.text = "[%s: %s] %s" % [display_id, alias, delayed_label]
-	report_button.disabled = false
+
+func _clear_report_list_buttons() -> void:
+	for child in report_list_container.get_children():
+		if child == report_list_label or child == report_button:
+			continue
+
+		child.queue_free()
+
+
+func _get_report_list_label(case_id: String, node_id: String) -> String:
+	var case_document: Dictionary = _get_case_document(case_id)
+	var display_id: String = str(case_document.get("display_id", case_id))
+	var alias: String = str(case_document.get("alias", ""))
+	var label_text: String = display_id
+	if not alias.is_empty():
+		label_text = "%s / %s" % [display_id, alias]
+
+	var delayed_label: String = _get_delayed_label(case_id, node_id)
+	if not delayed_label.is_empty():
+		label_text = "%s %s" % [label_text, delayed_label]
+
+	return label_text
 
 
 func _on_report_button_pressed() -> void:
-	if current_report_node.is_empty():
-		detail_text.text = "보고서 상세를 표시할 수 없습니다."
+	for active_report in GameState.active_reports:
+		if typeof(active_report) != TYPE_DICTIONARY:
+			continue
+
+		var active_report_data: Dictionary = active_report as Dictionary
+		_on_report_list_button_pressed(
+			str(active_report_data.get("case_id", "")),
+			str(active_report_data.get("node_id", ""))
+		)
 		return
 
-	var report_node: Dictionary = current_report_node
-	current_node_id = str(report_node.get("node_id", ""))
-	var delayed_label: String = _get_delayed_label(CASE_ID, current_node_id)
-	var detail_lines := PackedStringArray([
+
+func _on_report_list_button_pressed(case_id: String, node_id: String) -> void:
+	var report_node: Dictionary = _find_report_node(case_id, node_id)
+	if report_node.is_empty():
+		detail_text.text = "보고서 상세를 표시할 수 없습니다."
+		_set_report_controls_visible(false)
+		return
+
+	current_case_id = case_id
+	current_node_id = node_id
+	current_report_node = report_node
+	current_choices = report_node.get("choices", []) as Array
+	report_completed = GameState.is_report_completed(current_case_id, current_node_id)
+	selected_choice_index = _find_choice_index(GameState.get_completed_report_choice(current_case_id, current_node_id))
+
+	_show_current_report_detail()
+	_set_report_controls_visible(true)
+	_update_choice_buttons()
+
+
+func _show_current_report_detail() -> void:
+	var case_document: Dictionary = _get_case_document(current_case_id)
+	var detail_lines: PackedStringArray = PackedStringArray([
 		str(case_document.get("display_id", "")),
 		str(case_document.get("alias", ""))
 	])
+
+	var delayed_label: String = _get_delayed_label(current_case_id, current_node_id)
 	if not delayed_label.is_empty():
 		detail_lines.append(delayed_label)
+
 	detail_lines.append_array(PackedStringArray([
 		"",
 		str(case_document.get("basic_description", "")),
 		"",
-		str(report_node.get("report_text", ""))
+		str(current_report_node.get("report_text", ""))
 	]))
 	detail_text.text = "\n".join(detail_lines)
-	current_choices = report_node.get("choices", []) as Array
-	report_completed = GameState.is_report_completed(CASE_ID, current_node_id)
-	selected_choice_index = _find_choice_index(GameState.get_completed_report_choice(CASE_ID, current_node_id))
-	_set_report_controls_visible(true)
+
 	if report_completed:
 		status_label.text = str(ui_messages.get(
 			"choice_confirmed",
@@ -92,7 +152,6 @@ func _on_report_button_pressed() -> void:
 	else:
 		status_label.text = ""
 		completed_stamp_label.text = ""
-	_update_choice_buttons()
 
 
 func _on_choice_button_a_pressed() -> void:
@@ -105,6 +164,8 @@ func _on_choice_button_b_pressed() -> void:
 
 func _select_choice(choice_index: int) -> void:
 	if report_completed:
+		return
+	if choice_index >= current_choices.size():
 		return
 
 	selected_choice_index = choice_index
@@ -121,12 +182,12 @@ func _update_choice_buttons() -> void:
 func _update_choice_button(button: Button, choice_index: int) -> void:
 	if choice_index >= current_choices.size() or typeof(current_choices[choice_index]) != TYPE_DICTIONARY:
 		button.text = ""
+		button.button_pressed = false
 		button.disabled = true
 		return
 
 	var choice: Dictionary = current_choices[choice_index] as Dictionary
-	var choice_text := str(choice.get("choice_text", ""))
-	button.text = choice_text
+	button.text = str(choice.get("choice_text", ""))
 	button.button_pressed = choice_index == selected_choice_index
 	button.disabled = report_completed
 
@@ -135,7 +196,15 @@ func _on_confirm_button_pressed() -> void:
 	if report_completed:
 		return
 
+	if current_case_id.is_empty() or current_node_id.is_empty():
+		status_label.text = "보고서를 선택해 주십시오."
+		return
+
 	if selected_choice_index < 0:
+		status_label.text = "대응을 선택해 주십시오."
+		return
+
+	if selected_choice_index >= current_choices.size() or typeof(current_choices[selected_choice_index]) != TYPE_DICTIONARY:
 		status_label.text = "대응을 선택해 주십시오."
 		return
 
@@ -144,17 +213,15 @@ func _on_confirm_button_pressed() -> void:
 		return
 
 	var selected_choice: Dictionary = current_choices[selected_choice_index] as Dictionary
-	var selected_choice_id := str(selected_choice.get("choice_id", ""))
-	var next_node_id := str(selected_choice.get("next_node_id", ""))
-	GameState.mark_report_completed(CASE_ID, current_node_id, selected_choice_id)
-	GameState.clear_delay_for_report(CASE_ID, current_node_id)
-	GameState.record_completed_choice_for_end_day(CASE_ID, current_node_id, selected_choice_id, next_node_id)
+	var selected_choice_id: String = str(selected_choice.get("choice_id", ""))
+	var next_node_id: String = str(selected_choice.get("next_node_id", ""))
+	GameState.mark_report_completed(current_case_id, current_node_id, selected_choice_id)
+	GameState.clear_delay_for_report(current_case_id, current_node_id)
+	GameState.record_completed_choice_for_end_day(current_case_id, current_node_id, selected_choice_id, next_node_id)
+
 	report_completed = true
-	status_label.text = str(ui_messages.get(
-		"choice_confirmed",
-		"관리자 명령이 접수되었습니다.\n후속 보고는 별도 절차에 따라 전달됩니다."
-	))
-	completed_stamp_label.text = str(ui_messages.get("completed_stamp", "[처리 완료]"))
+	selected_choice_index = _find_choice_index(selected_choice_id)
+	_show_current_report_detail()
 	_update_choice_buttons()
 	_update_report_list()
 	_update_work_screen_action_label()
@@ -192,24 +259,20 @@ func _find_choice_index(choice_id: String) -> int:
 	return -1
 
 
-func _get_first_active_report_node() -> Dictionary:
+func _is_active_report(case_id: String, node_id: String) -> bool:
 	for active_report in GameState.active_reports:
 		if typeof(active_report) != TYPE_DICTIONARY:
 			continue
 
 		var active_report_data: Dictionary = active_report as Dictionary
-		if str(active_report_data.get("case_id", "")) != CASE_ID:
-			continue
+		if str(active_report_data.get("case_id", "")) == case_id and str(active_report_data.get("node_id", "")) == node_id:
+			return true
 
-		var node_id: String = str(active_report_data.get("node_id", ""))
-		var report_node: Dictionary = _find_report_node(node_id)
-		if not report_node.is_empty():
-			return report_node
-
-	return {}
+	return false
 
 
-func _find_report_node(node_id: String) -> Dictionary:
+func _find_report_node(case_id: String, node_id: String) -> Dictionary:
+	var case_reports: Dictionary = _get_case_reports(case_id)
 	var nodes: Array = case_reports.get("nodes", []) as Array
 	for node in nodes:
 		if typeof(node) == TYPE_DICTIONARY:
@@ -218,6 +281,24 @@ func _find_report_node(node_id: String) -> Dictionary:
 				return report_node
 
 	return {}
+
+
+func _get_case_document(case_id: String) -> Dictionary:
+	if not case_documents.has(case_id):
+		var data_manager: Variant = DATA_MANAGER_SCRIPT.new()
+		case_documents[case_id] = data_manager.load_case_document(case_id)
+		data_manager.free()
+
+	return case_documents.get(case_id, {})
+
+
+func _get_case_reports(case_id: String) -> Dictionary:
+	if not case_reports_by_id.has(case_id):
+		var data_manager: Variant = DATA_MANAGER_SCRIPT.new()
+		case_reports_by_id[case_id] = data_manager.load_case_reports(case_id)
+		data_manager.free()
+
+	return case_reports_by_id.get(case_id, {})
 
 
 func _get_delayed_label(case_id: String, node_id: String) -> String:

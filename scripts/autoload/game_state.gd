@@ -6,11 +6,17 @@ var current_day: int = 1
 var max_actions_per_day: int = 3
 var remaining_actions: int = 3
 var completed_reports: Dictionary = {}
-var active_reports: Array = [{"case_id": "case_001", "node_id": "report_001"}]
+var active_reports: Array = [
+	{"case_id": "case_001", "node_id": "report_001"},
+	{"case_id": "case_002", "node_id": "report_001"}
+]
 var scheduled_reports: Array = []
 var pending_completed_choices: Array = []
 var delayed_reports: Dictionary = {}
-var anomaly_states: Dictionary = {"case_001": 0}
+var anomaly_states: Dictionary = {
+	"case_001": 0,
+	"case_002": 0
+}
 var applied_delay_penalties: Dictionary = {}
 var trust_value: int = 100
 
@@ -20,11 +26,17 @@ func reset_for_new_run() -> void:
 	max_actions_per_day = 3
 	remaining_actions = max_actions_per_day
 	completed_reports = {}
-	active_reports = [{"case_id": "case_001", "node_id": "report_001"}]
+	active_reports = [
+		{"case_id": "case_001", "node_id": "report_001"},
+		{"case_id": "case_002", "node_id": "report_001"}
+	]
 	scheduled_reports = []
 	pending_completed_choices = []
 	delayed_reports = {}
-	anomaly_states = {"case_001": 0}
+	anomaly_states = {
+		"case_001": 0,
+		"case_002": 0
+	}
 	applied_delay_penalties = {}
 	trust_value = 100
 

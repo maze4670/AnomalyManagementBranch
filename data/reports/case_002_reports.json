@@ -1,0 +1,35 @@
+{
+  "case_id": "case_002",
+  "start_node_id": "report_001",
+  "nodes": [
+    {
+      "node_id": "report_001",
+      "report_day_label": "기능 확인용 보고",
+      "report_text": "여러 이상현상 구조를 확인하기 위한 두 번째 더미 보고 문장입니다. 최종 콘텐츠가 아닙니다.",
+      "choices": [
+        {
+          "choice_id": "test_case_002_choice_a",
+          "choice_text": "기능 확인용 선택지 2-A",
+          "next_node_id": "",
+          "state_delta": 0,
+          "delay_range": {
+            "min": 0,
+            "max": 0
+          }
+        },
+        {
+          "choice_id": "test_case_002_choice_b",
+          "choice_text": "기능 확인용 선택지 2-B",
+          "next_node_id": "",
+          "state_delta": 0,
+          "delay_range": {
+            "min": 0,
+            "max": 0
+          }
+        }
+      ]
+    }
+  ],
+  "is_test_data": true,
+  "note": "기능 확인용 더미 데이터이며 최종 콘텐츠가 아닙니다."
+}
