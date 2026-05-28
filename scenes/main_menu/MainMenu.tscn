@@ -11,19 +11,45 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_main_menu")
 
-[node name="Label" type="Label" parent="."]
+[node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -80.0
-offset_top = -12.0
-offset_right = 80.0
-offset_bottom = 12.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "Main Menu"
+
+[node name="MenuContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="TitleLabel" type="Label" parent="CenterContainer/MenuContainer"]
+layout_mode = 2
+text = "이상현상 관리"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="StartWorkButton" type="Button" parent="CenterContainer/MenuContainer"]
+custom_minimum_size = Vector2(240, 40)
+layout_mode = 2
+text = "근무 시작"
+
+[node name="ArchiveButton" type="Button" parent="CenterContainer/MenuContainer"]
+custom_minimum_size = Vector2(240, 40)
+layout_mode = 2
+text = "기록 보관실"
+
+[node name="SettingsButton" type="Button" parent="CenterContainer/MenuContainer"]
+custom_minimum_size = Vector2(240, 40)
+layout_mode = 2
+text = "설정"
+
+[node name="QuitButton" type="Button" parent="CenterContainer/MenuContainer"]
+custom_minimum_size = Vector2(240, 40)
+layout_mode = 2
+text = "근무 종료"
+
+[connection signal="pressed" from="CenterContainer/MenuContainer/StartWorkButton" to="." method="_on_start_work_button_pressed"]
+[connection signal="pressed" from="CenterContainer/MenuContainer/ArchiveButton" to="." method="_on_archive_button_pressed"]
+[connection signal="pressed" from="CenterContainer/MenuContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="CenterContainer/MenuContainer/QuitButton" to="." method="_on_quit_button_pressed"]
