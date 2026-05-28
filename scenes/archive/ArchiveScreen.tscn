@@ -31,13 +31,13 @@ vertical_alignment = 1
 
 [node name="EmptyLabel" type="Label" parent="CenterContainer/ContentContainer"]
 layout_mode = 2
-text = "아직 해금된 기록이 없습니다."
+text = "보관된 기록이 없습니다."
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="ArchiveListTitleLabel" type="Label" parent="CenterContainer/ContentContainer"]
 layout_mode = 2
-text = "해금된 기록"
+text = "보관된 기록"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -45,12 +45,11 @@ vertical_alignment = 1
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="DescriptionLabel" type="Label" parent="CenterContainer/ContentContainer"]
-custom_minimum_size = Vector2(420, 60)
+[node name="DetailLabel" type="Label" parent="CenterContainer/ContentContainer"]
+custom_minimum_size = Vector2(520, 220)
 layout_mode = 2
-text = "회차 종료 후 확인된 이상현상 정보가 이곳에 보관됩니다."
-horizontal_alignment = 1
-vertical_alignment = 1
+text = "기록을 선택해 주세요."
+vertical_alignment = 0
 autowrap_mode = 3
 
 [node name="MainMenuButton" type="Button" parent="CenterContainer/ContentContainer"]
