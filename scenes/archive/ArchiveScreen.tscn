@@ -35,6 +35,16 @@ text = "아직 해금된 기록이 없습니다."
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="ArchiveListTitleLabel" type="Label" parent="CenterContainer/ContentContainer"]
+layout_mode = 2
+text = "해금된 기록"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ArchiveListContainer" type="VBoxContainer" parent="CenterContainer/ContentContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
 [node name="DescriptionLabel" type="Label" parent="CenterContainer/ContentContainer"]
 custom_minimum_size = Vector2(420, 60)
 layout_mode = 2

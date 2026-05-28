@@ -158,7 +158,16 @@ func _should_move_to_good_ending() -> bool:
 
 func _move_to_ending(scene_tree: SceneTree, ending_type: String) -> void:
 	var save_manager: Variant = SAVE_MANAGER_SCRIPT.new()
+	save_manager.apply_ending_to_archive(ending_type, _get_current_run_archive_data())
 	save_manager.delete_current_run_save()
 	save_manager.free()
 	scene_tree.set_meta("ending_type", ending_type)
 	scene_tree.change_scene_to_file(ENDING_SCENE_PATH)
+
+
+func _get_current_run_archive_data() -> Dictionary:
+	return {
+		"completed_reports": GameState.completed_reports,
+		"active_reports": GameState.active_reports,
+		"current_day": GameState.current_day
+	}
