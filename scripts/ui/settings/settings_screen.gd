@@ -33,6 +33,7 @@ func _on_screen_mode_button_pressed() -> void:
 		screen_mode_button.text = SCREEN_MODE_FULLSCREEN
 	else:
 		screen_mode_button.text = SCREEN_MODE_WINDOWED
+	_apply_screen_mode(_get_screen_mode_key())
 	_save_current_settings()
 
 
@@ -55,7 +56,9 @@ func _load_settings_to_ui() -> void:
 	var volume: int = clampi(int(settings_data.get("volume", 100)), 0, 100)
 	volume_slider.value = volume
 	volume_value_label.text = "%d%%" % volume
-	screen_mode_button.text = _screen_mode_to_label(str(settings_data.get("screen_mode", "windowed")))
+	var screen_mode: String = str(settings_data.get("screen_mode", "windowed"))
+	screen_mode_button.text = _screen_mode_to_label(screen_mode)
+	_apply_screen_mode(screen_mode)
 	_set_text_size_from_key(str(settings_data.get("text_size", "normal")))
 	is_loading_settings = false
 
@@ -83,6 +86,15 @@ func _screen_mode_to_label(screen_mode: String) -> String:
 		return SCREEN_MODE_FULLSCREEN
 
 	return SCREEN_MODE_WINDOWED
+
+
+func _apply_screen_mode(screen_mode: String) -> void:
+	var window: Window = get_window()
+
+	if screen_mode == "fullscreen":
+		window.mode = Window.MODE_EXCLUSIVE_FULLSCREEN
+	else:
+		window.mode = Window.MODE_WINDOWED
 
 
 func _set_text_size_from_key(text_size_key: String) -> void:
