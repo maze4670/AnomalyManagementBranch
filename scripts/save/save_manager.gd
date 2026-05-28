@@ -8,7 +8,8 @@ func save_current_run() -> bool:
 		"save_version": 1,
 		"current_day": GameState.current_day,
 		"remaining_actions": GameState.remaining_actions,
-		"max_actions_per_day": GameState.max_actions_per_day
+		"max_actions_per_day": GameState.max_actions_per_day,
+		"completed_reports": GameState.completed_reports
 	}
 	var json_text: String = JSON.stringify(save_data)
 	var file: FileAccess = FileAccess.open(CURRENT_RUN_SAVE_PATH, FileAccess.WRITE)
@@ -58,4 +59,9 @@ func apply_current_run_to_game_state() -> bool:
 	GameState.current_day = int(save_data.get("current_day"))
 	GameState.remaining_actions = int(save_data.get("remaining_actions"))
 	GameState.max_actions_per_day = int(save_data.get("max_actions_per_day"))
+	var completed_reports: Variant = save_data.get("completed_reports", {})
+	if typeof(completed_reports) == TYPE_DICTIONARY:
+		GameState.completed_reports = completed_reports as Dictionary
+	else:
+		GameState.completed_reports = {}
 	return true

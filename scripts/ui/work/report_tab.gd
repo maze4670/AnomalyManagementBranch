@@ -16,6 +16,7 @@ var case_document: Dictionary = {}
 var case_reports: Dictionary = {}
 var ui_messages: Dictionary = {}
 var current_choices: Array = []
+var current_node_id: String = ""
 var selected_choice_index: int = -1
 var report_completed: bool = false
 
@@ -50,6 +51,7 @@ func _on_report_button_pressed() -> void:
 		return
 
 	var report_node: Dictionary = nodes[0] as Dictionary
+	current_node_id = str(report_node.get("node_id", ""))
 	var detail_lines := PackedStringArray([
 		str(case_document.get("display_id", "")),
 		str(case_document.get("alias", "")),
@@ -60,7 +62,8 @@ func _on_report_button_pressed() -> void:
 	])
 	detail_text.text = "\n".join(detail_lines)
 	current_choices = report_node.get("choices", []) as Array
-	selected_choice_index = -1
+	report_completed = GameState.is_report_completed(CASE_ID, current_node_id)
+	selected_choice_index = _find_choice_index(GameState.get_completed_report_choice(CASE_ID, current_node_id))
 	_set_report_controls_visible(true)
 	if report_completed:
 		status_label.text = str(ui_messages.get(
@@ -122,6 +125,9 @@ func _on_confirm_button_pressed() -> void:
 		status_label.text = "잔여 대응 절차가 없습니다."
 		return
 
+	var selected_choice: Dictionary = current_choices[selected_choice_index] as Dictionary
+	var selected_choice_id := str(selected_choice.get("choice_id", ""))
+	GameState.mark_report_completed(CASE_ID, current_node_id, selected_choice_id)
 	report_completed = true
 	status_label.text = str(ui_messages.get(
 		"choice_confirmed",
@@ -149,3 +155,16 @@ func _set_report_controls_visible(is_visible: bool) -> void:
 	confirm_button.visible = is_visible
 	status_label.visible = is_visible
 	completed_stamp_label.visible = is_visible
+
+
+func _find_choice_index(choice_id: String) -> int:
+	if choice_id.is_empty():
+		return -1
+
+	for index in range(current_choices.size()):
+		if typeof(current_choices[index]) == TYPE_DICTIONARY:
+			var choice: Dictionary = current_choices[index] as Dictionary
+			if str(choice.get("choice_id", "")) == choice_id:
+				return index
+
+	return -1
