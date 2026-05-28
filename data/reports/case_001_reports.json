@@ -1,0 +1,39 @@
+{
+  "case_id": "case_001",
+  "start_node_id": "test_report_node_001",
+  "nodes": [
+    {
+      "node_id": "test_report_node_001",
+      "report_day_label": "테스트 보고",
+      "report_text": "기능 확인용 보고서 더미 문장입니다. 최종 콘텐츠가 아닙니다.",
+      "choices": [
+        {
+          "choice_id": "test_choice_a",
+          "choice_text": "기능 확인용 선택지 A",
+          "next_node_id": "",
+          "state_delta": {
+            "test_value": 0
+          },
+          "delay_range": {
+            "min": 0,
+            "max": 0
+          }
+        },
+        {
+          "choice_id": "test_choice_b",
+          "choice_text": "기능 확인용 선택지 B",
+          "next_node_id": "",
+          "state_delta": {
+            "test_value": 0
+          },
+          "delay_range": {
+            "min": 0,
+            "max": 0
+          }
+        }
+      ]
+    }
+  ],
+  "is_test_data": true,
+  "note": "기능 확인용 더미 데이터이며 최종 콘텐츠가 아닙니다."
+}

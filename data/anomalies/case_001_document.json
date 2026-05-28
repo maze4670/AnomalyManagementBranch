@@ -1,0 +1,13 @@
+{
+  "case_id": "case_001",
+  "display_id": "TEST-CASE-001",
+  "alias": "기능 확인용 문서",
+  "category": "테스트",
+  "basic_description": "JSON 읽기 구조를 확인하기 위한 더미 문서입니다.",
+  "additional_descriptions": [
+    "이 항목은 플레이어에게 보여줄 수 있는 문서 데이터 구조 확인용입니다.",
+    "정식 이상현상 콘텐츠로 확정된 내용이 아닙니다."
+  ],
+  "is_test_data": true,
+  "note": "기능 확인용 더미 데이터이며 최종 콘텐츠가 아닙니다."
+}

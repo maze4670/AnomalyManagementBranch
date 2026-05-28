@@ -1,0 +1,7 @@
+{
+  "choice_confirmed": "관리자 명령이 접수되었습니다.\n후속 보고는 별도 절차에 따라 전달됩니다.",
+  "completed_stamp": "[처리 완료]",
+  "delayed_label": "[처리 지연]",
+  "is_test_data": true,
+  "note": "기능 확인용 더미 데이터이며 최종 콘텐츠가 아닙니다."
+}
