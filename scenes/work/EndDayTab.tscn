@@ -31,6 +31,13 @@ vertical_alignment = 1
 
 [node name="GuideLabel" type="Label" parent="CenterContainer/ContentContainer"]
 layout_mode = 2
-text = "하루 종료 기능은 이후 단계에서 구현됩니다."
+text = "금일 근무를 종료하시겠습니까?"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="EndDayButton" type="Button" parent="CenterContainer/ContentContainer"]
+custom_minimum_size = Vector2(160, 40)
+layout_mode = 2
+text = "하루 종료"
+
+[connection signal="pressed" from="CenterContainer/ContentContainer/EndDayButton" to="." method="_on_end_day_button_pressed"]
