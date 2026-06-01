@@ -1,70 +1,516 @@
 {
   "case_id": "case_001",
-  "start_node_id": "report_001",
-  "nodes": [
+  "display_id": "CASE-JB-001",
+  "alias": "흰 상여꾼",
+  "report_nodes": [
     {
       "node_id": "report_001",
-      "report_day_label": "테스트 보고",
-      "report_text": "기능 확인용 보고서 더미 문장입니다. 최종 콘텐츠가 아닙니다.",
+      "node_type": "report",
+      "title": "최초 출현 보고",
+      "body": "지방 파출소 및 군청 당직계를 통해 동일 마을에 대한 민간 신고가 접수되었다.\n\n신고 내용은 새벽 시간대 마을회관 앞 공터에 흰 천을 두른 사람들이 줄지어 서 있었다는 것이다. 현장 확인 결과, 마을회관 앞 공터와 선산 방향 산길 입구에서 삼베 천을 두른 복수의 인영이 확인되었다.\n\n일부 인영은 실제 상여로 보이는 목제 구조물을 어깨에 메고 있었으며, 대열은 장례 행렬이 출발하기 직전처럼 정지해 있었다.\n\n마을 행정 기록상 당일 등록된 장례 일정은 없었다. 신고자는 “마을에서 누가 돌아가신 줄 알았다”고 진술했으나, 이후 주민 일부는 해당 사안을 마을 행사 또는 착오로 처리해 달라고 요청했다.\n\n현재까지 개체가 특정 주민을 지목하거나 접촉한 정황은 확인되지 않았다.",
       "choices": [
         {
-          "choice_id": "test_choice_a",
-          "choice_text": "기능 확인용 선택지 A",
+          "choice_id": "report_001_choice_a",
+          "choice_text": "마을회관 앞 공터와 선산 방향 산길 입구의 접근을 제한하고, 확인된 인영의 이동 여부를 현장에서 통제한다.",
           "next_node_id": "report_002",
-          "state_delta": {
-            "test_value": 0
-          },
-          "delay_range": {
-            "min": 0,
-            "max": 0
-          }
+          "state_delta": "미정",
+          "delay_range": "미정"
         },
         {
-          "choice_id": "test_choice_b",
-          "choice_text": "기능 확인용 선택지 B",
-          "next_node_id": "report_002",
-          "state_delta": {
-            "test_value": 0
-          },
-          "delay_range": {
-            "min": 0,
-            "max": 0
-          }
+          "choice_id": "report_001_choice_b",
+          "choice_text": "마을 내 고령 주민과 건강 이상이 보고된 주민의 상태를 확인하고, 필요 시 보호 절차를 배치한다.",
+          "next_node_id": "report_003",
+          "state_delta": "미정",
+          "delay_range": "미정"
+        },
+        {
+          "choice_id": "report_001_choice_c",
+          "choice_text": "출현 위치를 현장 도면에 기록하고, 사망 신고·부고 연락망·장례식장 예약 기록을 함께 대조한다.",
+          "next_node_id": "report_004",
+          "state_delta": "미정",
+          "delay_range": "미정"
         }
       ]
     },
     {
       "node_id": "report_002",
-      "report_day_label": "기능 확인용 후속 보고",
-      "report_text": "후속 보고 예약 구조를 확인하기 위한 더미 보고 문장입니다. 최종 콘텐츠가 아닙니다.",
+      "node_type": "report",
+      "title": "장소 통제 후 재출현 보고",
+      "body": "마을회관 앞 공터에 임시 차단선이 설치된 뒤, 해당 위치에서는 흰 상여꾼 형상의 개체가 확인되지 않았다.\n\n그러나 다음 확인 시점에 선산 방향 산길 입구와 오래된 상여길 주변에서 유사한 대열이 다시 확인되었다. 일부 개체는 이전 보고와 동일하게 목제 구조물을 어깨에 메고 있었으며, 대열은 이동하지 않은 채 정지해 있었다.\n\n현장 기록에는 개체가 이동하는 과정이 남아 있지 않다. 방범 카메라에는 어느 순간부터 흰색 인영들이 이미 자리를 잡고 있는 장면만 흐릿하게 남았다.\n\n마을회관 공터 통제 이후, 마을 내부 부고 연락이 중단되었다는 진술과 사망 신고 접수가 늦어지고 있다는 행정 기록이 함께 확인되었다.",
       "choices": [
         {
-          "choice_id": "test_choice_followup_a",
-          "choice_text": "기능 확인용 후속 선택지 A",
-          "next_node_id": "",
-          "state_delta": {
-            "test_value": 0
-          },
-          "delay_range": {
-            "min": 0,
-            "max": 0
-          }
+          "choice_id": "report_002_choice_a",
+          "choice_text": "선산 입구와 오래된 상여길 주변까지 통제 범위를 확대하고, 주민 출입을 제한한다.",
+          "next_node_id": "report_005",
+          "state_delta": "미정",
+          "delay_range": "미정"
         },
         {
-          "choice_id": "test_choice_followup_b",
-          "choice_text": "기능 확인용 후속 선택지 B",
-          "next_node_id": "",
-          "state_delta": {
-            "test_value": 0
-          },
-          "delay_range": {
-            "min": 0,
-            "max": 0
-          }
+          "choice_id": "report_002_choice_b",
+          "choice_text": "재출현 위치를 기록하고, 부고·사망 신고·선산 이용 문의 기록과 함께 대조한다.",
+          "next_node_id": "report_004",
+          "state_delta": "미정",
+          "delay_range": "미정"
+        },
+        {
+          "choice_id": "report_002_choice_c",
+          "choice_text": "주민 불안 확산을 막기 위해 장례 관련 소문과 부고 연락의 외부 전달을 제한한다.",
+          "next_node_id": "report_006",
+          "state_delta": "미정",
+          "delay_range": "미정"
+        }
+      ]
+    },
+    {
+      "node_id": "report_003",
+      "node_type": "report",
+      "title": "사망 가능자 보호 이후 보고",
+      "body": "마을 내 고령 주민과 건강 이상이 보고된 주민에 대한 확인 절차가 진행되었다. 확인 대상자 주거지 주변에는 특이 접촉이나 직접 지목 행위가 확인되지 않았다.\n\n그러나 흰 상여꾼 형상의 개체들은 확인 대상자 주거지가 아니라, 마을 방송 설비 주변과 선산 방향 도로 초입에서 다시 관찰되었다.\n\n일부 주민은 “누구 차례인지 모른다”고 말하면서도, 구체적인 사망 또는 임종 상황에 대한 질문에는 답변을 피했다.\n\n군청 행정 기록에서는 장례식장 예약 취소 기록과 사망 신고 접수 지연 정황이 확인되었다. 해당 기록의 접수 시점과 실제 발생 시점 사이에는 간극이 있다.",
+      "choices": [
+        {
+          "choice_id": "report_003_choice_a",
+          "choice_text": "확인 대상 범위를 확대하고, 건강 이상이 보고된 주민의 주거지와 이동 경로를 추가 점검한다.",
+          "next_node_id": "report_005",
+          "state_delta": "미정",
+          "delay_range": "미정"
+        },
+        {
+          "choice_id": "report_003_choice_b",
+          "choice_text": "주민 상태 확인과 별도로, 사망 신고·부고 연락·장례식장 예약 취소 기록의 접수 경위를 조사한다.",
+          "next_node_id": "report_004",
+          "state_delta": "미정",
+          "delay_range": "미정"
+        },
+        {
+          "choice_id": "report_003_choice_c",
+          "choice_text": "마을 대표자에게 내부 확인을 요청하고, 외부 조사는 주민 진술이 정리될 때까지 유예한다.",
+          "next_node_id": "report_006",
+          "state_delta": "미정",
+          "delay_range": "미정"
+        }
+      ]
+    },
+    {
+      "node_id": "report_004",
+      "node_type": "report",
+      "title": "부고 및 사망 신고 지연 확인 보고",
+      "body": "마을 행정 기록과 연락망 기록을 대조한 결과, 사망 신고와 부고 연락이 정상 절차보다 늦게 처리된 정황이 확인되었다.\n\n장례식장 예약은 접수 직후 취소되었고, 마을 방송 설비에는 장례 관련 공지가 남아 있지 않았다. 선산 이용 문의와 장례 차량 문의 기록도 접수 이후 보류 처리되어 있었다.\n\n주민들은 장례 관련 질문에 대해 “아직 말할 때가 아니다”, “마을 안에서 정리할 일이다”, “괜히 부고를 내면 일이 커진다”는 표현을 반복했다.\n\n동시에 흰 상여꾼 형상의 개체들은 특정 주거지보다, 마을회관·상여길·선산 입구 등 마을 외곽과 공동시설 주변에 집중되어 있었다.",
+      "choices": [
+        {
+          "choice_id": "report_004_choice_a",
+          "choice_text": "지연된 사망 신고와 부고 연락을 접수 경로에 올리고, 관련 절차의 진행 여부를 행정 기록으로 확인한다.",
+          "next_node_id": "report_007",
+          "state_delta": "미정",
+          "delay_range": "미정"
+        },
+        {
+          "choice_id": "report_004_choice_b",
+          "choice_text": "주민 불안이 확대되지 않도록 부고 공지를 유예하고, 마을 내부 확인을 우선하도록 한다.",
+          "next_node_id": "report_006",
+          "state_delta": "미정",
+          "delay_range": "미정"
+        },
+        {
+          "choice_id": "report_004_choice_c",
+          "choice_text": "출현 위치 기록과 지연된 행정 기록을 대조하고, 누락된 접수 항목을 우선 확인한다.",
+          "next_node_id": "report_007",
+          "state_delta": "미정",
+          "delay_range": "미정"
+        }
+      ]
+    },
+    {
+      "node_id": "report_005",
+      "node_type": "report",
+      "title": "출현 지점 확장 보고",
+      "body": "통제 구역 확대 이후, 기존 출현 위치의 개체 수는 줄어든 것처럼 보였다.\n\n그러나 이후 마을회관 뒤편 빈터, 마을 방송 설비 주변, 선산 방향 도로 초입, 오래된 상여길 입구에서 흰 상여꾼 형상의 개체들이 추가로 확인되었다.\n\n출현 지점은 주민 주거지 안쪽보다 마을 외곽과 공동시설 주변에 치우쳐 있었다.\n\n일부 대열은 길목 한가운데에서 이동하지 않은 채 정지해 있었다.\n\n마을 내부에서는 장례식장 예약 취소가 반복되었고, 주민 일부는 “상여가 먼저 오면 조용히 넘겨야 한다”고 진술했다.",
+      "choices": [
+        {
+          "choice_id": "report_005_choice_a",
+          "choice_text": "상여길과 선산 입구를 포함한 주요 길목의 출입을 제한하고, 주민 이동을 별도 안내한다.",
+          "next_node_id": "report_008",
+          "state_delta": "미정",
+          "delay_range": "미정"
+        },
+        {
+          "choice_id": "report_005_choice_b",
+          "choice_text": "추가 출현 지점과 보류된 부고·사망 신고 기록을 함께 확인한다.",
+          "next_node_id": "report_004",
+          "state_delta": "미정",
+          "delay_range": "미정"
+        },
+        {
+          "choice_id": "report_005_choice_c",
+          "choice_text": "마을 대표자와 유족 측의 요청을 반영해 장례 관련 외부 보고를 보류한다.",
+          "next_node_id": "report_006",
+          "state_delta": "미정",
+          "delay_range": "미정"
+        }
+      ]
+    },
+    {
+      "node_id": "report_006",
+      "node_type": "report",
+      "title": "주민 진술 회피 심화 보고",
+      "body": "주민 진술에서 장례 관련 표현이 줄어들고 있다.\n\n초기에는 “장례 행렬인 줄 알았다”는 진술이 있었으나, 이후 조사에서는 “그런 일은 없었다”, “아직 말할 일이 아니다”, “외부 사람이 알 일이 아니다”는 답변이 반복되었다.\n\n마을 방송 기록에는 장례 관련 공지가 누락되어 있으며, 부고 연락망 일부는 사용되지 않은 상태로 남아 있다.\n\n마을 대표자는 해당 사안을 “마을 안에서 정리할 일”이라고 설명했다. 일부 주민은 부고를 내거나 장례 절차를 진행하는 일이 마을에 해를 끼칠 수 있다는 취지로 말했다.",
+      "choices": [
+        {
+          "choice_id": "report_006_choice_a",
+          "choice_text": "민간 혼란 방지를 위해 부고와 장례 관련 외부 공지를 제한하고, 마을 내부 확인을 우선하도록 한다.",
+          "next_node_id": "failure_002",
+          "state_delta": "미정",
+          "delay_range": "미정"
+        },
+        {
+          "choice_id": "report_006_choice_b",
+          "choice_text": "마을 대표자와 유족 측에 지연된 신고와 부고 관련 기록을 접수하도록 요구한다.",
+          "next_node_id": "report_007",
+          "state_delta": "미정",
+          "delay_range": "미정"
+        },
+        {
+          "choice_id": "report_006_choice_c",
+          "choice_text": "마을 내부 합의를 존중해 장례 일정과 진행 방식은 주민 측 결정에 맡긴다.",
+          "next_node_id": "report_008",
+          "state_delta": "미정",
+          "delay_range": "미정"
+        }
+      ]
+    },
+    {
+      "node_id": "report_007",
+      "node_type": "report",
+      "title": "지연 기록 재접수 보고",
+      "body": "지연되었던 사망 신고가 뒤늦게 접수되었다.\n\n부고 연락망 일부가 다시 작동했으며, 마을 방송 기록에도 장례 관련 공지가 남았다. 장례식장 예약과 선산 이용 문의 역시 별도 항목으로 재접수되었다.\n\n이후 마을회관 앞 공터와 선산 방향 산길 입구에서 확인되던 흰 상여꾼 형상의 대열은 더 이상 같은 형태를 유지하지 않았다.\n\n주민 진술에서도 “아직 말할 때가 아니다”라는 표현은 줄어들었다. 다만 새벽 시간대 선산 입구 먼 곳에 흰색 인영이 서 있었다는 미확인 진술은 남아 있다.",
+      "choices": [
+        {
+          "choice_id": "report_007_choice_a",
+          "choice_text": "접수된 사망 신고·부고 연락·관련 절차가 이어지는지 확인하고, 중단된 항목이 없는지 관리한다.",
+          "next_node_id": "stable_001",
+          "state_delta": "미정",
+          "delay_range": "미정"
+        },
+        {
+          "choice_id": "report_007_choice_b",
+          "choice_text": "재출현 가능성에 대비해 선산 입구와 오래된 상여길의 사용을 당분간 제한한다.",
+          "next_node_id": "report_008",
+          "state_delta": "미정",
+          "delay_range": "미정"
+        },
+        {
+          "choice_id": "report_007_choice_c",
+          "choice_text": "주민 불안을 고려해 장례 관련 절차를 축소하고, 외부 공지는 최소한으로 유지하도록 한다.",
+          "next_node_id": "report_006",
+          "state_delta": "미정",
+          "delay_range": "미정"
+        }
+      ]
+    },
+    {
+      "node_id": "report_008",
+      "node_type": "report",
+      "title": "주요 길목 동시 출현 보고",
+      "body": "상여꾼 형상의 개체들이 마을회관 앞 공터, 오래된 상여길, 선산 입구, 빈집 앞, 마을 방송 설비 주변에서 동시에 확인되었다.\n\n일부 대열은 길목 한가운데에서 먼저 자리를 잡은 듯 정지해 있었다. 마을 내부에서는 장례 차량 문의가 취소되었고, 장례식장 예약도 다시 보류되었다.\n\n주민들은 “장례라고 부르지 말라”, “상여가 먼저 오면 조용히 넘겨야 한다”는 표현을 반복했다.\n\n이후 실제 장례가 필요한 상황에서도 정상적인 부고 연락과 장례 준비가 이루어지지 않는 정황이 확인되었다.",
+      "choices": [
+        {
+          "choice_id": "report_008_choice_a",
+          "choice_text": "중단된 부고 연락과 관련 접수를 다시 진행하고, 예정된 이동 절차가 가능한지 확인한다.",
+          "next_node_id": "report_007",
+          "state_delta": "미정",
+          "delay_range": "미정"
+        },
+        {
+          "choice_id": "report_008_choice_b",
+          "choice_text": "상여꾼 대열이 확인된 길목을 폐쇄하고, 예정된 이동 절차를 다른 방식으로 대체한다.",
+          "next_node_id": "failure_001",
+          "state_delta": "미정",
+          "delay_range": "미정"
+        },
+        {
+          "choice_id": "report_008_choice_c",
+          "choice_text": "인근 마을로 관련 소문이 확산되지 않도록 외부 보고와 부고 연락을 제한한다.",
+          "next_node_id": "failure_003",
+          "state_delta": "미정",
+          "delay_range": "미정"
         }
       ]
     }
   ],
-  "is_test_data": true,
-  "note": "기능 확인용 더미 데이터이며 최종 콘텐츠가 아닙니다."
+  "stable_nodes": [
+    {
+      "node_id": "stable_001",
+      "node_type": "stable",
+      "title": "지연 기록 정리 이후 보고",
+      "body": "지연되었던 사망 신고와 부고 연락, 장례 절차가 접수 경로 안에서 정리되었다.\n\n마을 방송에는 장례 관련 공지가 남았고, 선산 이용 문의와 장례 차량 문의도 별도 항목으로 처리되었다. 주민 진술에서 장례 관련 표현을 회피하는 양상은 줄어들었다.\n\n이후 마을회관 앞 공터와 오래된 상여길 입구에서 확인되던 흰 상여꾼 형상의 개체들은 더 이상 기존 대열을 유지하지 않았다.\n\n다만 일부 기록에는 새벽 시간대 선산 입구 먼 곳에서 흰색 인영이 확인되었다는 미확인 진술이 남아 있다.\n\n해당 건은 일반 관리 절차상 추가 확산 징후가 낮은 상태로 정리한다.",
+      "result": "stabilized",
+      "state_delta": "미정"
+    }
+  ],
+  "failure_nodes": [
+    {
+      "node_id": "failure_001",
+      "node_type": "failure",
+      "title": "예정 동선 사용 불가",
+      "body": "마을의 실제 장례 절차가 진행되려 했으나, 상여꾼 형상의 개체들이 이미 마을회관 앞 공터와 오래된 상여길, 선산 입구를 차지한 상태였다.\n\n예정된 이동 절차는 진행되지 못했으며, 주민들은 관련 절차를 더 이상 진행할 수 없다고 진술했다.\n\n부고 연락망은 작동하지 않았으며, 장례 차량 문의와 선산 이용 절차도 중단되었다.\n\n이후 해당 마을에서는 유사 상황이 발생해도 부고 연락과 관련 절차가 정상적으로 진행되지 않는 것으로 보고되었다.",
+      "result": "containment_failed"
+    },
+    {
+      "node_id": "failure_002",
+      "node_type": "failure",
+      "title": "신고 및 연락망 중단",
+      "body": "마을 행정 기록에서 사망 신고 접수 항목이 반복적으로 누락되었다.\n\n부고 연락망은 사용되지 않았고, 마을 방송 기록에서도 장례 관련 공지는 확인되지 않았다. 주민들은 사망 여부와 장례 절차에 대한 질문을 모두 “마을 안에서 정리할 일”이라고 답했다.\n\n장례식장 예약과 장례 차량 문의는 접수 직후 취소되었으며, 이후 같은 유형의 보류 처리가 반복되었다.\n\n흰 상여꾼 형상의 개체들은 마을 곳곳의 공동시설과 외곽 길목에 계속 남아 있었고, 관련 신고와 연락 절차는 더 이상 정상적으로 진행되지 않았다.",
+      "result": "containment_failed"
+    },
+    {
+      "node_id": "failure_003",
+      "node_type": "failure",
+      "title": "출현 범위 확산",
+      "body": "인근 마을에서도 유사한 부고 지연과 장례 절차 회피 정황이 확인되었다.\n\n처음 보고된 마을과 동일하게, 장례 일정이 공식적으로 등록되지 않은 상태에서 흰 상여꾼 형상의 개체들이 선산 입구와 마을 공동시설 주변에 나타났다.\n\n해당 마을 주민들은 “상여가 먼저 오면 조용히 넘겨야 한다”는 표현을 사용했으며, 부고 연락과 사망 신고를 외부에 알리지 않으려 했다.\n\n흰 상여꾼 출현은 최초 보고 마을 밖에서도 유사한 신고 지연과 함께 확인되었다.",
+      "result": "containment_failed"
+    }
+  ],
+  "special_events": [
+    {
+      "event_id": "special_event_001",
+      "title": "늦은 부고",
+      "start_node_id": "special_001_report_001",
+      "nodes": [
+        {
+          "node_id": "special_001_report_001",
+          "node_type": "special_report",
+          "title": "부고 누락 재확인 보고",
+          "body": "안정화 처리 이후, 동일 마을에서 새로운 부고 연락 누락 정황이 확인되었다.\n\n마을 방송 기록에는 장례 관련 공지가 남아 있지 않았으며, 사망 신고 접수 시점과 실제 발생 시점 사이에 다시 간극이 발생했다.\n\n새벽 시간대 선산 입구 먼 곳에서 흰색 인영이 서 있었다는 주민 진술이 접수되었다. 해당 인영은 마을 안쪽으로 접근하지 않았고, 특정 주민을 지목하지도 않았다.",
+          "choices": [
+            {
+              "choice_id": "special_001_report_001_choice_a",
+              "choice_text": "누락된 부고 연락과 사망 신고 접수 과정을 확인하고, 해당 기록을 접수 경로에 올린다.",
+              "next_node_id": "special_001_report_002",
+              "state_delta": "미정",
+              "delay_range": "미정"
+            },
+            {
+              "choice_id": "special_001_report_001_choice_b",
+              "choice_text": "선산 입구 주변 접근을 제한하고, 흰색 인영의 재출현 여부를 확인한다.",
+              "next_node_id": "special_001_report_003",
+              "state_delta": "미정",
+              "delay_range": "미정"
+            },
+            {
+              "choice_id": "special_001_report_001_choice_c",
+              "choice_text": "주민 혼란을 막기 위해 부고 공지를 유예하고, 마을 내부 확인을 먼저 진행하도록 한다.",
+              "next_node_id": "special_001_report_003",
+              "state_delta": "미정",
+              "delay_range": "미정"
+            }
+          ]
+        },
+        {
+          "node_id": "special_001_report_002",
+          "node_type": "special_report",
+          "title": "뒤늦은 접수 이후 보고",
+          "body": "누락되었던 사망 신고가 뒤늦게 접수되었다.\n\n부고 연락망에는 일부 기록이 추가되었으나, 실제 연락이 모든 대상에게 전달되었는지는 확인되지 않았다.\n\n마을 방송 기록에는 장례 관련 공지가 남았지만, 방송 시각과 신고 접수 시점 사이에는 차이가 있었다.\n\n선산 입구 먼 곳에서 확인되던 흰색 인영은 이전보다 흐릿하게 기록되었으나, 같은 방향의 도로변에서 유사한 목격 진술이 추가로 접수되었다.",
+          "choices": [
+            {
+              "choice_id": "special_001_report_002_choice_a",
+              "choice_text": "접수된 부고와 관련 공지가 연락망과 마을 방송에 남았는지 재확인한다.",
+              "next_node_id": "special_001_report_004",
+              "state_delta": "미정",
+              "delay_range": "미정"
+            },
+            {
+              "choice_id": "special_001_report_002_choice_b",
+              "choice_text": "사망 신고 접수 완료를 기준으로 현장 관리를 축소하고, 추가 목격 진술은 별도 기록으로 남긴다.",
+              "next_node_id": "special_001_report_003",
+              "state_delta": "미정",
+              "delay_range": "미정"
+            }
+          ]
+        },
+        {
+          "node_id": "special_001_report_003",
+          "node_type": "special_report",
+          "title": "흰 인영 위치 변경 보고",
+          "body": "선산 입구 주변 접근 제한 이후, 해당 지점의 흰색 인영은 확인되지 않았다.\n\n그러나 부고 연락망 누락은 계속되었고, 마을 방송 기록에는 장례 관련 공지가 추가되지 않았다.\n\n이후 오래된 상여길 입구에서 흰색 인영이 다시 확인되었다.\n\n주민 일부는 “알릴수록 일이 커진다”, “이번에는 조용히 지나가야 한다”는 표현을 사용했다.",
+          "choices": [
+            {
+              "choice_id": "special_001_report_003_choice_a",
+              "choice_text": "출현 위치 감시는 유지하되, 누락된 부고 연락과 마을 방송 기록을 우선 재확인한다.",
+              "next_node_id": "special_001_report_004",
+              "state_delta": "미정",
+              "delay_range": "미정"
+            },
+            {
+              "choice_id": "special_001_report_003_choice_b",
+              "choice_text": "오래된 상여길 입구까지 통제 범위를 확대하고, 외부 공지는 계속 제한한다.",
+              "next_node_id": "special_001_failure_001",
+              "state_delta": "미정",
+              "delay_range": "미정"
+            }
+          ]
+        },
+        {
+          "node_id": "special_001_report_004",
+          "node_type": "special_report",
+          "title": "최종 확인 보고",
+          "body": "사망 신고 접수 기록, 부고 연락망, 마을 방송 기록이 다시 대조되었다.\n\n누락되었던 연락 대상 일부가 확인되었고, 장례 관련 공지는 뒤늦게 마을 방송 기록에 반영되었다.\n\n선산 이용 문의와 장례 차량 문의도 별도 항목으로 접수되었다.\n\n흰색 인영은 선산 입구와 오래된 상여길 입구에서 더 이상 같은 위치를 유지하지 않았다. 다만 새벽 시간대 마을 외곽 도로에서 흰 천 같은 것이 보였다는 미확인 진술은 남아 있다.",
+          "choices": [
+            {
+              "choice_id": "special_001_report_004_choice_a",
+              "choice_text": "부고 연락망, 마을 방송, 사망 신고 접수 기록을 대조해 누락 항목을 정리하고, 관련 문의가 별도 항목으로 처리되는지 확인한다.",
+              "next_node_id": "special_001_stable",
+              "state_delta": "미정",
+              "delay_range": "미정"
+            },
+            {
+              "choice_id": "special_001_report_004_choice_b",
+              "choice_text": "주민 요청에 따라 일부 공지는 생략하고, 내부 기록만 남긴 뒤 현장 관리를 종료한다.",
+              "next_node_id": "special_001_failure_001",
+              "state_delta": "미정",
+              "delay_range": "미정"
+            }
+          ]
+        }
+      ],
+      "stable_nodes": [
+        {
+          "node_id": "special_001_stable",
+          "node_type": "special_stable",
+          "title": "늦은 부고 안정화 복귀",
+          "body": "누락되었던 사망 신고와 부고 연락, 장례 관련 문의가 공식 기록 안에서 정리되었다.\n\n마을 방송에는 장례 관련 공지가 남았고, 연락망 기록에서도 누락 대상이 보완되었다.\n\n이후 선산 입구와 오래된 상여길 입구에서 확인되던 흰색 인영은 더 이상 같은 위치에서 관찰되지 않았다.\n\n해당 건은 안정화 이후 재확인 절차상 관리 가능한 상태로 정리한다.",
+          "result": "returned_to_stable",
+          "state_delta": "미정"
+        }
+      ],
+      "failure_nodes": [
+        {
+          "node_id": "special_001_failure_001",
+          "node_type": "special_failure",
+          "title": "늦은 부고 실패",
+          "body": "부고 연락과 사망 신고가 다시 지연되었다.\n\n마을 내부에서는 장례 관련 공지를 하지 않는 것이 낫다는 진술이 반복되었고, 선산 입구와 오래된 상여길 주변에서 흰색 인영이 동시에 확인되었다.\n\n이후 실제 장례 절차가 필요한 상황에서도 부고 연락망이 작동하지 않는 정황이 보고되었다.\n\n마을은 다시 죽음과 장례 절차를 공식 기록 안으로 들여놓지 못하는 상태에 들어갔다.",
+          "result": "containment_failed"
+        }
+      ]
+    },
+    {
+      "event_id": "special_event_002",
+      "title": "비어 있는 상여길",
+      "start_node_id": "special_002_report_001",
+      "nodes": [
+        {
+          "node_id": "special_002_report_001",
+          "node_type": "special_report",
+          "title": "장례 생략 합의 보고",
+          "body": "안정화 처리 이후, 해당 마을에서 장례 절차를 축소하거나 일부 생략하려는 합의 정황이 확인되었다.\n\n장례식장 예약은 보류되었고, 장례 차량 문의도 접수 이후 취소되었다.\n\n오래된 상여길 입구에서는 흰 상여꾼 형상의 개체들이 이전보다 먼 거리에서 정지해 있는 모습이 확인되었다.\n\n개체들은 특정 주민을 지목하지 않았고, 마을 안쪽으로 이동하지도 않았다.",
+          "choices": [
+            {
+              "choice_id": "special_002_report_001_choice_a",
+              "choice_text": "절차 생략 여부와 관련 기록을 확인하고, 보류된 문의를 다시 접수하도록 한다.",
+              "next_node_id": "special_002_report_002",
+              "state_delta": "미정",
+              "delay_range": "미정"
+            },
+            {
+              "choice_id": "special_002_report_001_choice_b",
+              "choice_text": "오래된 상여길 사용을 중지하고, 예정된 이동 절차를 다른 길로 대체하도록 한다.",
+              "next_node_id": "special_002_report_003",
+              "state_delta": "미정",
+              "delay_range": "미정"
+            },
+            {
+              "choice_id": "special_002_report_001_choice_c",
+              "choice_text": "마을 내부 합의를 존중해 절차 축소 여부를 주민 측 결정에 맡긴다.",
+              "next_node_id": "special_002_report_003",
+              "state_delta": "미정",
+              "delay_range": "미정"
+            }
+          ]
+        },
+        {
+          "node_id": "special_002_report_002",
+          "node_type": "special_report",
+          "title": "보류된 장례 절차 재접수 보고",
+          "body": "보류되었던 장례식장 예약과 장례 차량 문의가 다시 접수되었다.\n\n선산 이용 문의도 별도 항목으로 재분류되었으나, 실제 장례 이동 절차가 어떻게 진행될지는 아직 확정되지 않았다.\n\n마을 방송에는 장례 관련 공지가 추가되었지만, 일부 주민은 오래된 상여길을 다시 쓰는 것에 반대했다.\n\n상여길 입구에서 확인되던 흰 상여꾼 형상의 대열은 이전보다 흐릿하게 기록되었으나, 도로 초입 부근에서 유사한 흰색 인영이 추가로 확인되었다.",
+          "choices": [
+            {
+              "choice_id": "special_002_report_002_choice_a",
+              "choice_text": "재접수된 장례식장 예약, 장례 차량 문의, 선산 이용 문의가 이후 기록으로 이어지는지 확인한다.",
+              "next_node_id": "special_002_report_004",
+              "state_delta": "미정",
+              "delay_range": "미정"
+            },
+            {
+              "choice_id": "special_002_report_002_choice_b",
+              "choice_text": "상여길 재사용은 보류하고, 이동 절차를 축소한 상태로 관련 기록만 정리한다.",
+              "next_node_id": "special_002_report_003",
+              "state_delta": "미정",
+              "delay_range": "미정"
+            }
+          ]
+        },
+        {
+          "node_id": "special_002_report_003",
+          "node_type": "special_report",
+          "title": "상여길 주변 재출현 보고",
+          "body": "오래된 상여길 사용 중지 이후, 해당 위치에서는 흰 상여꾼 형상의 개체가 확인되지 않았다.\n\n그러나 선산 방향 우회 도로 초입과 마을 방송 설비 주변에서 유사한 흰색 인영이 다시 확인되었다.\n\n장례 이동 절차를 대체하는 과정에서 부고 연락과 선산 이용 문의가 다시 보류 처리되었다.\n\n주민 일부는 “길을 쓰지 않으면 된다”, “마지막 절차는 생략해도 된다”고 진술했다.",
+          "choices": [
+            {
+              "choice_id": "special_002_report_003_choice_a",
+              "choice_text": "우회 도로 통제보다 관련 접수와 예정된 이동 절차가 유지되는지 우선 확인한다.",
+              "next_node_id": "special_002_report_004",
+              "state_delta": "미정",
+              "delay_range": "미정"
+            },
+            {
+              "choice_id": "special_002_report_003_choice_b",
+              "choice_text": "선산 방향 우회 도로와 마을 방송 설비 주변까지 통제 범위를 넓힌다.",
+              "next_node_id": "special_002_failure_001",
+              "state_delta": "미정",
+              "delay_range": "미정"
+            }
+          ]
+        },
+        {
+          "node_id": "special_002_report_004",
+          "node_type": "special_report",
+          "title": "최종 절차 확인 보고",
+          "body": "장례식장 예약, 부고 연락, 선산 이용 문의, 장례 차량 문의 기록이 다시 대조되었다.\n\n보류되었던 항목들은 같은 사건 기록 안에서 정리되었고, 마을 방송에도 장례 관련 공지가 남았다.\n\n장례 이동 절차는 생략되지 않았으며, 주민 대표와 유족 측의 확인 기록도 함께 접수되었다.\n\n오래된 상여길 입구와 선산 방향 우회 도로 초입에서 확인되던 흰 상여꾼 형상의 대열은 더 이상 같은 위치를 유지하지 않았다.\n\n다만 새벽 시간대 길가의 흰 천을 사람으로 오인했다는 진술과, 반대로 사람이 서 있었다는 진술이 함께 남아 있다.",
+          "choices": [
+            {
+              "choice_id": "special_002_report_004_choice_a",
+              "choice_text": "장례식장 예약, 부고 연락, 선산 이용 문의, 이동 기록이 같은 사건 기록 안에서 처리되는지 확인하고 현장 관리를 유지한다.",
+              "next_node_id": "special_002_stable",
+              "state_delta": "미정",
+              "delay_range": "미정"
+            },
+            {
+              "choice_id": "special_002_report_004_choice_b",
+              "choice_text": "주민 불안을 이유로 마지막 이동 절차를 생략하고, 관련 기록만 문서에 남긴다.",
+              "next_node_id": "special_002_failure_001",
+              "state_delta": "미정",
+              "delay_range": "미정"
+            }
+          ]
+        }
+      ],
+      "stable_nodes": [
+        {
+          "node_id": "special_002_stable",
+          "node_type": "special_stable",
+          "title": "비어 있는 상여길 안정화 복귀",
+          "body": "보류되었던 장례식장 예약과 장례 차량 문의, 선산 이용 문의가 공식 기록 안에서 정리되었다.\n\n부고 연락과 마을 방송도 정상적으로 남았으며, 장례 이동 절차는 생략되지 않았다.\n\n이후 오래된 상여길 입구와 선산 방향 우회 도로 초입에서 확인되던 흰 상여꾼 형상의 대열은 더 이상 같은 위치를 유지하지 않았다.\n\n해당 건은 안정화 이후 재확인 절차상 관리 가능한 상태로 정리한다.",
+          "result": "returned_to_stable",
+          "state_delta": "미정"
+        }
+      ],
+      "failure_nodes": [
+        {
+          "node_id": "special_002_failure_001",
+          "node_type": "special_failure",
+          "title": "비어 있는 상여길 실패",
+          "body": "장례 이동 절차가 생략된 뒤, 상여꾼 형상의 개체들이 오래된 상여길과 선산 입구, 우회 도로 초입에서 동시에 확인되었다.\n\n마을 주민들은 실제 장례가 필요한 상황에서도 해당 길을 사용할 수 없다고 진술했다.\n\n장례식장 예약과 장례 차량 문의는 모두 취소되었고, 부고 연락망도 다시 작동하지 않았다.\n\n해당 마을의 마지막 이동 절차는 정상적인 공동체 절차로 성립하지 않는 상태에 들어갔다.",
+          "result": "containment_failed"
+        }
+      ]
+    }
+  ]
 }

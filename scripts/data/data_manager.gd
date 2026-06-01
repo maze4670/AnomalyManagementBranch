@@ -23,6 +23,34 @@ func load_case_reports(case_id: String) -> Dictionary:
 	return load_json_file("res://data/reports/%s_reports.json" % case_id)
 
 
+func get_report_nodes(case_reports: Dictionary) -> Array:
+	var report_nodes: Variant = case_reports.get("report_nodes", [])
+	if typeof(report_nodes) == TYPE_ARRAY:
+		return report_nodes as Array
+
+	var nodes: Variant = case_reports.get("nodes", [])
+	if typeof(nodes) == TYPE_ARRAY:
+		return nodes as Array
+
+	return []
+
+
+func get_report_body(report_node: Dictionary) -> String:
+	if report_node.has("body"):
+		return str(report_node.get("body", ""))
+
+	return str(report_node.get("report_text", ""))
+
+
+func get_report_label(report_node: Dictionary, fallback: String = "") -> String:
+	if report_node.has("report_day_label"):
+		return str(report_node.get("report_day_label", ""))
+	if report_node.has("title"):
+		return str(report_node.get("title", ""))
+
+	return fallback
+
+
 func load_day_rules() -> Dictionary:
 	return load_json_file("res://data/system/day_rules.json")
 
@@ -97,36 +125,33 @@ func _validate_case_reports(case_id: String, messages: Array) -> void:
 		messages.append("%s is missing or invalid." % label)
 		return
 
-	_validate_required_fields(case_reports, [
-		"case_id",
-		"start_node_id",
-		"nodes",
-		"is_test_data",
-		"note"
-	], label, messages)
+	_validate_required_fields(case_reports, ["case_id"], label, messages)
+	if not case_reports.has("start_node_id") and not case_reports.has("report_nodes"):
+		messages.append("%s missing required field: start_node_id" % label)
+	if not case_reports.has("nodes") and not case_reports.has("report_nodes"):
+		messages.append("%s missing required field: nodes or report_nodes" % label)
 
-	if case_reports.get("is_test_data", false) != true:
+	if case_reports.has("is_test_data") and case_reports.get("is_test_data", false) != true:
 		messages.append("%s is_test_data must be true for current test data." % label)
 
-	var nodes: Variant = case_reports.get("nodes", [])
-	if typeof(nodes) != TYPE_ARRAY:
-		messages.append("%s nodes must be an Array." % label)
+	var nodes: Array = get_report_nodes(case_reports)
+	if nodes.is_empty():
+		messages.append("%s nodes or report_nodes must be a non-empty Array." % label)
 		return
 
-	for node_index in range((nodes as Array).size()):
-		var node: Variant = (nodes as Array)[node_index]
+	for node_index in range(nodes.size()):
+		var node: Variant = nodes[node_index]
 		var node_label: String = "%s node %d" % [label, node_index]
 		if typeof(node) != TYPE_DICTIONARY:
 			messages.append("%s must be a Dictionary." % node_label)
 			continue
 
 		var node_data: Dictionary = node as Dictionary
-		_validate_required_fields(node_data, [
-			"node_id",
-			"report_day_label",
-			"report_text",
-			"choices"
-		], node_label, messages)
+		_validate_required_fields(node_data, ["node_id", "choices"], node_label, messages)
+		if not node_data.has("report_text") and not node_data.has("body"):
+			messages.append("%s missing required field: report_text or body" % node_label)
+		if not node_data.has("report_day_label") and not node_data.has("title"):
+			messages.append("%s missing required field: report_day_label or title" % node_label)
 
 		var choices: Variant = node_data.get("choices", [])
 		if typeof(choices) != TYPE_ARRAY:

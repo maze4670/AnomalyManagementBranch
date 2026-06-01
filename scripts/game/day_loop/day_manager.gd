@@ -109,9 +109,9 @@ func _apply_choice_state_delta(case_id: String, node_id: String, choice_id: Stri
 func _get_choice_state_delta(case_id: String, node_id: String, choice_id: String) -> int:
 	var data_manager: Variant = DATA_MANAGER_SCRIPT.new()
 	var case_reports: Dictionary = data_manager.load_case_reports(case_id)
+	var nodes: Array = data_manager.get_report_nodes(case_reports)
 	data_manager.free()
 
-	var nodes: Array = case_reports.get("nodes", []) as Array
 	for node in nodes:
 		if typeof(node) != TYPE_DICTIONARY:
 			continue

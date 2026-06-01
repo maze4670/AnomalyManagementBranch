@@ -20,6 +20,7 @@ var current_case_id: String = ""
 var current_node_id: String = ""
 var current_report_node: Dictionary = {}
 var current_choices: Array = []
+var choice_buttons: Array[Button] = []
 var selected_choice_index: int = -1
 var report_completed: bool = false
 
@@ -29,6 +30,7 @@ func _ready() -> void:
 	ui_messages = data_manager.load_ui_messages()
 	data_manager.free()
 
+	choice_buttons = [choice_button_a, choice_button_b]
 	report_button.visible = false
 	_update_report_list()
 	_set_report_controls_visible(false)
@@ -137,10 +139,15 @@ func _show_current_report_detail() -> void:
 
 	detail_lines.append_array(PackedStringArray([
 		"",
-		str(case_document.get("basic_description", "")),
-		"",
-		str(current_report_node.get("report_text", ""))
+		str(case_document.get("basic_description", ""))
 	]))
+	var report_title: String = _get_report_title(current_report_node)
+	if not report_title.is_empty():
+		detail_lines.append("")
+		detail_lines.append(report_title)
+
+	detail_lines.append("")
+	detail_lines.append(_get_report_body(current_report_node))
 	detail_text.text = "\n".join(detail_lines)
 
 	if report_completed:
@@ -174,9 +181,24 @@ func _select_choice(choice_index: int) -> void:
 
 
 func _update_choice_buttons() -> void:
-	_update_choice_button(choice_button_a, 0)
-	_update_choice_button(choice_button_b, 1)
+	_ensure_choice_buttons()
+	for choice_index in range(choice_buttons.size()):
+		_update_choice_button(choice_buttons[choice_index], choice_index)
+
 	confirm_button.disabled = current_choices.is_empty() or report_completed
+
+
+func _ensure_choice_buttons() -> void:
+	while choice_buttons.size() < current_choices.size():
+		var choice_button: Button = Button.new()
+		choice_button.custom_minimum_size = choice_button_a.custom_minimum_size
+		choice_button.toggle_mode = choice_button_a.toggle_mode
+		choice_button.text = ""
+		choice_button.button_pressed = false
+		choice_button.disabled = true
+		choice_button.pressed.connect(_select_choice.bind(choice_buttons.size()))
+		choice_container.add_child(choice_button)
+		choice_buttons.append(choice_button)
 
 
 func _update_choice_button(button: Button, choice_index: int) -> void:
@@ -184,9 +206,11 @@ func _update_choice_button(button: Button, choice_index: int) -> void:
 		button.text = ""
 		button.button_pressed = false
 		button.disabled = true
+		button.visible = false
 		return
 
 	var choice: Dictionary = current_choices[choice_index] as Dictionary
+	button.visible = true
 	button.text = str(choice.get("choice_text", ""))
 	button.button_pressed = choice_index == selected_choice_index
 	button.disabled = report_completed
@@ -273,7 +297,9 @@ func _is_active_report(case_id: String, node_id: String) -> bool:
 
 func _find_report_node(case_id: String, node_id: String) -> Dictionary:
 	var case_reports: Dictionary = _get_case_reports(case_id)
-	var nodes: Array = case_reports.get("nodes", []) as Array
+	var data_manager: Variant = DATA_MANAGER_SCRIPT.new()
+	var nodes: Array = data_manager.get_report_nodes(case_reports)
+	data_manager.free()
 	for node in nodes:
 		if typeof(node) == TYPE_DICTIONARY:
 			var report_node: Dictionary = node as Dictionary
@@ -281,6 +307,20 @@ func _find_report_node(case_id: String, node_id: String) -> Dictionary:
 				return report_node
 
 	return {}
+
+
+func _get_report_body(report_node: Dictionary) -> String:
+	var data_manager: Variant = DATA_MANAGER_SCRIPT.new()
+	var report_body: String = data_manager.get_report_body(report_node)
+	data_manager.free()
+	return report_body
+
+
+func _get_report_title(report_node: Dictionary) -> String:
+	var data_manager: Variant = DATA_MANAGER_SCRIPT.new()
+	var report_title: String = data_manager.get_report_label(report_node)
+	data_manager.free()
+	return report_title
 
 
 func _get_case_document(case_id: String) -> Dictionary:
