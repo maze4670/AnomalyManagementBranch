@@ -8,6 +8,7 @@ const TRUST_MANAGER_SCRIPT := preload("res://scripts/game/trust/trust_manager.gd
 const ENDING_MANAGER_SCRIPT := preload("res://scripts/game/endings/ending_manager.gd")
 const DELAY_PENALTY_DELTA := -1
 const DEFAULT_FOLLOWUP_DELAY_DAYS := 1
+const SPECIAL_EVENT_ROLL_MAX := 100
 
 
 func end_day_minimal(scene_tree: SceneTree) -> void:
@@ -24,7 +25,8 @@ func end_day_minimal(scene_tree: SceneTree) -> void:
 		_move_to_ending(scene_tree, "bad")
 		return
 
-	_check_internal_special_event_candidates()
+	GameState.increment_stabilized_day_counts()
+	_process_stabilized_case_special_event_candidates()
 	_try_introduce_new_test_case()
 	GameState.advance_day()
 	GameState.reset_actions_for_new_day()
@@ -134,7 +136,7 @@ func _get_next_report_delay_days(case_id: String, node_id: String, choice_id: St
 func _get_choice_data(case_id: String, node_id: String, choice_id: String) -> Dictionary:
 	var data_manager: Variant = DATA_MANAGER_SCRIPT.new()
 	var case_reports: Dictionary = data_manager.load_case_reports(case_id)
-	var nodes: Array = data_manager.get_report_nodes(case_reports)
+	var nodes: Array = data_manager.get_all_report_route_nodes(case_reports)
 	data_manager.free()
 
 	for node in nodes:
@@ -233,6 +235,90 @@ func _try_introduce_new_test_case() -> void:
 		str(next_case_report.get("case_id", "")),
 		str(next_case_report.get("node_id", ""))
 	)
+
+
+func _process_stabilized_case_special_event_candidates() -> void:
+	for case_id in GameState.get_stabilized_case_ids():
+		if GameState.has_active_report_for_case(case_id) or GameState.has_scheduled_report_for_case(case_id):
+			continue
+
+		var stabilized_days: int = GameState.get_stabilized_day_count(case_id)
+		var event_chance: int = _get_special_event_chance(stabilized_days)
+		if event_chance <= 0:
+			continue
+		if not _roll_special_event_chance(event_chance):
+			continue
+
+		var special_event: Dictionary = _pick_special_event(case_id)
+		if special_event.is_empty():
+			continue
+
+		var start_node_id: String = str(special_event.get("start_node_id", ""))
+		if start_node_id.is_empty():
+			continue
+		if GameState.is_report_completed(case_id, start_node_id):
+			continue
+
+		GameState.clear_case_stabilized(case_id)
+		GameState.introduce_case_report(case_id, start_node_id)
+
+
+func _get_special_event_chance(stabilized_days: int) -> int:
+	if stabilized_days <= 2:
+		return 0
+	if stabilized_days == 3:
+		return 10
+	if stabilized_days == 4:
+		return 20
+	if stabilized_days == 5:
+		return 30
+	if stabilized_days == 6:
+		return 50
+	if stabilized_days == 7:
+		return 70
+
+	return 100
+
+
+func _roll_special_event_chance(event_chance: int) -> bool:
+	if event_chance >= SPECIAL_EVENT_ROLL_MAX:
+		return true
+
+	var random_number_generator: RandomNumberGenerator = RandomNumberGenerator.new()
+	random_number_generator.randomize()
+	return random_number_generator.randi_range(1, SPECIAL_EVENT_ROLL_MAX) <= event_chance
+
+
+func _pick_special_event(case_id: String) -> Dictionary:
+	var data_manager: Variant = DATA_MANAGER_SCRIPT.new()
+	var case_reports: Dictionary = data_manager.load_case_reports(case_id)
+	var special_events: Array = data_manager.get_special_events(case_reports)
+	data_manager.free()
+
+	if special_events.is_empty():
+		return {}
+
+	var available_events: Array = []
+	for special_event in special_events:
+		if typeof(special_event) != TYPE_DICTIONARY:
+			continue
+
+		var special_event_data: Dictionary = special_event as Dictionary
+		var start_node_id: String = str(special_event_data.get("start_node_id", ""))
+		if start_node_id.is_empty():
+			continue
+		if GameState.is_report_completed(case_id, start_node_id):
+			continue
+
+		available_events.append(special_event_data)
+
+	if available_events.is_empty():
+		return {}
+
+	var random_number_generator: RandomNumberGenerator = RandomNumberGenerator.new()
+	random_number_generator.randomize()
+	var event_index: int = random_number_generator.randi_range(0, available_events.size() - 1)
+	return available_events[event_index] as Dictionary
 
 
 func _check_internal_special_event_candidates() -> void:

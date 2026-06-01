@@ -39,15 +39,32 @@ func get_all_report_route_nodes(case_reports: Dictionary) -> Array:
 	var route_nodes: Array = []
 	route_nodes.append_array(get_report_nodes(case_reports))
 
-	var stable_nodes: Variant = case_reports.get("stable_nodes", [])
-	if typeof(stable_nodes) == TYPE_ARRAY:
-		route_nodes.append_array(stable_nodes as Array)
+	_append_report_nodes(route_nodes, case_reports.get("stable_nodes", []))
+	_append_report_nodes(route_nodes, case_reports.get("failure_nodes", []))
 
-	var failure_nodes: Variant = case_reports.get("failure_nodes", [])
-	if typeof(failure_nodes) == TYPE_ARRAY:
-		route_nodes.append_array(failure_nodes as Array)
+	for special_event in get_special_events(case_reports):
+		if typeof(special_event) != TYPE_DICTIONARY:
+			continue
+
+		var special_event_data: Dictionary = special_event as Dictionary
+		_append_report_nodes(route_nodes, special_event_data.get("nodes", []))
+		_append_report_nodes(route_nodes, special_event_data.get("stable_nodes", []))
+		_append_report_nodes(route_nodes, special_event_data.get("failure_nodes", []))
 
 	return route_nodes
+
+
+func get_special_events(case_reports: Dictionary) -> Array:
+	var special_events: Variant = case_reports.get("special_events", [])
+	if typeof(special_events) == TYPE_ARRAY:
+		return special_events as Array
+
+	return []
+
+
+func _append_report_nodes(route_nodes: Array, nodes: Variant) -> void:
+	if typeof(nodes) == TYPE_ARRAY:
+		route_nodes.append_array(nodes as Array)
 
 
 func get_report_body(report_node: Dictionary) -> String:

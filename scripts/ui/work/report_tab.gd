@@ -317,7 +317,7 @@ func _find_report_node(case_id: String, node_id: String) -> Dictionary:
 
 func _is_terminal_report_node(report_node: Dictionary) -> bool:
 	var result: String = str(report_node.get("result", ""))
-	return result == "stabilized" or result == "containment_failed"
+	return result == "stabilized" or result == "returned_to_stable" or result == "containment_failed"
 
 
 func _confirm_terminal_report() -> void:
@@ -326,8 +326,9 @@ func _confirm_terminal_report() -> void:
 	GameState.clear_delay_for_report(current_case_id, current_node_id)
 	GameState.remove_active_report(current_case_id, current_node_id)
 
-	if result == "stabilized":
+	if result == "stabilized" or result == "returned_to_stable":
 		_apply_terminal_state_delta()
+		GameState.mark_case_stabilized(current_case_id)
 		report_completed = true
 		_update_report_list()
 		_show_current_report_detail()
@@ -336,6 +337,7 @@ func _confirm_terminal_report() -> void:
 		return
 
 	if result == "containment_failed":
+		GameState.clear_case_stabilized(current_case_id)
 		_move_to_bad_ending()
 
 

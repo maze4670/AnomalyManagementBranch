@@ -17,6 +17,7 @@ var applied_delay_penalties: Dictionary = {}
 var trust_value: int = 100
 var known_cases: Array = get_default_known_cases()
 var pending_special_events: Array = []
+var stabilized_day_counts: Dictionary = {}
 
 
 func reset_for_new_run() -> void:
@@ -33,6 +34,7 @@ func reset_for_new_run() -> void:
 	trust_value = 100
 	known_cases = get_default_known_cases()
 	pending_special_events = []
+	stabilized_day_counts = {}
 
 
 func reset_actions_for_new_day() -> void:
@@ -152,6 +154,59 @@ func introduce_case_report(case_id: String, node_id: String) -> void:
 	mark_case_known(case_id)
 	if not anomaly_states.has(case_id):
 		anomaly_states[case_id] = 0
+
+
+func has_active_report_for_case(case_id: String) -> bool:
+	for report in active_reports:
+		if typeof(report) != TYPE_DICTIONARY:
+			continue
+
+		var report_data: Dictionary = report as Dictionary
+		if str(report_data.get("case_id", "")) == case_id:
+			return true
+
+	return false
+
+
+func has_scheduled_report_for_case(case_id: String) -> bool:
+	for report in scheduled_reports:
+		if typeof(report) != TYPE_DICTIONARY:
+			continue
+
+		var report_data: Dictionary = report as Dictionary
+		if str(report_data.get("case_id", "")) == case_id:
+			return true
+
+	return false
+
+
+func mark_case_stabilized(case_id: String) -> void:
+	if case_id.is_empty():
+		return
+
+	stabilized_day_counts[case_id] = 0
+	mark_case_known(case_id)
+
+
+func clear_case_stabilized(case_id: String) -> void:
+	stabilized_day_counts.erase(case_id)
+
+
+func get_stabilized_case_ids() -> Array:
+	var case_ids: Array = []
+	for case_id in stabilized_day_counts.keys():
+		case_ids.append(str(case_id))
+
+	return case_ids
+
+
+func get_stabilized_day_count(case_id: String) -> int:
+	return int(stabilized_day_counts.get(case_id, 0))
+
+
+func increment_stabilized_day_counts() -> void:
+	for case_id in stabilized_day_counts.keys():
+		stabilized_day_counts[case_id] = get_stabilized_day_count(str(case_id)) + 1
 
 
 func has_pending_special_event(event_id: String) -> bool:
