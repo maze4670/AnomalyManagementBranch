@@ -13,22 +13,31 @@
           "choice_id": "report_001_choice_a",
           "choice_text": "마을회관 앞 공터와 선산 방향 산길 입구의 접근을 제한하고, 확인된 인영의 이동 여부를 현장에서 통제한다.",
           "next_node_id": "report_002",
-          "state_delta": "미정",
-          "delay_range": "미정"
+          "state_delta": -1,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
         },
         {
           "choice_id": "report_001_choice_b",
           "choice_text": "마을 내 고령 주민과 건강 이상이 보고된 주민의 상태를 확인하고, 필요 시 보호 절차를 배치한다.",
           "next_node_id": "report_003",
-          "state_delta": "미정",
-          "delay_range": "미정"
+          "state_delta": -1,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
         },
         {
           "choice_id": "report_001_choice_c",
           "choice_text": "출현 위치를 현장 도면에 기록하고, 사망 신고·부고 연락망·장례식장 예약 기록을 함께 대조한다.",
           "next_node_id": "report_004",
-          "state_delta": "미정",
-          "delay_range": "미정"
+          "state_delta": 1,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
         }
       ]
     },
@@ -42,22 +51,31 @@
           "choice_id": "report_002_choice_a",
           "choice_text": "선산 입구와 오래된 상여길 주변까지 통제 범위를 확대하고, 주민 출입을 제한한다.",
           "next_node_id": "report_005",
-          "state_delta": "미정",
-          "delay_range": "미정"
+          "state_delta": -2,
+          "delay_range": {
+            "min": 2,
+            "max": 4
+          }
         },
         {
           "choice_id": "report_002_choice_b",
           "choice_text": "재출현 위치를 기록하고, 부고·사망 신고·선산 이용 문의 기록과 함께 대조한다.",
           "next_node_id": "report_004",
-          "state_delta": "미정",
-          "delay_range": "미정"
+          "state_delta": 1,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
         },
         {
           "choice_id": "report_002_choice_c",
           "choice_text": "주민 불안 확산을 막기 위해 장례 관련 소문과 부고 연락의 외부 전달을 제한한다.",
           "next_node_id": "report_006",
-          "state_delta": "미정",
-          "delay_range": "미정"
+          "state_delta": -2,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
         }
       ]
     },
@@ -71,22 +89,31 @@
           "choice_id": "report_003_choice_a",
           "choice_text": "확인 대상 범위를 확대하고, 건강 이상이 보고된 주민의 주거지와 이동 경로를 추가 점검한다.",
           "next_node_id": "report_005",
-          "state_delta": "미정",
-          "delay_range": "미정"
+          "state_delta": -1,
+          "delay_range": {
+            "min": 2,
+            "max": 4
+          }
         },
         {
           "choice_id": "report_003_choice_b",
           "choice_text": "주민 상태 확인과 별도로, 사망 신고·부고 연락·장례식장 예약 취소 기록의 접수 경위를 조사한다.",
           "next_node_id": "report_004",
-          "state_delta": "미정",
-          "delay_range": "미정"
+          "state_delta": 1,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
         },
         {
           "choice_id": "report_003_choice_c",
           "choice_text": "마을 대표자에게 내부 확인을 요청하고, 외부 조사는 주민 진술이 정리될 때까지 유예한다.",
           "next_node_id": "report_006",
-          "state_delta": "미정",
-          "delay_range": "미정"
+          "state_delta": -2,
+          "delay_range": {
+            "min": 2,
+            "max": 4
+          }
         }
       ]
     },
@@ -100,22 +127,31 @@
           "choice_id": "report_004_choice_a",
           "choice_text": "지연된 사망 신고와 부고 연락을 접수 경로에 올리고, 관련 절차의 진행 여부를 행정 기록으로 확인한다.",
           "next_node_id": "report_007",
-          "state_delta": "미정",
-          "delay_range": "미정"
+          "state_delta": 2,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
         },
         {
           "choice_id": "report_004_choice_b",
           "choice_text": "주민 불안이 확대되지 않도록 부고 공지를 유예하고, 마을 내부 확인을 우선하도록 한다.",
           "next_node_id": "report_006",
-          "state_delta": "미정",
-          "delay_range": "미정"
+          "state_delta": -2,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
         },
         {
           "choice_id": "report_004_choice_c",
           "choice_text": "출현 위치 기록과 지연된 행정 기록을 대조하고, 누락된 접수 항목을 우선 확인한다.",
           "next_node_id": "report_007",
-          "state_delta": "미정",
-          "delay_range": "미정"
+          "state_delta": 1,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
         }
       ]
     },
@@ -129,22 +165,31 @@
           "choice_id": "report_005_choice_a",
           "choice_text": "상여길과 선산 입구를 포함한 주요 길목의 출입을 제한하고, 주민 이동을 별도 안내한다.",
           "next_node_id": "report_008",
-          "state_delta": "미정",
-          "delay_range": "미정"
+          "state_delta": -2,
+          "delay_range": {
+            "min": 2,
+            "max": 4
+          }
         },
         {
           "choice_id": "report_005_choice_b",
           "choice_text": "추가 출현 지점과 보류된 부고·사망 신고 기록을 함께 확인한다.",
           "next_node_id": "report_004",
-          "state_delta": "미정",
-          "delay_range": "미정"
+          "state_delta": 1,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
         },
         {
           "choice_id": "report_005_choice_c",
           "choice_text": "마을 대표자와 유족 측의 요청을 반영해 장례 관련 외부 보고를 보류한다.",
           "next_node_id": "report_006",
-          "state_delta": "미정",
-          "delay_range": "미정"
+          "state_delta": -2,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
         }
       ]
     },
@@ -158,22 +203,31 @@
           "choice_id": "report_006_choice_a",
           "choice_text": "민간 혼란 방지를 위해 부고와 장례 관련 외부 공지를 제한하고, 마을 내부 확인을 우선하도록 한다.",
           "next_node_id": "failure_002",
-          "state_delta": "미정",
-          "delay_range": "미정"
+          "state_delta": -3,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
         },
         {
           "choice_id": "report_006_choice_b",
           "choice_text": "마을 대표자와 유족 측에 지연된 신고와 부고 관련 기록을 접수하도록 요구한다.",
           "next_node_id": "report_007",
-          "state_delta": "미정",
-          "delay_range": "미정"
+          "state_delta": 2,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
         },
         {
           "choice_id": "report_006_choice_c",
           "choice_text": "마을 내부 합의를 존중해 장례 일정과 진행 방식은 주민 측 결정에 맡긴다.",
           "next_node_id": "report_008",
-          "state_delta": "미정",
-          "delay_range": "미정"
+          "state_delta": -2,
+          "delay_range": {
+            "min": 2,
+            "max": 4
+          }
         }
       ]
     },
@@ -187,22 +241,31 @@
           "choice_id": "report_007_choice_a",
           "choice_text": "접수된 사망 신고·부고 연락·관련 절차가 이어지는지 확인하고, 중단된 항목이 없는지 관리한다.",
           "next_node_id": "stable_001",
-          "state_delta": "미정",
-          "delay_range": "미정"
+          "state_delta": 2,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
         },
         {
           "choice_id": "report_007_choice_b",
           "choice_text": "재출현 가능성에 대비해 선산 입구와 오래된 상여길의 사용을 당분간 제한한다.",
           "next_node_id": "report_008",
-          "state_delta": "미정",
-          "delay_range": "미정"
+          "state_delta": -1,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
         },
         {
           "choice_id": "report_007_choice_c",
           "choice_text": "주민 불안을 고려해 장례 관련 절차를 축소하고, 외부 공지는 최소한으로 유지하도록 한다.",
           "next_node_id": "report_006",
-          "state_delta": "미정",
-          "delay_range": "미정"
+          "state_delta": -2,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
         }
       ]
     },
@@ -216,22 +279,31 @@
           "choice_id": "report_008_choice_a",
           "choice_text": "중단된 부고 연락과 관련 접수를 다시 진행하고, 예정된 이동 절차가 가능한지 확인한다.",
           "next_node_id": "report_007",
-          "state_delta": "미정",
-          "delay_range": "미정"
+          "state_delta": 1,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
         },
         {
           "choice_id": "report_008_choice_b",
           "choice_text": "상여꾼 대열이 확인된 길목을 폐쇄하고, 예정된 이동 절차를 다른 방식으로 대체한다.",
           "next_node_id": "failure_001",
-          "state_delta": "미정",
-          "delay_range": "미정"
+          "state_delta": -3,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
         },
         {
           "choice_id": "report_008_choice_c",
           "choice_text": "인근 마을로 관련 소문이 확산되지 않도록 외부 보고와 부고 연락을 제한한다.",
           "next_node_id": "failure_003",
-          "state_delta": "미정",
-          "delay_range": "미정"
+          "state_delta": -3,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
         }
       ]
     }
@@ -243,7 +315,7 @@
       "title": "지연 기록 정리 이후 보고",
       "body": "지연되었던 사망 신고와 부고 연락, 장례 절차가 접수 경로 안에서 정리되었다.\n\n마을 방송에는 장례 관련 공지가 남았고, 선산 이용 문의와 장례 차량 문의도 별도 항목으로 처리되었다. 주민 진술에서 장례 관련 표현을 회피하는 양상은 줄어들었다.\n\n이후 마을회관 앞 공터와 오래된 상여길 입구에서 확인되던 흰 상여꾼 형상의 개체들은 더 이상 기존 대열을 유지하지 않았다.\n\n다만 일부 기록에는 새벽 시간대 선산 입구 먼 곳에서 흰색 인영이 확인되었다는 미확인 진술이 남아 있다.\n\n해당 건은 일반 관리 절차상 추가 확산 징후가 낮은 상태로 정리한다.",
       "result": "stabilized",
-      "state_delta": "미정"
+      "state_delta": 3
     }
   ],
   "failure_nodes": [
@@ -285,22 +357,31 @@
               "choice_id": "special_001_report_001_choice_a",
               "choice_text": "누락된 부고 연락과 사망 신고 접수 과정을 확인하고, 해당 기록을 접수 경로에 올린다.",
               "next_node_id": "special_001_report_002",
-              "state_delta": "미정",
-              "delay_range": "미정"
+              "state_delta": 1,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
             },
             {
               "choice_id": "special_001_report_001_choice_b",
               "choice_text": "선산 입구 주변 접근을 제한하고, 흰색 인영의 재출현 여부를 확인한다.",
               "next_node_id": "special_001_report_003",
-              "state_delta": "미정",
-              "delay_range": "미정"
+              "state_delta": -1,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
             },
             {
               "choice_id": "special_001_report_001_choice_c",
               "choice_text": "주민 혼란을 막기 위해 부고 공지를 유예하고, 마을 내부 확인을 먼저 진행하도록 한다.",
               "next_node_id": "special_001_report_003",
-              "state_delta": "미정",
-              "delay_range": "미정"
+              "state_delta": -2,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
             }
           ]
         },
@@ -314,15 +395,21 @@
               "choice_id": "special_001_report_002_choice_a",
               "choice_text": "접수된 부고와 관련 공지가 연락망과 마을 방송에 남았는지 재확인한다.",
               "next_node_id": "special_001_report_004",
-              "state_delta": "미정",
-              "delay_range": "미정"
+              "state_delta": 2,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
             },
             {
               "choice_id": "special_001_report_002_choice_b",
               "choice_text": "사망 신고 접수 완료를 기준으로 현장 관리를 축소하고, 추가 목격 진술은 별도 기록으로 남긴다.",
               "next_node_id": "special_001_report_003",
-              "state_delta": "미정",
-              "delay_range": "미정"
+              "state_delta": -1,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
             }
           ]
         },
@@ -336,15 +423,21 @@
               "choice_id": "special_001_report_003_choice_a",
               "choice_text": "출현 위치 감시는 유지하되, 누락된 부고 연락과 마을 방송 기록을 우선 재확인한다.",
               "next_node_id": "special_001_report_004",
-              "state_delta": "미정",
-              "delay_range": "미정"
+              "state_delta": 1,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
             },
             {
               "choice_id": "special_001_report_003_choice_b",
               "choice_text": "오래된 상여길 입구까지 통제 범위를 확대하고, 외부 공지는 계속 제한한다.",
               "next_node_id": "special_001_failure_001",
-              "state_delta": "미정",
-              "delay_range": "미정"
+              "state_delta": -3,
+              "delay_range": {
+                "min": 1,
+                "max": 1
+              }
             }
           ]
         },
@@ -358,15 +451,21 @@
               "choice_id": "special_001_report_004_choice_a",
               "choice_text": "부고 연락망, 마을 방송, 사망 신고 접수 기록을 대조해 누락 항목을 정리하고, 관련 문의가 별도 항목으로 처리되는지 확인한다.",
               "next_node_id": "special_001_stable",
-              "state_delta": "미정",
-              "delay_range": "미정"
+              "state_delta": 2,
+              "delay_range": {
+                "min": 1,
+                "max": 1
+              }
             },
             {
               "choice_id": "special_001_report_004_choice_b",
               "choice_text": "주민 요청에 따라 일부 공지는 생략하고, 내부 기록만 남긴 뒤 현장 관리를 종료한다.",
               "next_node_id": "special_001_failure_001",
-              "state_delta": "미정",
-              "delay_range": "미정"
+              "state_delta": -3,
+              "delay_range": {
+                "min": 1,
+                "max": 1
+              }
             }
           ]
         }
@@ -378,7 +477,7 @@
           "title": "늦은 부고 안정화 복귀",
           "body": "누락되었던 사망 신고와 부고 연락, 장례 관련 문의가 공식 기록 안에서 정리되었다.\n\n마을 방송에는 장례 관련 공지가 남았고, 연락망 기록에서도 누락 대상이 보완되었다.\n\n이후 선산 입구와 오래된 상여길 입구에서 확인되던 흰색 인영은 더 이상 같은 위치에서 관찰되지 않았다.\n\n해당 건은 안정화 이후 재확인 절차상 관리 가능한 상태로 정리한다.",
           "result": "returned_to_stable",
-          "state_delta": "미정"
+          "state_delta": 2
         }
       ],
       "failure_nodes": [
@@ -406,22 +505,31 @@
               "choice_id": "special_002_report_001_choice_a",
               "choice_text": "절차 생략 여부와 관련 기록을 확인하고, 보류된 문의를 다시 접수하도록 한다.",
               "next_node_id": "special_002_report_002",
-              "state_delta": "미정",
-              "delay_range": "미정"
+              "state_delta": 1,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
             },
             {
               "choice_id": "special_002_report_001_choice_b",
               "choice_text": "오래된 상여길 사용을 중지하고, 예정된 이동 절차를 다른 길로 대체하도록 한다.",
               "next_node_id": "special_002_report_003",
-              "state_delta": "미정",
-              "delay_range": "미정"
+              "state_delta": -1,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
             },
             {
               "choice_id": "special_002_report_001_choice_c",
               "choice_text": "마을 내부 합의를 존중해 절차 축소 여부를 주민 측 결정에 맡긴다.",
               "next_node_id": "special_002_report_003",
-              "state_delta": "미정",
-              "delay_range": "미정"
+              "state_delta": -2,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
             }
           ]
         },
@@ -435,15 +543,21 @@
               "choice_id": "special_002_report_002_choice_a",
               "choice_text": "재접수된 장례식장 예약, 장례 차량 문의, 선산 이용 문의가 이후 기록으로 이어지는지 확인한다.",
               "next_node_id": "special_002_report_004",
-              "state_delta": "미정",
-              "delay_range": "미정"
+              "state_delta": 2,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
             },
             {
               "choice_id": "special_002_report_002_choice_b",
               "choice_text": "상여길 재사용은 보류하고, 이동 절차를 축소한 상태로 관련 기록만 정리한다.",
               "next_node_id": "special_002_report_003",
-              "state_delta": "미정",
-              "delay_range": "미정"
+              "state_delta": -2,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
             }
           ]
         },
@@ -457,15 +571,21 @@
               "choice_id": "special_002_report_003_choice_a",
               "choice_text": "우회 도로 통제보다 관련 접수와 예정된 이동 절차가 유지되는지 우선 확인한다.",
               "next_node_id": "special_002_report_004",
-              "state_delta": "미정",
-              "delay_range": "미정"
+              "state_delta": 1,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
             },
             {
               "choice_id": "special_002_report_003_choice_b",
               "choice_text": "선산 방향 우회 도로와 마을 방송 설비 주변까지 통제 범위를 넓힌다.",
               "next_node_id": "special_002_failure_001",
-              "state_delta": "미정",
-              "delay_range": "미정"
+              "state_delta": -3,
+              "delay_range": {
+                "min": 1,
+                "max": 1
+              }
             }
           ]
         },
@@ -479,15 +599,21 @@
               "choice_id": "special_002_report_004_choice_a",
               "choice_text": "장례식장 예약, 부고 연락, 선산 이용 문의, 이동 기록이 같은 사건 기록 안에서 처리되는지 확인하고 현장 관리를 유지한다.",
               "next_node_id": "special_002_stable",
-              "state_delta": "미정",
-              "delay_range": "미정"
+              "state_delta": 2,
+              "delay_range": {
+                "min": 1,
+                "max": 1
+              }
             },
             {
               "choice_id": "special_002_report_004_choice_b",
               "choice_text": "주민 불안을 이유로 마지막 이동 절차를 생략하고, 관련 기록만 문서에 남긴다.",
               "next_node_id": "special_002_failure_001",
-              "state_delta": "미정",
-              "delay_range": "미정"
+              "state_delta": -3,
+              "delay_range": {
+                "min": 1,
+                "max": 1
+              }
             }
           ]
         }
@@ -499,7 +625,7 @@
           "title": "비어 있는 상여길 안정화 복귀",
           "body": "보류되었던 장례식장 예약과 장례 차량 문의, 선산 이용 문의가 공식 기록 안에서 정리되었다.\n\n부고 연락과 마을 방송도 정상적으로 남았으며, 장례 이동 절차는 생략되지 않았다.\n\n이후 오래된 상여길 입구와 선산 방향 우회 도로 초입에서 확인되던 흰 상여꾼 형상의 대열은 더 이상 같은 위치를 유지하지 않았다.\n\n해당 건은 안정화 이후 재확인 절차상 관리 가능한 상태로 정리한다.",
           "result": "returned_to_stable",
-          "state_delta": "미정"
+          "state_delta": 2
         }
       ],
       "failure_nodes": [
