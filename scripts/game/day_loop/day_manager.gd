@@ -7,6 +7,7 @@ const DATA_MANAGER_SCRIPT := preload("res://scripts/data/data_manager.gd")
 const TRUST_MANAGER_SCRIPT := preload("res://scripts/game/trust/trust_manager.gd")
 const ENDING_MANAGER_SCRIPT := preload("res://scripts/game/endings/ending_manager.gd")
 const DELAY_PENALTY_DELTA := -1
+const DEFAULT_FOLLOWUP_DELAY_DAYS := 1
 
 
 func end_day_minimal(scene_tree: SceneTree) -> void:
@@ -81,7 +82,8 @@ func _process_pending_completed_choices() -> void:
 		_apply_choice_state_delta(case_id, node_id, choice_id)
 		GameState.remove_active_report(case_id, node_id)
 		if not next_node_id.is_empty():
-			GameState.schedule_report(case_id, next_node_id, 1)
+			var delay_days: int = _get_next_report_delay_days(case_id, node_id, choice_id, next_node_id)
+			GameState.schedule_report(case_id, next_node_id, delay_days)
 
 	GameState.pending_completed_choices = []
 
@@ -107,6 +109,29 @@ func _apply_choice_state_delta(case_id: String, node_id: String, choice_id: Stri
 
 
 func _get_choice_state_delta(case_id: String, node_id: String, choice_id: String) -> int:
+	var choice_data: Dictionary = _get_choice_data(case_id, node_id, choice_id)
+	if choice_data.is_empty():
+		return 0
+
+	var state_delta: Variant = choice_data.get("state_delta", 0)
+	if typeof(state_delta) == TYPE_INT:
+		return state_delta
+
+	return 0
+
+
+func _get_next_report_delay_days(case_id: String, node_id: String, choice_id: String, next_node_id: String) -> int:
+	if not _is_general_report_node(case_id, next_node_id):
+		return DEFAULT_FOLLOWUP_DELAY_DAYS
+
+	var choice_data: Dictionary = _get_choice_data(case_id, node_id, choice_id)
+	if choice_data.is_empty():
+		return DEFAULT_FOLLOWUP_DELAY_DAYS
+
+	return _get_delay_days_from_choice(choice_data)
+
+
+func _get_choice_data(case_id: String, node_id: String, choice_id: String) -> Dictionary:
 	var data_manager: Variant = DATA_MANAGER_SCRIPT.new()
 	var case_reports: Dictionary = data_manager.load_case_reports(case_id)
 	var nodes: Array = data_manager.get_report_nodes(case_reports)
@@ -129,12 +154,50 @@ func _get_choice_state_delta(case_id: String, node_id: String, choice_id: String
 			if str(choice_data.get("choice_id", "")) != choice_id:
 				continue
 
-			var state_delta: Variant = choice_data.get("state_delta", 0)
-			if typeof(state_delta) == TYPE_INT:
-				return state_delta
-			return 0
+			return choice_data
 
-	return 0
+	return {}
+
+
+func _is_general_report_node(case_id: String, node_id: String) -> bool:
+	var data_manager: Variant = DATA_MANAGER_SCRIPT.new()
+	var case_reports: Dictionary = data_manager.load_case_reports(case_id)
+	var nodes: Array = data_manager.get_report_nodes(case_reports)
+	data_manager.free()
+
+	for node in nodes:
+		if typeof(node) != TYPE_DICTIONARY:
+			continue
+
+		var report_node: Dictionary = node as Dictionary
+		if str(report_node.get("node_id", "")) == node_id:
+			return true
+
+	return false
+
+
+func _get_delay_days_from_choice(choice_data: Dictionary) -> int:
+	var delay_range: Variant = choice_data.get("delay_range", null)
+	if typeof(delay_range) != TYPE_DICTIONARY:
+		return DEFAULT_FOLLOWUP_DELAY_DAYS
+
+	var delay_data: Dictionary = delay_range as Dictionary
+	var min_delay: Variant = delay_data.get("min", null)
+	var max_delay: Variant = delay_data.get("max", null)
+	if not _is_number(min_delay) or not _is_number(max_delay):
+		return DEFAULT_FOLLOWUP_DELAY_DAYS
+	var min_delay_days: int = int(min_delay)
+	var max_delay_days: int = int(max_delay)
+	if min_delay_days > max_delay_days:
+		return DEFAULT_FOLLOWUP_DELAY_DAYS
+
+	var random_number_generator: RandomNumberGenerator = RandomNumberGenerator.new()
+	random_number_generator.randomize()
+	return random_number_generator.randi_range(min_delay_days, max_delay_days)
+
+
+func _is_number(value: Variant) -> bool:
+	return typeof(value) == TYPE_INT or typeof(value) == TYPE_FLOAT
 
 
 func _update_trust_value() -> void:
