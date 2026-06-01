@@ -1,6 +1,8 @@
 extends Control
 
+const ENDING_SCENE_PATH := "res://scenes/ending/EndingScreen.tscn"
 const DATA_MANAGER_SCRIPT := preload("res://scripts/data/data_manager.gd")
+const SAVE_MANAGER_SCRIPT := preload("res://scripts/save/save_manager.gd")
 
 @onready var report_list_container: VBoxContainer = $RootContainer/ContentContainer/ReportListContainer
 @onready var report_list_label: Label = $RootContainer/ContentContainer/ReportListContainer/ReportListLabel
@@ -185,7 +187,7 @@ func _update_choice_buttons() -> void:
 	for choice_index in range(choice_buttons.size()):
 		_update_choice_button(choice_buttons[choice_index], choice_index)
 
-	confirm_button.disabled = current_choices.is_empty() or report_completed
+	confirm_button.disabled = report_completed or (current_choices.is_empty() and not _is_terminal_report_node(current_report_node))
 
 
 func _ensure_choice_buttons() -> void:
@@ -222,6 +224,10 @@ func _on_confirm_button_pressed() -> void:
 
 	if current_case_id.is_empty() or current_node_id.is_empty():
 		status_label.text = "보고서를 선택해 주십시오."
+		return
+
+	if _is_terminal_report_node(current_report_node):
+		_confirm_terminal_report()
 		return
 
 	if selected_choice_index < 0:
@@ -298,7 +304,7 @@ func _is_active_report(case_id: String, node_id: String) -> bool:
 func _find_report_node(case_id: String, node_id: String) -> Dictionary:
 	var case_reports: Dictionary = _get_case_reports(case_id)
 	var data_manager: Variant = DATA_MANAGER_SCRIPT.new()
-	var nodes: Array = data_manager.get_report_nodes(case_reports)
+	var nodes: Array = data_manager.get_all_report_route_nodes(case_reports)
 	data_manager.free()
 	for node in nodes:
 		if typeof(node) == TYPE_DICTIONARY:
@@ -307,6 +313,53 @@ func _find_report_node(case_id: String, node_id: String) -> Dictionary:
 				return report_node
 
 	return {}
+
+
+func _is_terminal_report_node(report_node: Dictionary) -> bool:
+	var result: String = str(report_node.get("result", ""))
+	return result == "stabilized" or result == "containment_failed"
+
+
+func _confirm_terminal_report() -> void:
+	var result: String = str(current_report_node.get("result", ""))
+	GameState.mark_report_completed(current_case_id, current_node_id, "")
+	GameState.clear_delay_for_report(current_case_id, current_node_id)
+	GameState.remove_active_report(current_case_id, current_node_id)
+
+	if result == "stabilized":
+		_apply_terminal_state_delta()
+		report_completed = true
+		_update_report_list()
+		_show_current_report_detail()
+		_set_report_controls_visible(true)
+		_update_choice_buttons()
+		return
+
+	if result == "containment_failed":
+		_move_to_bad_ending()
+
+
+func _apply_terminal_state_delta() -> void:
+	var state_delta: Variant = current_report_node.get("state_delta", 0)
+	if typeof(state_delta) == TYPE_INT:
+		GameState.apply_anomaly_state_delta(current_case_id, state_delta)
+
+
+func _move_to_bad_ending() -> void:
+	var save_manager: Variant = SAVE_MANAGER_SCRIPT.new()
+	save_manager.apply_ending_to_archive("bad", _get_current_run_archive_data())
+	save_manager.delete_current_run_save()
+	save_manager.free()
+	get_tree().set_meta("ending_type", "bad")
+	get_tree().change_scene_to_file(ENDING_SCENE_PATH)
+
+
+func _get_current_run_archive_data() -> Dictionary:
+	return {
+		"completed_reports": GameState.completed_reports,
+		"active_reports": GameState.active_reports,
+		"current_day": GameState.current_day
+	}
 
 
 func _get_report_body(report_node: Dictionary) -> String:
