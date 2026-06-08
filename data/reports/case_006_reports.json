@@ -1,0 +1,642 @@
+{
+  "case_id": "case_006",
+  "display_id": "CASE-CN-001",
+  "alias": "주의하십시오",
+  "report_nodes": [
+    {
+      "node_id": "report_001",
+      "node_type": "report",
+      "title": "최초 저수지 접근 방송 및 사고 보고",
+      "body": "며칠 전 폭우 이후, 마을 안내 방송을 통해 ○○저수지 수위 상승과 접근 주의 안내가 송출되었다.\n\n방송 내용은 “폭우로 인해 ○○저수지의 수위가 높아졌으니, 해당 저수지 접근을 삼가고 사고에 유의하십시오”에 가까운 정형 문구였다.\n\n이후 며칠 뒤, 주민 1명이 저수지 접근로 인근에서 사고를 겪었다. 사고 현장은 저수지 본체가 아니라 접근로 주변으로 기록되었다.\n\n해당 주민은 사고 전 “방송에서 말한 곳을 확인만 하려고 했다”고 진술했다. 다른 주민들은 사고 후 “방송에서 조심하라고 했는데도 사고가 났다”고 말했다.\n\n방송을 듣지 못했거나 당시 마을 밖에 있던 주민에게서는 해당 저수지를 확인하려는 행동이 비교적 약하게 확인되었다.",
+      "choices": [
+        {
+          "choice_id": "report_001_choice_a",
+          "choice_text": "저수지 접근 주의 방송을 유지하되, 사고 현장 확인 결과를 참고해 문구를 다시 정리한다.",
+          "next_node_id": "report_002",
+          "state_delta": -1,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        },
+        {
+          "choice_id": "report_001_choice_b",
+          "choice_text": "방송 녹취와 사고 보고서를 비교하고, 주민들이 방송 이후 어느 경로로 이동했는지 확인한다.",
+          "next_node_id": "report_004",
+          "state_delta": 1,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        },
+        {
+          "choice_id": "report_001_choice_c",
+          "choice_text": "저수지 접근로 주변을 임시 통제하고, 현장 안내와 짧은 마을 방송을 함께 진행한다.",
+          "next_node_id": "report_003",
+          "state_delta": 0,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        }
+      ]
+    },
+    {
+      "node_id": "report_002",
+      "node_type": "report",
+      "title": "방송 문구 정리 이후 보고",
+      "body": "사고 재발 방지를 위해 기존 저수지 접근 주의 방송 문구가 다시 검토되었다.\n\n방송 담당자는 사고 보고서와 주민 진술을 참고해, 기존 문구가 충분히 구체적이지 않았을 가능성을 제기했다. 초안에는 접근로 위치, 수위 상승, 야간 통행, 미끄러짐 주의 같은 표현이 추가되었다.\n\n문구를 검토하는 과정에서 일부 주민은 “방송에서 말한 곳이 정확히 어디였는지 모르겠다”고 말했다. 다른 주민은 “그 길을 말하는 줄 알았다”고 답했다.\n\n방송은 아직 대규모로 반복 송출되지 않았으나, 새 원고가 확정되면 마을 전체에 다시 안내할 수 있다는 의견이 남았다.",
+      "choices": [
+        {
+          "choice_id": "report_002_choice_a",
+          "choice_text": "사고 보고서 표현을 참고해 방송 문구를 더 명확하게 정리하고, 같은 원고로 다시 안내한다.",
+          "next_node_id": "report_005",
+          "state_delta": -2,
+          "delay_range": {
+            "min": 2,
+            "max": 4
+          }
+        },
+        {
+          "choice_id": "report_002_choice_b",
+          "choice_text": "사고 보고서와 방송 원고를 따로 정리하고, 새 방송 원고에는 사고 설명을 직접 옮기지 않는다.",
+          "next_node_id": "report_004",
+          "state_delta": 1,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "choice_id": "report_002_choice_c",
+          "choice_text": "장소 혼선을 줄이기 위해 같은 문구를 마을 전체 방송망으로 먼저 안내한다.",
+          "next_node_id": "report_006",
+          "state_delta": -2,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        }
+      ]
+    },
+    {
+      "node_id": "report_003",
+      "node_type": "report",
+      "title": "현장 통제와 방송 병행 이후 보고",
+      "body": "저수지 접근로 일부가 임시 차단되었고, 현장에는 우회 방향을 표시하는 짧은 안내가 설치되었다.\n\n동시에 마을 방송으로도 “저수지 인근 통행에 유의하라”는 짧은 안내가 송출되었다. 방송은 기존보다 짧았지만, 일부 주민은 여전히 “방송에서 말한 곳이 어디인지”를 서로 확인했다.\n\n현장 통제 이후 접근로 주변 통행은 줄었으나, 방송을 들은 일부 주민은 “막아 둔 곳이 정확히 어디인지 보려고 했다”고 말했다.\n\n사고 보고서와 방송 녹취의 표현 유사성은 아직 크게 강해지지 않았으나, 방송과 현장 안내가 같은 장소를 반복해서 가리키고 있다는 의견이 남았다.",
+      "choices": [
+        {
+          "choice_id": "report_003_choice_a",
+          "choice_text": "현장 차단과 개별 안내를 유지하고, 마을 방송은 짧은 생활 안내 수준으로 줄인다.",
+          "next_node_id": "report_007",
+          "state_delta": 1,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        },
+        {
+          "choice_id": "report_003_choice_b",
+          "choice_text": "주민 혼선을 줄이기 위해 저수지 주변 상황을 방송으로 더 자세히 설명한다.",
+          "next_node_id": "report_005",
+          "state_delta": -2,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        },
+        {
+          "choice_id": "report_003_choice_c",
+          "choice_text": "우회 안내와 함께 사고가 난 장소를 자세히 설명하는 현장 표지를 추가한다.",
+          "next_node_id": "report_006",
+          "state_delta": -1,
+          "delay_range": {
+            "min": 2,
+            "max": 4
+          }
+        }
+      ]
+    },
+    {
+      "node_id": "report_004",
+      "node_type": "report",
+      "title": "방송 녹취와 사고 보고서 대조 보고",
+      "body": "최초 방송 녹취와 사고 보고서가 대조되었다.\n\n방송 녹취 자체가 변형된 흔적은 확인되지 않았다. 그러나 사고 보고서의 장소와 행동 설명은 방송 문구와 유사한 표현으로 정리되어 있었다.\n\n주민 진술에는 “방송에서 말한 곳”, “확인만 하려고 했다”, “조심하려고 갔다”는 표현이 반복되었다.\n\n조사 기록에는 방송을 들은 주민과 듣지 못한 주민의 행동 차이를 추가 확인해야 한다는 의견이 남았다.",
+      "choices": [
+        {
+          "choice_id": "report_004_choice_a",
+          "choice_text": "방송 녹취와 사고 보고서를 따로 정리하고, 주민 이동 진술을 함께 비교한다.",
+          "next_node_id": "report_007",
+          "state_delta": 2,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        },
+        {
+          "choice_id": "report_004_choice_b",
+          "choice_text": "사고 보고서 표현을 참고해 주민이 이해하기 쉬운 안내 원고를 작성한다.",
+          "next_node_id": "report_005",
+          "state_delta": -2,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        },
+        {
+          "choice_id": "report_004_choice_c",
+          "choice_text": "방송을 들은 주민들에게 녹취를 다시 확인시키고, 어느 장소로 이해했는지 조사한다.",
+          "next_node_id": "report_006",
+          "state_delta": -1,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        }
+      ]
+    },
+    {
+      "node_id": "report_005",
+      "node_type": "report",
+      "title": "방송 문구 구체화 보고",
+      "body": "후속 안내 방송 문구에 세부 표현이 추가되었다.\n\n기존의 저수지 접근 주의 문구는 “○○저수지 동쪽 접근로”, “수위 상승”, “미끄러짐”, “추락 위험”, “야간 접근 금지” 같은 표현을 포함하는 문장으로 바뀌었다.\n\n이후 보고된 사고 기록은 이전보다 구체화된 방송 문구와 더 가까운 표현으로 정리되었다.\n\n사고 전 주민은 “방송에서 말한 동쪽 길이 맞는지 확인하려 했다”고 진술했다. 주민들은 사고 후 “방송에서 조심하라고 했던 바로 그 길”이라는 표현을 반복했다.",
+      "choices": [
+        {
+          "choice_id": "report_005_choice_a",
+          "choice_text": "구체화된 방송 문구를 공식 원고로 정리하고, 일정 기간 같은 표현을 유지한다.",
+          "next_node_id": "failure_001",
+          "state_delta": -3,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "choice_id": "report_005_choice_b",
+          "choice_text": "세부 사고 설명은 원고에서 제외하고, 현장 차단과 개별 안내를 우선한다.",
+          "next_node_id": "report_004",
+          "state_delta": 1,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "choice_id": "report_005_choice_c",
+          "choice_text": "주민 안전을 위해 농로와 배수로도 안내 대상에 포함한다.",
+          "next_node_id": "report_008",
+          "state_delta": -2,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        }
+      ]
+    },
+    {
+      "node_id": "report_006",
+      "node_type": "report",
+      "title": "방송 범위 확대 보고",
+      "body": "동일 안내 문구가 마을 전체 방송망으로 확대 송출되었다.\n\n방송 이후 같은 저수지 접근로를 확인하려는 주민 진술이 늘어났다. 일부 주민은 “방송이 나왔으니 조심하려고 확인했다”고 말했다.\n\n방송을 듣지 못했거나 마을 밖에 있던 주민에게서는 같은 장소를 확인하려는 행동이 상대적으로 약하게 확인되었다.\n\n마을회관 게시판에는 방송 문구를 요약한 안내문이 붙었고, 주민들은 해당 문구를 사고 이후 설명에도 사용했다.",
+      "choices": [
+        {
+          "choice_id": "report_006_choice_a",
+          "choice_text": "방송 범위를 유지하되, 비슷한 위험 장소도 함께 정리해 안내한다.",
+          "next_node_id": "report_008",
+          "state_delta": -2,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        },
+        {
+          "choice_id": "report_006_choice_b",
+          "choice_text": "마을 전체 송출을 줄이고, 통행이 필요한 주민에게 개별 연락과 대면 안내를 진행한다.",
+          "next_node_id": "report_007",
+          "state_delta": 2,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        },
+        {
+          "choice_id": "report_006_choice_c",
+          "choice_text": "농로, 배수로, 논둑, 하천변을 선제 안내 목록에 추가한다.",
+          "next_node_id": "failure_002",
+          "state_delta": -3,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        }
+      ]
+    },
+    {
+      "node_id": "report_007",
+      "node_type": "report",
+      "title": "현장 관리 전환 전조 보고",
+      "body": "반복 방송이 축소되고, 위험 안내는 현장 접근 차단, 우회 동선 안내, 개별 연락, 순찰 중심으로 전환되었다.\n\n마을 방송은 짧은 생활 안내 수준으로 제한되었으며, 특정 접근로의 사고 형태를 자세히 설명하지 않았다.\n\n사고 보고서와 새 방송 원고는 별도로 관리되었다. 사고 보고서 표현이 다음 방송 문구에 반영되는 흐름도 중단되었다.\n\n주민들이 “방송에서 말한 곳을 확인하러 갔다”고 진술하는 사례는 줄어들었다. 현장 표지는 출입 제한과 우회 방향 중심으로 정리되었다.",
+      "choices": [
+        {
+          "choice_id": "report_007_choice_a",
+          "choice_text": "방송은 짧게 유지하고, 현장 차단·개별 안내·순찰 중심으로 관리한다.",
+          "next_node_id": "stable_001",
+          "state_delta": 2,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "choice_id": "report_007_choice_b",
+          "choice_text": "주민 불안을 줄이기 위해 마을 전체에 현장 상황을 자세히 공유한다.",
+          "next_node_id": "report_006",
+          "state_delta": -2,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        },
+        {
+          "choice_id": "report_007_choice_c",
+          "choice_text": "현장 표지에 사고 장소와 주의 내용을 더 자세히 적어 주민이 알아보기 쉽게 한다.",
+          "next_node_id": "report_008",
+          "state_delta": -1,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        }
+      ]
+    },
+    {
+      "node_id": "report_008",
+      "node_type": "report",
+      "title": "위험 장소 목록 확장 보고",
+      "body": "저수지 외에도 농로, 배수로, 논둑, 하천변이 안내 문구에 추가되었다.\n\n이후 새로 언급된 장소들이 순차적으로 “조심해야 할 곳”으로 주민들 사이에서 언급되기 시작했다.\n\n일부 후속 사고 기록에는 방송 문구에 새로 포함된 장소명이 함께 기재되었다. 주민 진술에서도 “방송에서 말한 배수로”, “그 논둑 쪽을 확인하려 했다”는 표현이 확인되었다.\n\n마을 방송, 게시문, 순찰 메모가 서로 비슷한 장소 목록을 반복하고 있었다.",
+      "choices": [
+        {
+          "choice_id": "report_008_choice_a",
+          "choice_text": "장소 목록 방송을 중단하고, 각 장소는 현장 차단·우회 안내·순찰 기록으로 따로 관리한다.",
+          "next_node_id": "report_007",
+          "state_delta": 1,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "choice_id": "report_008_choice_b",
+          "choice_text": "위험 장소 목록을 공식 방송 원고에 합치고, 같은 형식으로 반복 안내한다.",
+          "next_node_id": "failure_002",
+          "state_delta": -3,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "choice_id": "report_008_choice_c",
+          "choice_text": "방송, 게시문, 표지, 문자 알림에 같은 위험 장소 목록을 적용한다.",
+          "next_node_id": "failure_003",
+          "state_delta": -3,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        }
+      ]
+    }
+  ],
+  "stable_nodes": [
+    {
+      "node_id": "stable_001",
+      "node_type": "stable",
+      "title": "현장 관리 전환 이후 보고",
+      "body": "마을 방송은 짧고 비구체적인 생활 안내로 제한되었다.\n\n구체적인 위험 장소와 사고 설명은 방송으로 반복되지 않았다. 저수지 접근로와 주변 농로는 현장 차단, 대면 안내, 우회 동선 안내, 순찰로 관리되었다.\n\n이후 주민들이 “방송에서 말한 곳을 확인하러 갔다”고 진술하는 사례가 줄었다. 사고 보고서도 방송 문구와 직접적으로 닮은 형태로 정리되지 않았다.\n\n현장 표지는 남아 있었으나, 사고 사례나 사고가 나는 방식을 설명하지 않고 출입 제한과 우회 방향만 표시했다.",
+      "result": "stabilized",
+      "state_delta": 3
+    }
+  ],
+  "failure_nodes": [
+    {
+      "node_id": "failure_001",
+      "node_type": "failure",
+      "title": "방송 문구 구체화",
+      "body": "마을 방송 원고는 이전보다 길고 구체적인 문구로 확정되었다.\n\n원고에는 장소명, 접근로 방향, 수위 상승, 미끄러짐, 추락 위험, 야간 접근 금지 같은 표현이 포함되었다.\n\n이후 사고 보고서는 방송 문구와 거의 같은 순서와 표현으로 정리되었다. 사고 전 주민은 “방송에서 말한 길이 맞는지 확인하려 했다”고 진술했다.\n\n기관은 방송 문구가 자세해질수록 후속 사고 기록도 비슷한 표현으로 정리되는 흐름을 차단하지 못했다.",
+      "result": "containment_failed"
+    },
+    {
+      "node_id": "failure_002",
+      "node_type": "failure",
+      "title": "위험 장소 확장",
+      "body": "저수지에서 시작된 안내 문구는 농로, 배수로, 논둑, 하천변으로 확대되었다.\n\n방송 이후 주민들은 새로 언급된 장소들을 “방송에서 조심하라고 한 곳”으로 부르기 시작했다.\n\n일부 주민은 “방송에서 말한 배수로를 확인만 하려고 했다”, “그 논둑 쪽이 맞는지 보려고 했다”고 진술했다.\n\n후속 사고 보고서에는 방송 문구에 포함된 장소명이 반복적으로 등장했다. 기관은 어떤 장소를 방송에 포함하든 그 장소가 주민들의 새로운 확인 대상이 되는 흐름을 막지 못했다.",
+      "result": "containment_failed"
+    },
+    {
+      "node_id": "failure_003",
+      "node_type": "failure",
+      "title": "안내 문구 반복 확산",
+      "body": "마을 방송 원고, 마을회관 게시문, 현장 표지, 문자 알림 문구가 같은 장소 목록과 사고 표현을 공유하기 시작했다.\n\n주민들은 방송을 듣지 않아도 게시문이나 표지, 문자 알림을 통해 같은 장소를 반복 확인했다.\n\n사고 보고서는 방송 문구뿐 아니라 게시문, 표지, 문자 알림의 표현과도 유사한 형태로 정리되었다.\n\n최종 기록에서는 정상적인 안전 안내 문구들이 같은 장소와 사고 설명을 반복하는 상태로 정리되었다.",
+      "result": "containment_failed"
+    }
+  ],
+  "special_events": [
+    {
+      "event_id": "special_event_001",
+      "title": "현장 표지",
+      "start_node_id": "special_001_report_001",
+      "nodes": [
+        {
+          "node_id": "special_001_report_001",
+          "node_type": "special_report",
+          "title": "현장 표지 문구 보고",
+          "body": "안정화 이후 저수지 접근로 주변에 현장 표지가 설치되었다.\n\n일부 표지에는 “미끄러짐 주의”, “수위 상승 구간”, “우측 농로 접근 금지”처럼 구체적인 장소와 사고 형태가 함께 적혀 있었다.\n\n마을 방송은 추가로 송출되지 않았다. 그러나 표지를 읽은 주민 일부가 해당 장소를 확인하려 했다는 보고가 접수되었다.",
+          "choices": [
+            {
+              "choice_id": "special_001_report_001_choice_a",
+              "choice_text": "표지 문구를 더 자세히 만들어 사고 유형과 접근 방향을 명확히 표시한다.",
+              "next_node_id": "special_001_report_003",
+              "state_delta": -2,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            },
+            {
+              "choice_id": "special_001_report_001_choice_b",
+              "choice_text": "표지는 유지하되, 출입 제한과 우회 방향 중심으로 문구를 줄인다.",
+              "next_node_id": "special_001_report_002",
+              "state_delta": 1,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            },
+            {
+              "choice_id": "special_001_report_001_choice_c",
+              "choice_text": "같은 문구의 표지를 여러 위치에 추가 설치해 주민들이 놓치지 않게 한다.",
+              "next_node_id": "special_001_report_003",
+              "state_delta": -2,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            }
+          ]
+        },
+        {
+          "node_id": "special_001_report_002",
+          "node_type": "special_report",
+          "title": "제한·우회 표지 정리 보고",
+          "body": "현장 표지 문구가 다시 정리되었다.\n\n표지는 사고 유형을 자세히 설명하지 않고, 출입 제한 구역과 우회 방향을 표시하는 방식으로 바뀌었다.\n\n일부 주민은 표지가 불친절해졌다고 말했으나, “표지에 적힌 곳을 확인하려 했다”는 진술은 줄어들었다.",
+          "choices": [
+            {
+              "choice_id": "special_001_report_002_choice_a",
+              "choice_text": "현재 표지 기준을 유지하고, 이동 방향과 제한 구역만 최소한으로 표시한다.",
+              "next_node_id": "special_001_report_004",
+              "state_delta": 2,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            },
+            {
+              "choice_id": "special_001_report_002_choice_b",
+              "choice_text": "주민 이해를 돕기 위해 표지에 사고 사례와 위험 설명을 다시 추가한다.",
+              "next_node_id": "special_001_report_003",
+              "state_delta": -2,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            }
+          ]
+        },
+        {
+          "node_id": "special_001_report_003",
+          "node_type": "special_report",
+          "title": "표지 문구 재구체화 보고",
+          "body": "현장 표지에 사고 유형과 세부 위치 설명이 다시 추가되었다.\n\n일부 표지에는 특정 접근로, 미끄러짐, 수위 상승, 추락 위험 같은 표현이 함께 적혔다.\n\n이후 주민 진술에는 “표지에 적힌 곳만 확인하려 했다”, “표지에 나온 농로가 어디인지 보려고 했다”는 표현이 남았다.",
+          "choices": [
+            {
+              "choice_id": "special_001_report_003_choice_a",
+              "choice_text": "표지에서 사고 유형 설명을 제거하고, 우회 방향과 제한 구역만 남긴다.",
+              "next_node_id": "special_001_report_004",
+              "state_delta": 1,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            },
+            {
+              "choice_id": "special_001_report_003_choice_b",
+              "choice_text": "사고 방지를 위해 표지 주변에 실제 사고 사례와 자세한 위험 설명을 추가한다.",
+              "next_node_id": "special_001_failure_001",
+              "state_delta": -3,
+              "delay_range": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        },
+        {
+          "node_id": "special_001_report_004",
+          "node_type": "special_report",
+          "title": "최종 표지 정리 보고",
+          "body": "현장 표지가 다시 정리되었다.\n\n표지는 현장 차단선, 우회 방향, 제한 구역 표시와 함께 사용되었으며, 사고 유형이나 사고 사례를 자세히 설명하지 않았다.\n\n표지를 읽은 뒤 특정 장소를 확인하려는 주민 행동은 추가로 확인되지 않았다.",
+          "choices": [
+            {
+              "choice_id": "special_001_report_004_choice_a",
+              "choice_text": "정리된 표지 기준을 유지하고, 사고가 어떻게 나는지 설명하는 문구가 다시 붙지 않게 관리한다.",
+              "next_node_id": "special_001_stable",
+              "state_delta": 2,
+              "delay_range": {
+                "min": 1,
+                "max": 1
+              }
+            },
+            {
+              "choice_id": "special_001_report_004_choice_b",
+              "choice_text": "주민 안내 강화를 위해 표지에 사고 유형과 장소 설명을 다시 포함한다.",
+              "next_node_id": "special_001_failure_001",
+              "state_delta": -3,
+              "delay_range": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        }
+      ],
+      "stable_nodes": [
+        {
+          "node_id": "special_001_stable",
+          "node_type": "special_stable",
+          "title": "현장 표지 안정화 복귀",
+          "body": "현장 표지는 출입 제한과 우회 방향 중심으로 유지되었다.\n\n표지 문구는 사고 형태를 자세히 설명하지 않았고, 물리적 차단과 우회 동선 안내를 보조하는 역할로만 사용되었다.",
+          "result": "returned_to_stable",
+          "state_delta": 2
+        }
+      ],
+      "failure_nodes": [
+        {
+          "node_id": "special_001_failure_001",
+          "node_type": "special_failure",
+          "title": "현장 표지 실패",
+          "body": "현장 표지 문구가 사고 보고서처럼 구체화되었다.\n\n주민들은 표지에 적힌 장소와 행동을 따라 현장을 확인하려 했고, 이후 표지에 포함된 다른 구간으로도 사고 기록이 확장되었다.\n\n현장 표지는 안전 보조 수단이 아니라, 사고 장소와 행동을 반복해서 떠올리게 하는 공식 문구로 처리되었다.",
+          "result": "containment_failed"
+        }
+      ]
+    },
+    {
+      "event_id": "special_event_002",
+      "title": "문자 알림",
+      "start_node_id": "special_002_report_001",
+      "nodes": [
+        {
+          "node_id": "special_002_report_001",
+          "node_type": "special_report",
+          "title": "문자 알림 이후 확인 행동 보고",
+          "body": "마을 방송 대신 문자 알림으로 특정 배수로 접근 주의 안내가 발송되었다.\n\n문자에는 “○○배수로 인근 미끄러짐 위험, 접근 자제”라는 문구가 포함되어 있었다.\n\n이후 문자를 받은 주민 1명이 “문자에 적힌 배수로를 확인만 하려고 했다”고 진술했다.",
+          "choices": [
+            {
+              "choice_id": "special_002_report_001_choice_a",
+              "choice_text": "같은 문자를 다시 발송해 주민들이 내용을 놓치지 않게 한다.",
+              "next_node_id": "special_002_report_003",
+              "state_delta": -2,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            },
+            {
+              "choice_id": "special_002_report_001_choice_b",
+              "choice_text": "문자에는 최소한의 행동 안내만 남기고, 필요한 주민에게는 개별 연락을 진행한다.",
+              "next_node_id": "special_002_report_002",
+              "state_delta": 1,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            },
+            {
+              "choice_id": "special_002_report_001_choice_c",
+              "choice_text": "문자에 지도 링크와 현장 사진을 첨부해 위치를 명확히 안내한다.",
+              "next_node_id": "special_002_report_003",
+              "state_delta": -2,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            }
+          ]
+        },
+        {
+          "node_id": "special_002_report_002",
+          "node_type": "special_report",
+          "title": "문자 안내 축소 보고",
+          "body": "문자 알림 문구가 짧게 수정되었다.\n\n문자는 특정 사고 형태나 현장 사진을 포함하지 않았고, 필요한 대상에게만 최소 행동 안내를 전달했다.\n\n구체적인 위험 관리는 현장 차단, 개별 연락, 담당자 대면 안내로 처리되었다.",
+          "choices": [
+            {
+              "choice_id": "special_002_report_002_choice_a",
+              "choice_text": "현재 문자 기준을 유지하고, 지도 링크나 사고 사례 없이 최소 안내만 발송한다.",
+              "next_node_id": "special_002_report_004",
+              "state_delta": 2,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            },
+            {
+              "choice_id": "special_002_report_002_choice_b",
+              "choice_text": "주민 이해를 돕기 위해 문자에 배수로 사진과 사고 사례를 추가한다.",
+              "next_node_id": "special_002_report_003",
+              "state_delta": -2,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            }
+          ]
+        },
+        {
+          "node_id": "special_002_report_003",
+          "node_type": "special_report",
+          "title": "문자 내용 재구체화 보고",
+          "body": "문자 알림에 장소명, 지도 링크, 현장 사진, 사고 사례가 추가되었다.\n\n일부 주민은 문자 내용을 여러 번 다시 열어 본 것으로 확인되었다.\n\n후속 진술에는 “문자에 적힌 곳을 확인하려 했다”, “사진 속 배수로가 어디인지 보려고 했다”는 표현이 남았다.",
+          "choices": [
+            {
+              "choice_id": "special_002_report_003_choice_a",
+              "choice_text": "문자에서 지도 링크와 사고 사례를 제외하고, 필요한 대상에게 개별 연락을 진행한다.",
+              "next_node_id": "special_002_report_004",
+              "state_delta": 1,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            },
+            {
+              "choice_id": "special_002_report_003_choice_b",
+              "choice_text": "문자 내용을 더 명확히 하기 위해 사진과 지도 링크를 포함한 안내를 반복 발송한다.",
+              "next_node_id": "special_002_failure_001",
+              "state_delta": -3,
+              "delay_range": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        },
+        {
+          "node_id": "special_002_report_004",
+          "node_type": "special_report",
+          "title": "최종 문자 안내 정리 보고",
+          "body": "문자 알림 기준이 다시 정리되었다.\n\n문자는 구체적인 사고 형태, 현장 사진, 지도 링크를 포함하지 않았고, 필요한 대상에게만 최소 안내를 전달했다.\n\n위험 장소 관리는 현장 차단, 담당자 연락, 대면 안내로 처리되었다. 문자 수신자가 특정 장소를 확인하러 가는 사례는 추가 확인되지 않았다.",
+          "choices": [
+            {
+              "choice_id": "special_002_report_004_choice_a",
+              "choice_text": "정리된 문자 기준을 유지하고, 반복해서 열어 볼 수 있는 세부 장소 정보는 보내지 않는다.",
+              "next_node_id": "special_002_stable",
+              "state_delta": 2,
+              "delay_range": {
+                "min": 1,
+                "max": 1
+              }
+            },
+            {
+              "choice_id": "special_002_report_004_choice_b",
+              "choice_text": "주민 편의를 위해 문자에 지도 링크와 현장 사진을 다시 포함한다.",
+              "next_node_id": "special_002_failure_001",
+              "state_delta": -3,
+              "delay_range": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        }
+      ],
+      "stable_nodes": [
+        {
+          "node_id": "special_002_stable",
+          "node_type": "special_stable",
+          "title": "문자 알림 안정화 복귀",
+          "body": "문자 알림은 최소 행동 안내로만 유지되었다.\n\n구체적인 장소명, 사고 사례, 지도 링크, 현장 사진은 문자에 포함되지 않았다. 위험 관리는 현장 차단과 개별 안내로 처리되었다.",
+          "result": "returned_to_stable",
+          "state_delta": 2
+        }
+      ],
+      "failure_nodes": [
+        {
+          "node_id": "special_002_failure_001",
+          "node_type": "special_failure",
+          "title": "문자 알림 실패",
+          "body": "문자 알림이 반복 발송되었고, 문자에는 장소명, 지도 링크, 현장 사진, 사고 사례가 함께 포함되었다.\n\n주민들은 문자를 여러 번 다시 열어 보며 해당 장소를 확인하려 했다.\n\n후속 사고 보고서에는 문자에 포함된 장소와 설명이 반복적으로 등장했다.",
+          "result": "containment_failed"
+        }
+      ]
+    }
+  ]
+}
