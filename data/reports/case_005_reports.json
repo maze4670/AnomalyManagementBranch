@@ -1,0 +1,642 @@
+{
+  "case_id": "case_005",
+  "display_id": "CASE-IC-001",
+  "alias": "늘 살던 사람",
+  "report_nodes": [
+    {
+      "node_id": "report_001",
+      "node_type": "report",
+      "title": "최초 택배·경비실 불일치 보고",
+      "body": "단지 내 택배 오배송 처리 중, 수취인 이름이 비어 있거나 동·호수가 누락된 송장이 확인되었다.\n\n택배 기사는 해당 수취인을 “항상 여기로 받던 분”이라고 진술했다. 그러나 관리사무소 입주민 명부에서는 해당 수취인과 일치하는 항목이 확인되지 않았다.\n\n경비실 방문대장에도 해당 인물은 방문자로 기록되어 있지 않았다. 다만 경비원은 해당 인물을 방문자가 아니라 “원래 사는 사람”으로 알고 있었으며, 자주 드나드는 사람이라 별도 기록을 남기지 않았다고 진술했다.\n\n일부 주민은 해당 인물을 엘리베이터, 분리수거장, 경비실 앞, 택배 보관대 주변에서 본 적이 있다고 말했다. 그러나 이름, 동·호수, 가족관계, 차량번호는 확인되지 않았다.",
+      "choices": [
+        {
+          "choice_id": "report_001_choice_a",
+          "choice_text": "주민 제보와 경비실 기억을 모아 해당 인물에 대한 단서를 정리한다.",
+          "next_node_id": "report_002",
+          "state_delta": -1,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        },
+        {
+          "choice_id": "report_001_choice_b",
+          "choice_text": "택배·방문·출입 기록에서 서로 맞지 않는 항목을 따로 기록한다.",
+          "next_node_id": "report_004",
+          "state_delta": 1,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        },
+        {
+          "choice_id": "report_001_choice_c",
+          "choice_text": "경비실 출입 확인을 강화하고, 출입 사진 확인 절차를 추가한다.",
+          "next_node_id": "report_003",
+          "state_delta": -1,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        }
+      ]
+    },
+    {
+      "node_id": "report_002",
+      "node_type": "report",
+      "title": "주민 제보 수집 이후 보고",
+      "body": "주민 제보가 수집되었다. 제보자들은 해당 인물을 낯선 사람으로 보지는 않았으나, 이름과 동·호수는 서로 다르게 말했다.\n\n한 주민은 “2동 쪽 사람 같다”고 했고, 다른 주민은 “3동 뒤편 라인에서 본 것 같다”고 진술했다. 일부 주민은 “오래 살아서 정확히 모를 뿐”이라고 덧붙였다.\n\n제보가 늘어났지만 신원은 명확해지지 않았다. 관리사무소 보조 기록에는 “거주 추정”, “장기 거주자 가능성”, “명부 누락 확인 필요” 같은 항목이 추가되었다.\n\n택배 수령 기록 일부도 주민 진술을 근거로 보완될 수 있다는 의견이 남았다.",
+      "choices": [
+        {
+          "choice_id": "report_002_choice_a",
+          "choice_text": "복수 주민의 제보를 근거로 임시 거주 추정 항목을 만들고, 명부 누락 여부를 확인한다.",
+          "next_node_id": "report_005",
+          "state_delta": -2,
+          "delay_range": {
+            "min": 2,
+            "max": 4
+          }
+        },
+        {
+          "choice_id": "report_002_choice_b",
+          "choice_text": "주민 제보는 보관하되, 명부 빈칸이나 출입 승인 근거로 쓰지 않게 따로 둔다.",
+          "next_node_id": "report_004",
+          "state_delta": 1,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "choice_id": "report_002_choice_c",
+          "choice_text": "단지 게시판에 해당 인물 확인 요청문을 붙이고, 추가 제보를 받는다.",
+          "next_node_id": "report_006",
+          "state_delta": -2,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        }
+      ]
+    },
+    {
+      "node_id": "report_003",
+      "node_type": "report",
+      "title": "출입·사진 확인 강화 이후 보고",
+      "body": "경비실 출입 확인이 강화되었고, 출입 사진과 CCTV 캡처를 바탕으로 주민 여부를 확인하는 절차가 추가되었다.\n\n사진과 영상은 정상적으로 남아 있었다. 그러나 확인자는 사진 속 인물의 얼굴 특징을 구체적으로 설명하지 못하고, “아는 얼굴 같다”, “우리 단지 사람 같다”는 표현으로만 분류했다.\n\n경비실은 익숙한 얼굴은 별도 확인 없이 통과시키는 반면, 일부 실제 주민에게는 추가 확인을 요구했다.\n\n출입 사진 판독 메모에는 “낯선 사람 아님”, “단지 사람으로 보임”, “기억 있음” 같은 표현이 늘어났다.",
+      "choices": [
+        {
+          "choice_id": "report_003_choice_a",
+          "choice_text": "CCTV 캡처와 출입 사진을 주민들에게 보여 주고, 아는 얼굴인지 확인하게 한다.",
+          "next_node_id": "report_006",
+          "state_delta": -2,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        },
+        {
+          "choice_id": "report_003_choice_b",
+          "choice_text": "사진 자료는 보존하되, 주민 여부는 현재 입주 기록과 출입 기록으로 따로 확인한다.",
+          "next_node_id": "report_004",
+          "state_delta": 1,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "choice_id": "report_003_choice_c",
+          "choice_text": "경비실 확인 절차를 더 강화하고, 실제 주민 전체도 재확인 대상으로 올린다.",
+          "next_node_id": "report_008",
+          "state_delta": -2,
+          "delay_range": {
+            "min": 2,
+            "max": 4
+          }
+        }
+      ]
+    },
+    {
+      "node_id": "report_004",
+      "node_type": "report",
+      "title": "불일치 기록 분리 보고",
+      "body": "택배 송장, 방문대장, 입주민 명부, 출입 사진 기록이 서로 대조되었다.\n\n동일한 인물을 가리키는 것처럼 보이는 기록도 있었으나, 이름, 동·호수, 가족관계, 차량번호가 함께 맞아떨어지는 항목은 확인되지 않았다.\n\n주민 제보와 경비실 기억은 별도 참고 자료로 분리되었다. 해당 진술은 명부 보완이나 출입 승인 근거로는 사용하지 않는 방식으로 정리되었다.\n\n다만 일부 관리사무소 직원은 주민 제보를 완전히 배제하면 실제 오래된 주민을 놓칠 수 있다고 우려했다.",
+      "choices": [
+        {
+          "choice_id": "report_004_choice_a",
+          "choice_text": "출입·택배·주차·민원·방문 기록을 각각 따로 확인하고, 주민 기억으로 누락 항목을 채우지 않는다.",
+          "next_node_id": "report_007",
+          "state_delta": 2,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        },
+        {
+          "choice_id": "report_004_choice_b",
+          "choice_text": "주민 제보를 참고해 누락 가능성이 있는 세대와 장기 거주자 항목을 다시 정리한다.",
+          "next_node_id": "report_005",
+          "state_delta": -2,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        },
+        {
+          "choice_id": "report_004_choice_c",
+          "choice_text": "“확인되지 않은 주민 없음” 안내문을 게시해 주민들의 기억을 바로잡는다.",
+          "next_node_id": "report_006",
+          "state_delta": -1,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        }
+      ]
+    },
+    {
+      "node_id": "report_005",
+      "node_type": "report",
+      "title": "가짜 이웃상 구체화 보고",
+      "body": "주민 제보와 관리사무소 보조 기록을 모은 뒤, 해당 인물에 대한 설명은 정리되기보다 더 구체화되었다.\n\n기록에는 “2동 장기 거주자 가능성”, “과거 세대원 누락 가능성”, “택배 수령 이력 보완 필요” 같은 항목이 추가되었다.\n\n주민들은 서로 다른 정보를 말했지만, 모순은 정정되지 않았다. 대신 “오래 살아서 정확히 기억하지 못할 뿐”이라는 설명이 붙었다.\n\n이후 택배 보관대 주변에서 이름 없는 수취인 기록이 추가로 확인되었고, 일부 민원 접수 기록에도 동·호수가 불명확한 인물이 “기존 주민”처럼 기재되었다.",
+      "choices": [
+        {
+          "choice_id": "report_005_choice_a",
+          "choice_text": "주민 제보를 근거로 누락 주민 항목을 만들고, 관련 택배·민원 기록을 연결한다.",
+          "next_node_id": "failure_001",
+          "state_delta": -3,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "choice_id": "report_005_choice_b",
+          "choice_text": "거주 추정 항목을 보류하고, 주민 제보가 기록 빈칸을 채우지 못하게 따로 둔다.",
+          "next_node_id": "report_004",
+          "state_delta": 1,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "choice_id": "report_005_choice_c",
+          "choice_text": "공개 안내문을 다시 게시해 해당 인물이 입주민 명부에 없음을 주민들에게 알린다.",
+          "next_node_id": "report_008",
+          "state_delta": -2,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        }
+      ]
+    },
+    {
+      "node_id": "report_006",
+      "node_type": "report",
+      "title": "얼굴 사진 확인 절차 이상 보고",
+      "body": "출입 사진과 CCTV 캡처 확인 절차가 진행되었다.\n\n사진은 정상적으로 남아 있었고, 영상 훼손이나 조작 흔적도 확인되지 않았다. 그러나 확인자들은 사진 속 인물의 얼굴 특징을 구체적으로 설명하지 못했다.\n\n여러 장의 사진에서 서로 다른 인물이 확인되었으나, 판독 메모에는 모두 “아는 얼굴”, “단지 사람 같음”, “낯설지 않음”으로 정리되었다.\n\n일부 주민은 사진을 본 뒤 “이 사람도 본 적 있다”고 말했지만, 어디서 언제 봤는지는 설명하지 못했다.",
+      "choices": [
+        {
+          "choice_id": "report_006_choice_a",
+          "choice_text": "사진과 CCTV 캡처를 더 많은 주민에게 보여 주고, 아는 얼굴인지 확인한다.",
+          "next_node_id": "failure_003",
+          "state_delta": -3,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "choice_id": "report_006_choice_b",
+          "choice_text": "사진 자료는 보관하되, 익숙한 얼굴인지 여부만으로 주민을 판단하지 않는다.",
+          "next_node_id": "report_007",
+          "state_delta": 2,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        },
+        {
+          "choice_id": "report_006_choice_c",
+          "choice_text": "사진 속 인물들을 기존 제보와 연결해, 여러 명의 원래 주민 후보로 정리한다.",
+          "next_node_id": "report_008",
+          "state_delta": -2,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        }
+      ]
+    },
+    {
+      "node_id": "report_007",
+      "node_type": "report",
+      "title": "기록 기준 정리 전조 보고",
+      "body": "출입, 택배, 주차, 민원, 방문 승인 기록이 각각 따로 정리되었다.\n\n경비실은 “자주 봤다”, “원래 사는 사람 같다”는 판단만으로 출입을 승인하지 않도록 조정되었다. 택배 수령 기록도 주민 진술만으로 보완되지 않게 되었다.\n\n주차 등록과 민원 접수 기록에서는 동·호수와 현재 등록 기준이 따로 확인되었고, 얼굴이 익숙하다는 진술은 보조 메모로만 남았다.\n\n실제 주민이 추가 확인 대상으로 밀려나는 사례도 줄어들기 시작했다. 다만 일부 주민은 여전히 “어디선가 본 것 같다”고 진술했다.",
+      "choices": [
+        {
+          "choice_id": "report_007_choice_a",
+          "choice_text": "현재 방식대로 각 기록을 따로 확인하고, “아는 얼굴” 진술로 누락 항목을 채우지 않는다.",
+          "next_node_id": "stable_001",
+          "state_delta": 2,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "choice_id": "report_007_choice_b",
+          "choice_text": "주민 불안을 줄이기 위해 사진 자료와 제보 내용을 다시 모아 설명회를 연다.",
+          "next_node_id": "report_006",
+          "state_delta": -1,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        },
+        {
+          "choice_id": "report_007_choice_c",
+          "choice_text": "미확인 인물 유입을 막기 위해 단지 전체 주민을 공개 재확인 대상으로 올린다.",
+          "next_node_id": "report_008",
+          "state_delta": -2,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        }
+      ]
+    },
+    {
+      "node_id": "report_008",
+      "node_type": "report",
+      "title": "실제 주민 방문자 처리 보고",
+      "body": "실제 거주자 일부가 경비실 또는 관리사무소에서 방문자처럼 처리되는 사례가 확인되었다.\n\n한 주민은 자기 집 앞에서 추가 확인을 요구받았고, 다른 주민은 주차 등록 갱신 과정에서 “기존 거주 확인 필요” 항목으로 분류되었다.\n\n반대로, 이름과 동·호수가 확인되지 않는 인물에 대해서는 “낯선 사람은 아니다”, “자주 보던 얼굴이다”라는 이유로 절차가 넘어간 기록이 남았다.\n\n관리사무소 내부에서는 실제 주민 전체를 다시 확인해야 한다는 의견과, 주민 기억을 기록에서 분리해야 한다는 의견이 갈렸다.",
+      "choices": [
+        {
+          "choice_id": "report_008_choice_a",
+          "choice_text": "실제 주민 전체를 공개 재확인하지 않고, 문제가 생긴 기록부터 따로 정리한다.",
+          "next_node_id": "report_007",
+          "state_delta": 1,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "choice_id": "report_008_choice_b",
+          "choice_text": "실제 주민과 미확인 인물을 모두 같은 방식으로 공개 재확인한다.",
+          "next_node_id": "failure_002",
+          "state_delta": -3,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "choice_id": "report_008_choice_c",
+          "choice_text": "주민 제보가 많은 인물을 우선 누락 주민 후보로 등록해 실제 주민과 구분한다.",
+          "next_node_id": "failure_001",
+          "state_delta": -3,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        }
+      ]
+    }
+  ],
+  "stable_nodes": [
+    {
+      "node_id": "stable_001",
+      "node_type": "stable",
+      "title": "기록 기준 정리 이후 보고",
+      "body": "출입, 택배, 주차, 민원, 방문 기록에서 “아는 얼굴” 진술이 제외되었다.\n\n경비실은 더 이상 “자주 봤다”, “원래 사는 사람 같다”는 판단만으로 출입을 승인하지 않았다. 택배 수령, 방문 승인, 주차 등록, 민원 접수 역시 주민 증언이나 “익숙한 얼굴”이라는 말로 보완되지 않았다.\n\n주민들은 여전히 “어디선가 본 것 같다”고 말했으나, 해당 진술은 더 이상 기록 빈칸을 채우거나 출입을 승인하는 근거로 사용되지 않았다.\n\n실제 주민 일부가 방문자처럼 처리되던 사례도 줄어들었다. 기록에 없는 인물이 주민으로 처리되는 사례는 더 이상 추가 확인되지 않았다.",
+      "result": "stabilized",
+      "state_delta": 3
+    }
+  ],
+  "failure_nodes": [
+    {
+      "node_id": "failure_001",
+      "node_type": "failure",
+      "title": "누락 주민 등록",
+      "body": "관리사무소 기록에 “누락 주민” 항목이 만들어졌다.\n\n해당 항목에는 이름, 동·호수, 가족관계가 명확히 기재되지 않았으나, 복수 주민의 제보와 택배 수령 기록이 보조 근거로 붙었다.\n\n이후 비슷한 방식의 “거주 추정” 항목이 여러 개 생겼고, 이름 없는 택배 수령 기록과 민원 접수 기록이 해당 항목으로 묶이기 시작했다.\n\n기록에 없는 인물은 더 이상 방문자나 미확인자가 아니라, 오래전부터 누락된 주민처럼 처리되었다.",
+      "result": "containment_failed"
+    },
+    {
+      "node_id": "failure_002",
+      "node_type": "failure",
+      "title": "실제 주민 밀려남",
+      "body": "실제 거주자 일부가 경비실, 주차 등록, 민원 접수 과정에서 방문자 또는 새 입주민처럼 처리되었다.\n\n경비실은 익숙한 얼굴을 통과시키면서도, 실제 주민에게는 추가 확인을 요구했다. 일부 실제 주민은 자기 집 앞에서 “거주 확인 필요” 대상으로 분류되었다.\n\n동시에 이름과 동·호수가 확인되지 않는 인물은 주민들의 “낯선 얼굴은 아니다”라는 진술로 절차를 통과했다.\n\n관리사무소와 기관은 실제 주민 보호와 미확인 인물 차단을 동시에 실패한 것으로 판단했다.",
+      "result": "containment_failed"
+    },
+    {
+      "node_id": "failure_003",
+      "node_type": "failure",
+      "title": "얼굴 확인 기준 붕괴",
+      "body": "출입 사진과 CCTV 캡처는 정상적으로 남아 있었다.\n\n그러나 확인자들은 사진 속 인물의 눈, 코, 입, 나이, 옷차림 같은 특징을 구체적으로 설명하지 못했다. 대신 대부분의 사진은 “아는 얼굴 같다”, “우리 단지 사람 같다”, “낯설지 않음”으로 분류되었다.\n\n서로 다른 인물로 보이는 사진도 같은 방식으로 처리되었고, 여러 명의 “원래 살던 사람”이 단지 안에서 언급되기 시작했다.\n\n최종 기록에서는 실제 주민과 기록에 없는 인물을 얼굴로 구분하는 절차가 더 이상 안정적으로 작동하지 않는 것으로 정리되었다.",
+      "result": "containment_failed"
+    }
+  ],
+  "special_events": [
+    {
+      "event_id": "special_event_001",
+      "title": "그 집 사람",
+      "start_node_id": "special_001_report_001",
+      "nodes": [
+        {
+          "node_id": "special_001_report_001",
+          "node_type": "special_report",
+          "title": "그 집 사람 항목 보고",
+          "body": "안정화 이후 관리사무소가 동별 연락망을 정리하던 중, 이름과 호수가 비어 있는 항목이 확인되었다.\n\n해당 항목에는 “그 집 사람”이라는 메모만 남아 있었다. 입주민 명부에는 일치 항목이 없었으나, 일부 주민은 “그 집 일은 원래 그분한테 말하면 됐다”고 진술했다.\n\n해당 메모는 출입·택배·주차 기록에는 연결되지 않았지만, 민원 전달과 반상회 연락망 초안에서 반복 확인되었다.",
+          "choices": [
+            {
+              "choice_id": "special_001_report_001_choice_a",
+              "choice_text": "“그 집 사람”이 누구인지 주민들에게 묻고, 담당자 신원을 확인한다.",
+              "next_node_id": "special_001_report_003",
+              "state_delta": -1,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            },
+            {
+              "choice_id": "special_001_report_001_choice_b",
+              "choice_text": "해당 항목을 임시 연락 담당자로 등록하고, 민원 전달 기록을 보완한다.",
+              "next_node_id": "special_001_report_003",
+              "state_delta": -2,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            },
+            {
+              "choice_id": "special_001_report_001_choice_c",
+              "choice_text": "해당 항목을 특정 인물로 등록하지 않고, 현재 확인 가능한 세대 연락처와 비교한다.",
+              "next_node_id": "special_001_report_002",
+              "state_delta": 1,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            }
+          ]
+        },
+        {
+          "node_id": "special_001_report_002",
+          "node_type": "special_report",
+          "title": "연락망 기준 정리 보고",
+          "body": "동별 연락망과 민원 전달 기록이 다시 확인되었다.\n\n“그 집 사람”이라는 표현은 주민 대화에 남아 있었지만, 연락 담당자나 세대 대표 항목으로는 등록되지 않았다.\n\n일부 주민은 해당 표현을 계속 사용했으나, 관리사무소 기록에서는 현재 확인 가능한 세대 연락처와 공식 담당자 기준만 남겼다.",
+          "choices": [
+            {
+              "choice_id": "special_001_report_002_choice_a",
+              "choice_text": "“그 집 사람” 같은 표현이 공식 담당자나 세대 대표 이름을 대신하지 못하게 연락망 기준을 유지한다.",
+              "next_node_id": "special_001_report_004",
+              "state_delta": 2,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            },
+            {
+              "choice_id": "special_001_report_002_choice_b",
+              "choice_text": "주민들이 실제로 쓰는 표현을 반영해 “그 집 사람” 항목을 보조 담당자로 남긴다.",
+              "next_node_id": "special_001_report_003",
+              "state_delta": -2,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            }
+          ]
+        },
+        {
+          "node_id": "special_001_report_003",
+          "node_type": "special_report",
+          "title": "관계 호칭 재혼입 보고",
+          "body": "“그 집 사람” 항목이 민원 전달과 반상회 연락망에서 다시 사용되기 시작했다.\n\n일부 기록에는 이름과 호수 없이 “그 집 사람에게 전달 완료”라는 문구가 남았다. 실제 세대주는 해당 전달 내용을 알지 못한다고 답했다.\n\n주민들은 “그분한테 말하면 늘 해결됐다”고 진술했지만, 해당 인물의 이름이나 세대는 특정하지 못했다.",
+          "choices": [
+            {
+              "choice_id": "special_001_report_003_choice_a",
+              "choice_text": "“그 집 사람” 항목을 다시 확인하고, 공식 연락 담당자처럼 쓰인 기록에서 분리한다.",
+              "next_node_id": "special_001_report_004",
+              "state_delta": 1,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            },
+            {
+              "choice_id": "special_001_report_003_choice_b",
+              "choice_text": "주민 편의를 위해 “그 집 사람”을 해당 세대의 임시 전달 담당자로 등록한다.",
+              "next_node_id": "special_001_failure_001",
+              "state_delta": -3,
+              "delay_range": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        },
+        {
+          "node_id": "special_001_report_004",
+          "node_type": "special_report",
+          "title": "최종 연락망 정리 보고",
+          "body": "동별 연락망, 민원 전달 기록, 반상회 연락 기록이 다시 정리되었다.\n\n“그 집 사람”이라는 표현은 주민 대화에는 남아 있었으나, 공식 담당자나 세대 대표 항목에는 반영되지 않았다.\n\n해당 세대의 연락 기준은 현재 확인 가능한 세대주 또는 공식 위임자 기준으로 정리되었다.",
+          "choices": [
+            {
+              "choice_id": "special_001_report_004_choice_a",
+              "choice_text": "정리된 연락망 기준을 유지하고, “그 집 사람” 같은 표현이 공식 담당자 항목을 대신하지 않게 관리한다.",
+              "next_node_id": "special_001_stable",
+              "state_delta": 2,
+              "delay_range": {
+                "min": 1,
+                "max": 1
+              }
+            },
+            {
+              "choice_id": "special_001_report_004_choice_b",
+              "choice_text": "주민들이 계속 사용하는 표현이므로 “그 집 사람” 항목을 연락망 보조 항목으로 복원한다.",
+              "next_node_id": "special_001_failure_001",
+              "state_delta": -3,
+              "delay_range": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        }
+      ],
+      "stable_nodes": [
+        {
+          "node_id": "special_001_stable",
+          "node_type": "special_stable",
+          "title": "그 집 사람 안정화 복귀",
+          "body": "“그 집 사람” 항목은 특정 인물이나 담당자로 등록되지 않았다.\n\n동별 연락망과 민원 전달 기록은 현재 확인 가능한 세대 연락 기준으로 정리되었다. 주민들은 해당 호칭을 말로 사용할 수는 있었으나, 공식 기록을 보완하는 근거로 쓰이지 않았다.",
+          "result": "returned_to_stable",
+          "state_delta": 2
+        }
+      ],
+      "failure_nodes": [
+        {
+          "node_id": "special_001_failure_001",
+          "node_type": "special_failure",
+          "title": "그 집 사람 실패",
+          "body": "“그 집 사람” 항목이 동별 연락망과 민원 전달 기록에 보조 담당자로 등록되었다.\n\n이후 실제 세대주는 자기 집의 공지·민원·연락 체계에서 일부 제외되었다. 일부 민원 기록에는 이름과 호수 없이 “그 집 사람에게 전달”이라는 문구가 반복되었다.\n\n기록에 없는 인물이 특정 세대의 역할을 대신하는 상태가 확인되었다.",
+          "result": "containment_failed"
+        }
+      ]
+    },
+    {
+      "event_id": "special_event_002",
+      "title": "빈 의자",
+      "start_node_id": "special_002_report_001",
+      "nodes": [
+        {
+          "node_id": "special_002_report_001",
+          "node_type": "special_report",
+          "title": "빈 의자 보고",
+          "body": "안정화 이후 열린 주민 대표 회의 사진에서, 참석자 수보다 의자 하나가 더 배치되어 있는 것이 확인되었다.\n\n회의록에는 해당 좌석의 발언자가 기록되어 있지 않았다. 그러나 참석자 일부는 “늘 그 자리에 앉던 분”이 있었다고 진술했다.\n\n해당 좌석은 회의 사진마다 같은 위치에 놓여 있었으며, 일부 참석자는 그 자리를 비워 두는 것이 자연스럽다고 말했다.",
+          "choices": [
+            {
+              "choice_id": "special_002_report_001_choice_a",
+              "choice_text": "참석자들에게 빈 의자에 앉았던 사람의 얼굴과 발언 내용을 떠올리게 한다.",
+              "next_node_id": "special_002_report_003",
+              "state_delta": -1,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            },
+            {
+              "choice_id": "special_002_report_001_choice_b",
+              "choice_text": "회의 사진을 주민들에게 공개해 해당 좌석의 참석자를 확인한다.",
+              "next_node_id": "special_002_report_003",
+              "state_delta": -2,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            },
+            {
+              "choice_id": "special_002_report_001_choice_c",
+              "choice_text": "회의 참석자와 발언권을 현재 대표 명단과 위임 기록 기준으로 다시 확인한다.",
+              "next_node_id": "special_002_report_002",
+              "state_delta": 1,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            }
+          ]
+        },
+        {
+          "node_id": "special_002_report_002",
+          "node_type": "special_report",
+          "title": "회의 기준 정리 보고",
+          "body": "주민 대표 회의 참석자 명단, 세대 대표 명단, 위임 기록이 다시 확인되었다.\n\n빈 의자는 사진에 남아 있었으나, 해당 좌석은 발언권이나 의결권을 가진 참석자로 등록되지 않았다.\n\n일부 참석자는 “한 자리 비어 있으면 이상하다”고 말했지만, 회의록에는 발언자 미상 항목이 추가되지 않았다.",
+          "choices": [
+            {
+              "choice_id": "special_002_report_002_choice_a",
+              "choice_text": "회의 참석자와 의결권을 현재 대표 명단과 위임 기록 기준으로만 유지한다.",
+              "next_node_id": "special_002_report_004",
+              "state_delta": 2,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            },
+            {
+              "choice_id": "special_002_report_002_choice_b",
+              "choice_text": "회의 분위기를 반영해 빈 의자를 관례적 참석석으로 남긴다.",
+              "next_node_id": "special_002_report_003",
+              "state_delta": -2,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            }
+          ]
+        },
+        {
+          "node_id": "special_002_report_003",
+          "node_type": "special_report",
+          "title": "빈 의자 발언자 보완 보고",
+          "body": "빈 의자에 앉았던 사람을 확인하려는 과정에서 참석자들의 진술이 추가되었다.\n\n일부 참석자는 “늘 조용히 듣던 분”이라고 말했고, 다른 참석자는 “가끔 중요한 말을 했다”고 진술했다. 그러나 이름, 세대, 위임 여부는 확인되지 않았다.\n\n회의록 보완 초안에는 “발언자 미상 참석자” 항목이 생겼고, 해당 좌석이 다음 회의 배치도에도 남았다.",
+          "choices": [
+            {
+              "choice_id": "special_002_report_003_choice_a",
+              "choice_text": "빈 의자 관련 진술을 회의록 빈칸을 채우는 근거로 쓰지 않고, 대표 명단과 위임 기록을 다시 확인한다.",
+              "next_node_id": "special_002_report_004",
+              "state_delta": 1,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            },
+            {
+              "choice_id": "special_002_report_003_choice_b",
+              "choice_text": "누락 발언자가 있었을 가능성을 고려해 회의록에 미상 참석자 항목을 추가한다.",
+              "next_node_id": "special_002_failure_001",
+              "state_delta": -3,
+              "delay_range": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        },
+        {
+          "node_id": "special_002_report_004",
+          "node_type": "special_report",
+          "title": "최종 회의록 정리 보고",
+          "body": "주민 대표 회의록, 참석자 명단, 위임 기록, 사진 자료가 다시 정리되었다.\n\n빈 의자는 사진에는 남아 있었으나, 참석자·발언자·의결권자로 등록되지 않았다.\n\n회의 의결권은 현재 확인 가능한 대표 명단과 위임 기록 기준으로 유지되었다. 참석자들은 여전히 “늘 있던 자리 같다”고 말했지만, 해당 감각은 회의록을 보완하는 근거로 사용되지 않았다.",
+          "choices": [
+            {
+              "choice_id": "special_002_report_004_choice_a",
+              "choice_text": "정리된 회의 기준을 유지하고, 빈 좌석이 참석자나 발언권으로 처리되지 않게 관리한다.",
+              "next_node_id": "special_002_stable",
+              "state_delta": 2,
+              "delay_range": {
+                "min": 1,
+                "max": 1
+              }
+            },
+            {
+              "choice_id": "special_002_report_004_choice_b",
+              "choice_text": "주민들이 기억하는 관례를 반영해 빈 의자를 회의 참석석으로 인정한다.",
+              "next_node_id": "special_002_failure_001",
+              "state_delta": -3,
+              "delay_range": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        }
+      ],
+      "stable_nodes": [
+        {
+          "node_id": "special_002_stable",
+          "node_type": "special_stable",
+          "title": "빈 의자 안정화 복귀",
+          "body": "빈 의자는 회의 사진에 남아 있었으나, 참석자나 발언권으로 기록되지 않았다.\n\n회의록과 의결권은 현재 확인 가능한 대표 명단과 위임 기록 기준으로 정리되었다. 참석자들의 “늘 있던 자리”라는 진술은 회의 기록 보완 근거로 쓰이지 않았다.",
+          "result": "returned_to_stable",
+          "state_delta": 2
+        }
+      ],
+      "failure_nodes": [
+        {
+          "node_id": "special_002_failure_001",
+          "node_type": "special_failure",
+          "title": "빈 의자 실패",
+          "body": "빈 의자가 회의록상 참석석으로 인정되었다.\n\n이후 “늘 오던 사람”의 의견이 주민 대표 회의 결정에 반영되었고, 실제 주민 대표 일부는 발언권이 확인되지 않은 사람처럼 처리되었다.\n\n회의 사진 속 빈 좌석은 계속 같은 위치에 배치되었으며, 회의록에는 이름 없는 참석자 항목이 반복되었다.",
+          "result": "containment_failed"
+        }
+      ]
+    }
+  ]
+}
