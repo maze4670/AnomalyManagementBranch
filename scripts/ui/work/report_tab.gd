@@ -7,7 +7,9 @@ const SAVE_MANAGER_SCRIPT := preload("res://scripts/save/save_manager.gd")
 @onready var report_list_container: VBoxContainer = $RootContainer/ContentContainer/ReportListContainer
 @onready var report_list_label: Label = $RootContainer/ContentContainer/ReportListContainer/ReportListLabel
 @onready var report_button: Button = $RootContainer/ContentContainer/ReportListContainer/ReportButton
-@onready var detail_text: RichTextLabel = $RootContainer/ContentContainer/DetailContainer/DetailText
+@onready var detail_text: RichTextLabel = $RootContainer/ContentContainer/DetailContainer/DetailScrollContainer/DetailBodyContainer/DetailText
+@onready var anomaly_image_slot: Control = $RootContainer/ContentContainer/DetailContainer/DetailScrollContainer/DetailBodyContainer/AnomalyImageSlot
+@onready var anomaly_image_rect: TextureRect = $RootContainer/ContentContainer/DetailContainer/DetailScrollContainer/DetailBodyContainer/AnomalyImageSlot/AnomalyImageRect
 @onready var completed_stamp_label: Label = $RootContainer/ContentContainer/DetailContainer/CompletedStampLabel
 @onready var status_label: Label = $RootContainer/ContentContainer/DetailContainer/StatusLabel
 @onready var choice_container: VBoxContainer = $RootContainer/ContentContainer/DetailContainer/ChoiceContainer
@@ -151,6 +153,7 @@ func _show_current_report_detail() -> void:
 	detail_lines.append("")
 	detail_lines.append(_get_report_body(current_report_node))
 	detail_text.text = "\n".join(detail_lines)
+	_update_anomaly_image(case_document)
 
 	if report_completed:
 		status_label.text = str(ui_messages.get(
@@ -270,6 +273,9 @@ func _update_work_screen_action_label() -> void:
 
 
 func _set_report_controls_visible(is_visible: bool) -> void:
+	if not is_visible:
+		_clear_anomaly_image()
+
 	choice_container.visible = is_visible
 	confirm_button.visible = is_visible
 	status_label.visible = is_visible
@@ -394,6 +400,27 @@ func _get_case_reports(case_id: String) -> Dictionary:
 		data_manager.free()
 
 	return case_reports_by_id.get(case_id, {})
+
+
+func _update_anomaly_image(case_document: Dictionary) -> void:
+	var image_path: String = str(case_document.get("image_path", ""))
+	if image_path.is_empty() or not ResourceLoader.exists(image_path):
+		_clear_anomaly_image()
+		return
+
+	var texture_resource: Resource = load(image_path)
+	var texture: Texture2D = texture_resource as Texture2D
+	if texture == null:
+		_clear_anomaly_image()
+		return
+
+	anomaly_image_rect.texture = texture
+	anomaly_image_slot.visible = true
+
+
+func _clear_anomaly_image() -> void:
+	anomaly_image_rect.texture = null
+	anomaly_image_slot.visible = false
 
 
 func _get_delayed_label(case_id: String, node_id: String) -> String:
