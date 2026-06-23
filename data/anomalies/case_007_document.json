@@ -1,0 +1,9 @@
+{
+  "case_id": "case_007",
+  "display_id": "CASE-JN-001",
+  "alias": "우물 속 색동저고리",
+  "category": "개체형",
+  "basic_description": "CASE-JN-001은 ████년 ██월 ██일 ███ 지역의 폐쇄 공동우물에서 발견되었다.\n\n해당 이상현상은 우물 안쪽 수면 위에 젖은 색동저고리처럼 보이는 형체가 떠 있는 현상으로 분류된다.\n\n초기 조사에서 해당 형체는 버려진 옷가지로 추정되었으나, 우물을 확인한 일부 인원은 이를 등 돌린 아이의 상반신처럼 보았다고 진술했다. 얼굴은 확인되지 않았다.",
+  "additional_descriptions": [],
+  "image_path": "res://assets/anomalies/case_007.png"
+}

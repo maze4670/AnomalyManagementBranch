@@ -1,0 +1,9 @@
+{
+  "case_id": "case_004",
+  "display_id": "CASE-DG-001",
+  "alias": "네 번째 탕",
+  "category": "공간형",
+  "basic_description": "CASE-DG-001은 ████년 ██월 ██일 ███ 지역의 폐업한 목욕탕 건물에서 발견되었다.\n\n해당 이상현상은 목욕탕 내부에서 도면상 존재하지 않는 추가 탕과, 실제 구조와 일치하지 않는 탈의실·복도 구역이 확인되는 현상으로 분류된다.\n\n초기 조사에서 도면에는 없는 ‘제4탕’ 표지가 확인되었으며, 이후 출구 표지판을 따라 이동한 점검자가 다시 탈의실과 유사한 공간에 도달한 기록이 남아 있다.",
+  "additional_descriptions": [],
+  "image_path": "res://assets/anomalies/case_004.png"
+}

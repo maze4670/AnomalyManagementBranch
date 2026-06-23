@@ -1,0 +1,40 @@
+{
+  "is_test_data": true,
+  "note": "마지막 이상현상 추가 후 경과일 기준 새 이상현상 추가 확률표입니다.",
+  "probability_table": [
+    {
+      "min_day": 0,
+      "max_day": 3,
+      "chance_percent": 10
+    },
+    {
+      "min_day": 4,
+      "max_day": 4,
+      "chance_percent": 15
+    },
+    {
+      "min_day": 5,
+      "max_day": 5,
+      "chance_percent": 30
+    },
+    {
+      "min_day": 6,
+      "max_day": 6,
+      "chance_percent": 40
+    },
+    {
+      "min_day": 7,
+      "max_day": 7,
+      "chance_percent": 50
+    },
+    {
+      "min_day": 8,
+      "max_day": 8,
+      "chance_percent": 60
+    },
+    {
+      "min_day": 9,
+      "chance_percent": 100
+    }
+  ]
+}

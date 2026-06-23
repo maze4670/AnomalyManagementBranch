@@ -4,5 +4,6 @@
   "alias": "흰 상여꾼",
   "category": "개체형",
   "basic_description": "CASE-JB-001은 ████년 ██월 ██일 ███ 지역의 한 농촌 마을에서 발견되었다.\n\n해당 이상현상은 최근 장례가 없던 마을에 삼베 천을 두른 상여꾼 형상의 개체들이 먼저 나타나는 현상으로 분류된다.\n\n개체들은 주로 마을회관 앞 공터, 선산으로 이어지는 산길, 오래된 상여길 주변에 자리 잡으며, 일부 출현에서는 실제 상여로 보이는 목제 구조물을 메고 있는 행렬 형태가 확인된다.\n\n특정 주민을 직접 지목하는 행동은 확인되지 않았다.",
-  "additional_descriptions": []
+  "additional_descriptions": [],
+  "image_path": "res://assets/anomalies/case_001.png"
 }

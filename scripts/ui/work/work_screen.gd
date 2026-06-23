@@ -1,5 +1,7 @@
 extends Control
 
+const CONTAINMENT_FAILURE_SCENE_PATH := "res://scenes/ending/ContainmentFailureScreen.tscn"
+
 @onready var current_day_label: Label = $RootContainer/HeaderContainer/StatusContainer/CurrentDayLabel
 @onready var action_label: Label = $RootContainer/HeaderContainer/StatusContainer/ActionLabel
 @onready var report_tab: Control = $RootContainer/TabContent/ReportTab
@@ -8,9 +10,17 @@ extends Control
 
 
 func _ready() -> void:
+	if GameState.has_active_containment_failure_report():
+		call_deferred("_open_containment_failure_screen")
+		return
+
 	current_day_label.text = "%d일차" % GameState.current_day
 	action_label.text = GameState.get_action_label()
 	_show_tab(report_tab)
+
+
+func _open_containment_failure_screen() -> void:
+	get_tree().change_scene_to_file(CONTAINMENT_FAILURE_SCENE_PATH)
 
 
 func _show_tab(tab_to_show: Control) -> void:

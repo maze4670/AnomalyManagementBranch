@@ -2,6 +2,7 @@ extends Node
 
 const BRIEFING_SCENE_PATH := "res://scenes/briefing/BriefingScreen.tscn"
 const ENDING_SCENE_PATH := "res://scenes/ending/EndingScreen.tscn"
+const CONTAINMENT_FAILURE_SCENE_PATH := "res://scenes/ending/ContainmentFailureScreen.tscn"
 const SAVE_MANAGER_SCRIPT := preload("res://scripts/save/save_manager.gd")
 const DATA_MANAGER_SCRIPT := preload("res://scripts/data/data_manager.gd")
 const TRUST_MANAGER_SCRIPT := preload("res://scripts/game/trust/trust_manager.gd")
@@ -9,9 +10,14 @@ const ENDING_MANAGER_SCRIPT := preload("res://scripts/game/endings/ending_manage
 const DELAY_PENALTY_DELTA := -1
 const DEFAULT_FOLLOWUP_DELAY_DAYS := 1
 const SPECIAL_EVENT_ROLL_MAX := 100
+const NEW_ANOMALY_ROLL_MAX := 100
 
 
 func end_day_minimal(scene_tree: SceneTree) -> void:
+	if GameState.has_active_containment_failure_report():
+		scene_tree.change_scene_to_file(CONTAINMENT_FAILURE_SCENE_PATH)
+		return
+
 	if _should_move_to_good_ending():
 		_move_to_ending(scene_tree, "good")
 		return
@@ -226,6 +232,11 @@ func _should_move_to_good_ending() -> bool:
 func _try_introduce_new_test_case() -> void:
 	if GameState.current_day < 1:
 		return
+	if not GameState.has_unintroduced_new_anomaly_case():
+		return
+
+	if not _should_introduce_new_test_case():
+		return
 
 	var next_case_report: Dictionary = GameState.get_next_test_case_to_introduce()
 	if next_case_report.is_empty():
@@ -235,6 +246,43 @@ func _try_introduce_new_test_case() -> void:
 		str(next_case_report.get("case_id", "")),
 		str(next_case_report.get("node_id", ""))
 	)
+	GameState.mark_anomaly_introduced(GameState.current_day)
+
+
+func _should_introduce_new_test_case() -> bool:
+	var chance_percent: int = _get_new_anomaly_chance_percent(GameState.get_days_since_last_anomaly_introduction())
+	if chance_percent <= 0:
+		return false
+	if chance_percent >= NEW_ANOMALY_ROLL_MAX:
+		return true
+
+	var random_number_generator: RandomNumberGenerator = RandomNumberGenerator.new()
+	random_number_generator.randomize()
+	return random_number_generator.randi_range(1, NEW_ANOMALY_ROLL_MAX) <= chance_percent
+
+
+func _get_new_anomaly_chance_percent(days_since_last_introduction: int) -> int:
+	var data_manager: Variant = DATA_MANAGER_SCRIPT.new()
+	var new_anomaly_rules: Dictionary = data_manager.load_new_anomaly_rules()
+	data_manager.free()
+
+	var probability_table: Variant = new_anomaly_rules.get("probability_table", [])
+	if typeof(probability_table) != TYPE_ARRAY:
+		return 0
+
+	for rule in (probability_table as Array):
+		if typeof(rule) != TYPE_DICTIONARY:
+			continue
+
+		var rule_data: Dictionary = rule as Dictionary
+		var min_day: int = int(rule_data.get("min_day", 0))
+		var max_day: int = int(rule_data.get("max_day", days_since_last_introduction))
+		if days_since_last_introduction < min_day or days_since_last_introduction > max_day:
+			continue
+
+		return clampi(int(rule_data.get("chance_percent", 0)), 0, NEW_ANOMALY_ROLL_MAX)
+
+	return 0
 
 
 func _process_stabilized_case_special_event_candidates() -> void:

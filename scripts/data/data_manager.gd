@@ -1,5 +1,11 @@
 extends Node
 
+const CASE_DOCUMENT_DIR := "res://data/anomalies"
+const CASE_REPORT_DIR := "res://data/reports"
+const CASE_DOCUMENT_SUFFIX := "_document.json"
+const CASE_REPORT_SUFFIX := "_reports.json"
+const DEFAULT_START_NODE_ID := "report_001"
+
 func load_json_file(path: String) -> Dictionary:
 	if not FileAccess.file_exists(path):
 		return {}
@@ -16,11 +22,43 @@ func load_json_file(path: String) -> Dictionary:
 
 
 func load_case_document(case_id: String) -> Dictionary:
-	return load_json_file("res://data/anomalies/%s_document.json" % case_id)
+	return load_json_file("%s/%s_document.json" % [CASE_DOCUMENT_DIR, case_id])
 
 
 func load_case_reports(case_id: String) -> Dictionary:
-	return load_json_file("res://data/reports/%s_reports.json" % case_id)
+	return load_json_file("%s/%s_reports.json" % [CASE_REPORT_DIR, case_id])
+
+
+func get_available_case_ids() -> Array:
+	var document_case_ids: Array = _get_case_ids_from_files(CASE_DOCUMENT_DIR, CASE_DOCUMENT_SUFFIX)
+	var report_case_ids: Array = _get_case_ids_from_files(CASE_REPORT_DIR, CASE_REPORT_SUFFIX)
+	var available_case_ids: Array = []
+
+	for case_id in document_case_ids:
+		if report_case_ids.has(case_id):
+			available_case_ids.append(case_id)
+		else:
+			print("Case document has no matching reports file: %s" % case_id)
+
+	for case_id in report_case_ids:
+		if not document_case_ids.has(case_id):
+			print("Case reports has no matching document file: %s" % case_id)
+
+	available_case_ids.sort()
+	return available_case_ids
+
+
+func get_eligible_starting_case_entries(case_pool: Dictionary) -> Array:
+	var excluded_cases: Array = _get_case_id_list(case_pool.get("exclude_from_starting_pool", []))
+	excluded_cases.append_array(_get_case_id_list(case_pool.get("late_game_only_cases", [])))
+	return _case_ids_to_entries(_filter_case_ids(get_available_case_ids(), excluded_cases))
+
+
+func get_eligible_introducible_case_entries(case_pool: Dictionary) -> Array:
+	var excluded_cases: Array = _get_case_id_list(case_pool.get("exclude_from_introduction_pool", []))
+	excluded_cases.append_array(_get_case_id_list(case_pool.get("exclude_from_new_anomaly_pool", [])))
+	excluded_cases.append_array(_get_case_id_list(case_pool.get("late_game_only_cases", [])))
+	return _case_ids_to_entries(_filter_case_ids(get_available_case_ids(), excluded_cases))
 
 
 func get_report_nodes(case_reports: Dictionary) -> Array:
@@ -54,6 +92,27 @@ func get_all_report_route_nodes(case_reports: Dictionary) -> Array:
 	return route_nodes
 
 
+func find_report_node(case_reports: Dictionary, node_id: String) -> Dictionary:
+	if node_id.is_empty():
+		return {}
+
+	for node in get_all_report_route_nodes(case_reports):
+		if typeof(node) != TYPE_DICTIONARY:
+			continue
+
+		var report_node: Dictionary = node as Dictionary
+		if str(report_node.get("node_id", "")) == node_id:
+			return report_node
+
+	return {}
+
+
+func is_containment_failure_node(report_node: Dictionary) -> bool:
+	var node_type: String = str(report_node.get("node_type", ""))
+	var result: String = str(report_node.get("result", ""))
+	return node_type == "failure" or node_type == "special_failure" or result == "containment_failed"
+
+
 func get_special_events(case_reports: Dictionary) -> Array:
 	var special_events: Variant = case_reports.get("special_events", [])
 	if typeof(special_events) == TYPE_ARRAY:
@@ -65,6 +124,85 @@ func get_special_events(case_reports: Dictionary) -> Array:
 func _append_report_nodes(route_nodes: Array, nodes: Variant) -> void:
 	if typeof(nodes) == TYPE_ARRAY:
 		route_nodes.append_array(nodes as Array)
+
+
+func _get_case_ids_from_files(directory_path: String, file_suffix: String) -> Array:
+	var case_ids: Array = []
+	var directory: DirAccess = DirAccess.open(directory_path)
+	if directory == null:
+		print("Case directory is missing: %s" % directory_path)
+		return case_ids
+
+	directory.list_dir_begin()
+	while true:
+		var file_name: String = directory.get_next()
+		if file_name.is_empty():
+			break
+		if directory.current_is_dir():
+			continue
+		if not file_name.ends_with(file_suffix):
+			continue
+
+		var case_id: String = file_name.substr(0, file_name.length() - file_suffix.length())
+		if not _is_valid_case_id(case_id):
+			continue
+		if not case_ids.has(case_id):
+			case_ids.append(case_id)
+
+	directory.list_dir_end()
+	case_ids.sort()
+	return case_ids
+
+
+func _is_valid_case_id(case_id: String) -> bool:
+	if case_id.length() != 8:
+		return false
+	if not case_id.begins_with("case_"):
+		return false
+
+	var number_text: String = case_id.substr(5, 3)
+	for index in range(number_text.length()):
+		var code_point: int = number_text.unicode_at(index)
+		if code_point < 48 or code_point > 57:
+			return false
+
+	return true
+
+
+func _get_case_id_list(value: Variant) -> Array:
+	var case_ids: Array = []
+	if typeof(value) != TYPE_ARRAY:
+		return case_ids
+
+	for item in (value as Array):
+		var case_id: String = str(item)
+		if _is_valid_case_id(case_id) and not case_ids.has(case_id):
+			case_ids.append(case_id)
+
+	return case_ids
+
+
+func _filter_case_ids(case_ids: Array, excluded_cases: Array) -> Array:
+	var filtered_case_ids: Array = []
+	for case_id in case_ids:
+		if excluded_cases.has(case_id):
+			continue
+
+		filtered_case_ids.append(case_id)
+
+	return filtered_case_ids
+
+
+func _case_ids_to_entries(case_ids: Array) -> Array:
+	var entries: Array = []
+	for case_id in case_ids:
+		entries.append({
+			"case_id": case_id,
+			"start_node_id": DEFAULT_START_NODE_ID,
+			"pool_type": "general"
+		})
+
+	return entries
 
 
 func get_report_body(report_node: Dictionary) -> String:
@@ -89,6 +227,10 @@ func load_day_rules() -> Dictionary:
 
 func load_case_pool() -> Dictionary:
 	return load_json_file("res://data/system/case_pool.json")
+
+
+func load_new_anomaly_rules() -> Dictionary:
+	return load_json_file("res://data/system/new_anomaly_rules.json")
 
 
 func load_special_event_rules() -> Dictionary:
@@ -138,6 +280,7 @@ func _validate_case_document(case_id: String, messages: Array) -> void:
 		"display_id",
 		"alias",
 		"category",
+		"image_path",
 		"basic_description",
 		"additional_descriptions",
 		"is_test_data",
@@ -216,15 +359,18 @@ func _validate_case_pool(messages: Array) -> void:
 	_validate_required_fields(case_pool, [
 		"is_test_data",
 		"note",
-		"starting_cases",
-		"introducible_cases"
+		"starting_case_count",
+		"exclude_from_starting_pool",
+		"exclude_from_introduction_pool",
+		"late_game_only_cases"
 	], label, messages)
 
 	if case_pool.get("is_test_data", false) != true:
 		messages.append("%s is_test_data must be true for current test data." % label)
 
-	_validate_case_pool_entries(case_pool.get("starting_cases", []), "starting_cases", messages)
-	_validate_case_pool_entries(case_pool.get("introducible_cases", []), "introducible_cases", messages)
+	_validate_case_id_list(case_pool.get("exclude_from_starting_pool", []), "exclude_from_starting_pool", messages)
+	_validate_case_id_list(case_pool.get("exclude_from_introduction_pool", []), "exclude_from_introduction_pool", messages)
+	_validate_case_id_list(case_pool.get("late_game_only_cases", []), "late_game_only_cases", messages)
 
 
 func _validate_case_pool_entries(entries: Variant, label: String, messages: Array) -> void:
@@ -243,6 +389,17 @@ func _validate_case_pool_entries(entries: Variant, label: String, messages: Arra
 			"case_id",
 			"start_node_id"
 		], entry_label, messages)
+
+
+func _validate_case_id_list(entries: Variant, label: String, messages: Array) -> void:
+	if typeof(entries) != TYPE_ARRAY:
+		messages.append("%s must be an Array." % label)
+		return
+
+	for index in range((entries as Array).size()):
+		var case_id: String = str((entries as Array)[index])
+		if not _is_valid_case_id(case_id):
+			messages.append("%s entry %d must be a case_XXX id." % [label, index])
 
 
 func _validate_special_event_rules(messages: Array) -> void:

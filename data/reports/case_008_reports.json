@@ -1,0 +1,642 @@
+{
+  "case_id": "case_008",
+  "display_id": "CASE-GN-001",
+  "alias": "돌아보는 꼭두",
+  "report_nodes": [
+    {
+      "node_id": "report_001",
+      "node_type": "report",
+      "title": "창고 내 꼭두 발견 보고",
+      "body": "마을회관 뒤편 창고에서 오래된 상여 부속품을 정리하던 중, 작은 꼭두 인형 하나가 발견되었다.\n\n해당 꼭두는 낡은 선반 끝에 따로 놓여 있었으며, 주변에는 먼지 쌓인 나무 장식, 천 조각, 부러진 장대 일부가 함께 보관되어 있었다. 꼭두의 얼굴은 약간 웃는 표정이었고, 눈 부분은 어둡게 파여 있었다.\n\n창고 정리 담당자는 며칠 간격으로 촬영한 사진을 비교하던 중, 꼭두의 얼굴 방향이 조금씩 달라져 있다는 점을 확인했다. 꼭두가 놓인 선반 앞쪽 바닥에는 먼지가 넓게 쌓여 있었으나, 꼭두가 바라보는 방향으로만 좁게 쓸린 듯한 흔적이 있었다.",
+      "choices": [
+        {
+          "choice_id": "report_001_choice_a",
+          "choice_text": "며칠 간격의 사진과 창고 정리 기록을 비교해 얼굴 방향 변화를 확인한다.",
+          "next_node_id": "report_002",
+          "state_delta": 0,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        },
+        {
+          "choice_id": "report_001_choice_b",
+          "choice_text": "꼭두의 얼굴이 사람 쪽을 향하지 않도록 벽 쪽으로 돌려 임시 보관한다.",
+          "next_node_id": "report_004",
+          "state_delta": -1,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "choice_id": "report_001_choice_c",
+          "choice_text": "함께 발견된 상여 부속품을 확인하고, 꼭두가 원래 붙어 있던 위치를 찾아본다.",
+          "next_node_id": "report_006",
+          "state_delta": -1,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        }
+      ]
+    },
+    {
+      "node_id": "report_002",
+      "node_type": "report",
+      "title": "얼굴 각도 변화 확인 보고",
+      "body": "사진 기록을 비교한 결과, 꼭두의 몸통 정면과 얼굴 정면이 완전히 일치하지 않는 상태가 반복적으로 확인되었다.\n\n꼭두는 직접 이동한 흔적을 남기지 않았고, 선반 위 위치도 크게 달라지지 않았다. 그러나 얼굴 방향은 며칠 간격으로 미세하게 달라져 있었다.\n\n사진을 검토한 직원 중 한 명은 “다음에는 창고 문 쪽을 볼 것 같습니다”라고 말했으며, 이후 해당 직원은 창고 문 앞에서 한동안 서 있었다. 목적지를 묻자 직원은 “순서가 됐습니다”라고 답했다.",
+      "choices": [
+        {
+          "choice_id": "report_002_choice_a",
+          "choice_text": "꼭두의 각도 변화를 계속 촬영하고, 다음에 향할 방향을 예측한다.",
+          "next_node_id": "report_005",
+          "state_delta": -2,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "choice_id": "report_002_choice_b",
+          "choice_text": "반복 촬영을 줄이고, 꼭두 주변의 물건 배치와 대기 위치만 따로 기록한다.",
+          "next_node_id": "report_008",
+          "state_delta": 1,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        },
+        {
+          "choice_id": "report_002_choice_c",
+          "choice_text": "꼭두가 향한 방향의 바닥과 물건 배치를 정리해 통로 여부를 확인한다.",
+          "next_node_id": "report_003",
+          "state_delta": -1,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        }
+      ]
+    },
+    {
+      "node_id": "report_003",
+      "node_type": "report",
+      "title": "먼지와 물건 배치 보고",
+      "body": "꼭두가 바라보는 방향으로만 먼지가 좁게 쓸린 듯한 흔적이 확인되었다.\n\n해당 방향에 놓여 있던 상자와 장식품 일부는 양옆으로 밀려난 것처럼 보였으나, 사람이 자주 지나간 통로로 보기는 어려웠다. 창고 관리자는 “길처럼 비어 있는 부분”이라고 기록했다.\n\n이후 꼭두가 향한 방향에 서 있던 직원 한 명이 느린 보폭으로 창고 끝까지 이동하려 했다. 해당 직원은 “앞에서 가시면 됩니다”, “여기서 기다리면 됩니다”라고 말했다.",
+      "choices": [
+        {
+          "choice_id": "report_003_choice_a",
+          "choice_text": "비어 있는 방향을 현장 통제 동선으로 정리하고, 이동 구역을 표시한다.",
+          "next_node_id": "report_007",
+          "state_delta": -2,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "choice_id": "report_003_choice_b",
+          "choice_text": "방향 기준이 생기지 않도록 주변 대기 위치를 분산하고, 통로 표시는 하지 않는다.",
+          "next_node_id": "report_008",
+          "state_delta": 1,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        },
+        {
+          "choice_id": "report_003_choice_c",
+          "choice_text": "꼭두가 바라보는 방향에 가림막과 임시 문을 세워 통로를 막는다.",
+          "next_node_id": "report_004",
+          "state_delta": -1,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        }
+      ]
+    },
+    {
+      "node_id": "report_004",
+      "node_type": "report",
+      "title": "벽 방향 보관 이후 보고",
+      "body": "꼭두의 얼굴이 사람 쪽을 향하지 않도록 벽 쪽으로 돌려 임시 보관했다.\n\n이후 벽면에 걸려 있던 유리 액자와 금속 집기 표면에서 꼭두의 얼굴 방향이 반사되는 것으로 보고되었다. 반사면이 향한 방향에 있던 현장 인원 한 명이 창고 밖 복도 쪽으로 느리게 이동하려 했다.\n\n해당 인원은 자신이 어디로 가려는지 설명하지 못했으나, “이제 가면 됩니다”라고 말했다.",
+      "choices": [
+        {
+          "choice_id": "report_004_choice_a",
+          "choice_text": "벽면 유리와 금속 집기를 제거하고, 꼭두의 현재 각도는 더 돌리지 않는다.",
+          "next_node_id": "report_008",
+          "state_delta": 1,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "choice_id": "report_004_choice_b",
+          "choice_text": "꼭두가 보이지 않도록 더 단단한 보관 상자에 넣어 잠근다.",
+          "next_node_id": "report_005",
+          "state_delta": -2,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "choice_id": "report_004_choice_c",
+          "choice_text": "얼굴 방향이 다시 사람 쪽을 향하지 않도록 벽 쪽으로 더 단단히 고정한다.",
+          "next_node_id": "failure_002",
+          "state_delta": -3,
+          "delay_range": {
+            "min": 1,
+            "max": 1
+          }
+        }
+      ]
+    },
+    {
+      "node_id": "report_005",
+      "node_type": "report",
+      "title": "상자 보관 이후 보고",
+      "body": "꼭두를 임시 보관 상자에 넣은 뒤, 상자 틈과 손잡이가 향한 방향으로 현장 인원이 이동하려는 행동이 확인되었다.\n\n해당 인원은 상자 안을 직접 확인하지 않았으나, “이제 가면 됩니다”라고 진술했다. 상자 뚜껑의 열린 방향, 손잡이 방향, 틈새가 모두 현장 기록에서 이동 기준처럼 언급되었다.\n\n현장 담당자는 상자를 더 밀폐하면 문제를 줄일 수 있을 것으로 보고했다.",
+      "choices": [
+        {
+          "choice_id": "report_005_choice_a",
+          "choice_text": "상자 틈과 손잡이 방향을 막기 위해 더 밀폐된 보관함으로 옮긴다.",
+          "next_node_id": "failure_002",
+          "state_delta": -3,
+          "delay_range": {
+            "min": 1,
+            "max": 1
+          }
+        },
+        {
+          "choice_id": "report_005_choice_b",
+          "choice_text": "상자 보관을 중단하고, 사람 키보다 낮은 둥근 가림막으로 주변을 둘러 보관하는 방식을 검토한다.",
+          "next_node_id": "report_008",
+          "state_delta": 2,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "choice_id": "report_005_choice_c",
+          "choice_text": "상자 앞에 점검 인원을 한 줄로 세워 순서대로 상태를 확인한다.",
+          "next_node_id": "report_007",
+          "state_delta": -2,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        }
+      ]
+    },
+    {
+      "node_id": "report_006",
+      "node_type": "report",
+      "title": "상여 부속 복원 이후 보고",
+      "body": "함께 발견된 상여 부속품을 기준으로 꼭두의 원래 위치를 추정하는 작업이 진행되었다.\n\n꼭두를 상여 장식 위치에 맞춰 복원하자, 조사 인원 중 한 명이 상여 장식 앞에서 느린 보폭으로 걷기 시작했다. 해당 인원은 자신이 어디로 가는지 설명하지 못했으며, “순서가 됐습니다”, “여기서 기다리면 됩니다”라는 표현을 반복했다.\n\n복원 담당자는 원래 장례 물품의 배치가 맞춰질수록 꼭두의 의미가 명확해진다고 보고했다.",
+      "choices": [
+        {
+          "choice_id": "report_006_choice_a",
+          "choice_text": "꼭두를 원래 상여 장식 위치에 고정하고, 나머지 부속품도 복원한다.",
+          "next_node_id": "failure_001",
+          "state_delta": -3,
+          "delay_range": {
+            "min": 1,
+            "max": 1
+          }
+        },
+        {
+          "choice_id": "report_006_choice_b",
+          "choice_text": "꼭두를 상여 부속품과 분리하고, 현재 각도를 유지한 보관 방식을 검토한다.",
+          "next_node_id": "report_008",
+          "state_delta": 2,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "choice_id": "report_006_choice_c",
+          "choice_text": "복원 상태를 확인하기 위해 전시 동선과 관람 순서를 임시로 정리한다.",
+          "next_node_id": "report_007",
+          "state_delta": -2,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        }
+      ]
+    },
+    {
+      "node_id": "report_007",
+      "node_type": "report",
+      "title": "피영향자 통제 이후 보고",
+      "body": "특정 방향으로 이동하려는 인원을 통제하기 위해 앞쪽 확인자와 후방 기록자가 배치되었다.\n\n겉보기에는 이동이 제한되는 것처럼 보였으나, 피영향자는 앞사람과 뒷사람의 위치를 확인한 뒤 더 느리고 규칙적인 보폭을 보였다. 현장 기록에는 “앞쪽 확인”, “후방 기록”, “대기 위치”라는 표현이 포함되었다.\n\n피영향자는 “다들 오셨으면 됐습니다”, “차례가 오면 가면 됩니다”라고 말했다.",
+      "choices": [
+        {
+          "choice_id": "report_007_choice_a",
+          "choice_text": "앞뒤 인원을 유지해 피영향자의 이동을 더 엄격하게 통제한다.",
+          "next_node_id": "failure_003",
+          "state_delta": -3,
+          "delay_range": {
+            "min": 1,
+            "max": 1
+          }
+        },
+        {
+          "choice_id": "report_007_choice_b",
+          "choice_text": "해당 인원을 중심에 두는 배치를 해체하고, 현장 인원을 서로 떨어진 위치에 배정한다.",
+          "next_node_id": "report_008",
+          "state_delta": 2,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "choice_id": "report_007_choice_c",
+          "choice_text": "점검 인원을 한 줄로 세우고, 순서대로 통과시키는 절차를 만든다.",
+          "next_node_id": "failure_003",
+          "state_delta": -3,
+          "delay_range": {
+            "min": 1,
+            "max": 1
+          }
+        }
+      ]
+    },
+    {
+      "node_id": "report_008",
+      "node_type": "report",
+      "title": "차폐 및 분산 점검 준비 보고",
+      "body": "꼭두를 이동시키거나 돌리지 않는 보관 방식이 검토되었다.\n\n제안된 방식은 꼭두의 현재 각도를 유지한 채, 낮고 둥근 차폐물로 주변을 둘러싸는 것이다. 차폐물에는 문, 틈, 복도처럼 보이는 입구를 만들지 않는 방안이 함께 검토되었다.\n\n현장 담당자는 반사면과 사진 기록 장비를 제거하고, 점검 인원을 한 줄로 세우지 않는 방식을 제안했다. 다만 일부 담당자는 출입 통제를 위해 문 있는 차폐와 선두·후방 담당자가 필요하다고 주장했다.",
+      "choices": [
+        {
+          "choice_id": "report_008_choice_a",
+          "choice_text": "사람 키보다 낮은 둥근 가림막을 설치하고, 반사되는 집기와 점검 대기 위치를 따로 정리한다.",
+          "next_node_id": "stable_001",
+          "state_delta": 3,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "choice_id": "report_008_choice_b",
+          "choice_text": "출입 확인을 위해 차폐물 한쪽에 관리용 문과 짧은 통로를 둔다.",
+          "next_node_id": "failure_002",
+          "state_delta": -3,
+          "delay_range": {
+            "min": 1,
+            "max": 1
+          }
+        },
+        {
+          "choice_id": "report_008_choice_c",
+          "choice_text": "점검 순서를 명확히 하기 위해 앞쪽 확인자, 뒤쪽 기록자, 대기 담당자를 지정한다.",
+          "next_node_id": "failure_003",
+          "state_delta": -3,
+          "delay_range": {
+            "min": 1,
+            "max": 1
+          }
+        }
+      ]
+    }
+  ],
+  "stable_nodes": [
+    {
+      "node_id": "stable_001",
+      "node_type": "stable",
+      "title": "차폐 및 분산 점검 이후 보고",
+      "body": "꼭두는 현재 각도를 유지한 채 사람 키보다 낮은 둥근 가림막 안에 보관되었다.\n\n차폐물에는 문이나 틈이 없었으며, 꼭두 앞쪽에 사람이나 통로가 배치되지 않았다. 주변의 유리 액자, 금속판, 반사 가능한 집기, 사진 기록 장비는 제거되었다.\n\n현장 확인은 한 줄 통과가 아니라 개별 분산 확인으로 전환되었다. 점검 인원은 서로의 앞뒤에 서지 않았고, 중앙 대기자도 지정되지 않았다.\n\n이후 영향을 받은 인원이 특정 방향으로 느리게 걷거나 “여기서 기다리면 됩니다”라고 말하는 사례는 줄어든 것으로 보고되었다.",
+      "result": "stabilized",
+      "state_delta": 3
+    }
+  ],
+  "failure_nodes": [
+    {
+      "node_id": "failure_001",
+      "node_type": "failure",
+      "title": "상여 복원 실패",
+      "body": "꼭두가 원래 상여 장식 위치에 복원되었다.\n\n복원 이후 꼭두 주변의 상여 부속품은 하나의 이동 방향을 가진 구조처럼 정리되었다. 조사 인원 중 한 명은 상여 장식 앞에서 느린 보폭으로 걷기 시작했고, “순서가 됐습니다”, “제가 가운데 서면 됩니다”라고 말했다.\n\n현장 인원이 이를 제지하려 하자 앞쪽과 뒤쪽에 사람이 배치되었고, 해당 인원은 더 안정된 보폭으로 이동했다.",
+      "result": "containment_failed"
+    },
+    {
+      "node_id": "failure_002",
+      "node_type": "failure",
+      "title": "시선 차단 실패",
+      "body": "꼭두를 벽 쪽으로 돌리거나 상자에 넣거나 문이 있는 차폐물 안에 보관하는 절차가 반복되었다.\n\n그러나 유리 액자, 금속 집기, 상자 틈, 손잡이, 차폐물 입구가 새로운 방향 기준이 되었다. 현장 인원은 꼭두를 직접 보지 않았음에도 그 방향을 따라 이동하려 했다.\n\n이후 “안 보이게 막은 방향”이 오히려 이동 기준처럼 기록되었고, 피영향자는 벽이나 문 앞에서 “여기서 기다리면 됩니다”라고 말했다.",
+      "result": "containment_failed"
+    },
+    {
+      "node_id": "failure_003",
+      "node_type": "failure",
+      "title": "배웅 대형 고정",
+      "body": "피영향자를 통제하기 위해 앞쪽 확인, 후방 기록, 대기 위치를 나누는 절차가 만들어졌다.\n\n현장 인원은 이를 안전 관리 절차로 설명했으나, 실제 배치는 특정 인원을 중심에 두고 앞뒤의 이동 순서를 맞추는 형태가 되었다. 한 줄 점검과 순서 통과 절차가 추가되자 피영향자는 더 차분한 태도로 “차례가 오면 가면 됩니다”라고 말했다.\n\n최종 기록에는 “선두 확인”, “후방 기록”, “중앙 대기자”라는 항목이 반복되었고, 피영향자는 특정 길 끝이나 격리실 벽 앞에서 장시간 대기했다.",
+      "result": "containment_failed"
+    }
+  ],
+  "special_events": [
+    {
+      "event_id": "special_event_001",
+      "title": "배웅 순서표",
+      "start_node_id": "special_001_report_001",
+      "nodes": [
+        {
+          "node_id": "special_001_report_001",
+          "node_type": "special_report",
+          "title": "인원 배치표 작성 보고",
+          "body": "꼭두는 낮고 둥근 차폐 안에 보관되어 있었고, 직접적인 각도 변화 보고는 없었다.\n\n그러나 안정화 이후 차폐물 점검 절차를 재개하는 과정에서 현장 관리자가 인원 배치표를 작성했다. 초기 배치표는 단순한 안전 관리 항목으로 작성되었으나, 검토본에는 “앞쪽 확인”, “좌우 보조”, “후방 기록”, “중앙 대기자”라는 표현이 추가되어 있었다.\n\n중앙 대기자로 적힌 직원은 자신이 그 위치에 서야 한다고 말했으며, “다들 서 계시면 제가 나가면 됩니다”라고 진술했다.",
+          "choices": [
+            {
+              "choice_id": "special_001_report_001_choice_a",
+              "choice_text": "배치표를 유지하고 각 담당 위치를 확정한다.",
+              "next_node_id": "special_001_report_003",
+              "state_delta": -2,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            },
+            {
+              "choice_id": "special_001_report_001_choice_b",
+              "choice_text": "한 사람을 중심에 두는 항목을 지우고, 각 인원을 서로 떨어진 점검 구역에 배치한다.",
+              "next_node_id": "special_001_report_002",
+              "state_delta": 1,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            },
+            {
+              "choice_id": "special_001_report_001_choice_c",
+              "choice_text": "선두 확인자와 후방 기록자를 추가해 이동 통제를 강화한다.",
+              "next_node_id": "special_001_report_003",
+              "state_delta": -2,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            }
+          ]
+        },
+        {
+          "node_id": "special_001_report_002",
+          "node_type": "special_report",
+          "title": "배치표 분산 수정 보고",
+          "body": "인원 배치표에서 한 사람을 중심에 두는 대기 항목이 삭제되었다.\n\n선두 확인자, 후방 기록자, 좌우 보조처럼 한 사람을 중심에 두는 항목도 제거되었다. 점검 인원은 서로의 앞뒤가 아니라 독립된 구역에 배치되었다.\n\n다만 일부 현장 관리자는 통제 책임이 불명확해졌다고 보고하며, 다시 선두와 후방 담당자를 두자고 제안했다.",
+          "choices": [
+            {
+              "choice_id": "special_001_report_002_choice_a",
+              "choice_text": "현재 배치 기준을 유지하고, 앞뒤 이동 순서나 중심 대기 항목을 추가하지 않는다.",
+              "next_node_id": "special_001_report_004",
+              "state_delta": 1,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            },
+            {
+              "choice_id": "special_001_report_002_choice_b",
+              "choice_text": "안전 관리를 위해 선두 확인자와 후방 기록자만 다시 지정한다.",
+              "next_node_id": "special_001_report_003",
+              "state_delta": -1,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            }
+          ]
+        },
+        {
+          "node_id": "special_001_report_003",
+          "node_type": "special_report",
+          "title": "배웅 대형 재구성 보고",
+          "body": "현장 배치표에 선두 확인자, 후방 기록자, 중앙 대기자 항목이 다시 포함되었다.\n\n중앙 대기자로 적힌 직원은 배치표가 확정된 뒤 차폐물 앞에 서서 “다들 서 계시면 제가 나가면 됩니다”라고 말했다. 선두와 후방에 배치된 인원은 자신들이 이동을 통제하고 있다고 보고했다.\n\n그러나 현장 동선은 한 사람을 가운데 두고 앞뒤에서 따라붙는 형태로 정리되고 있었다.",
+          "choices": [
+            {
+              "choice_id": "special_001_report_003_choice_a",
+              "choice_text": "중심 대기 항목과 앞뒤 이동 순서를 삭제하고, 점검 구역을 다시 나눈다.",
+              "next_node_id": "special_001_report_004",
+              "state_delta": 1,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            },
+            {
+              "choice_id": "special_001_report_003_choice_b",
+              "choice_text": "배치표를 확정하고, 인원이 지정된 위치에 서도록 한다.",
+              "next_node_id": "special_001_failure_001",
+              "state_delta": -3,
+              "delay_range": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        },
+        {
+          "node_id": "special_001_report_004",
+          "node_type": "special_report",
+          "title": "배치표 종결 보고",
+          "body": "차폐물 점검 배치표는 분산 점검 기준으로 종결되었다.\n\n문서에는 선두 확인자, 후방 기록자, 중앙 대기자 항목이 남지 않았다. 점검 인원은 서로의 앞뒤에 서지 않았고, 한 사람을 중심으로 한 대기 위치도 만들지 않았다.\n\n이후 “제가 가운데 서면 됩니다” 또는 “다들 서 계시면 제가 나가면 됩니다”라는 진술은 더 접수되지 않았다.",
+          "choices": [
+            {
+              "choice_id": "special_001_report_004_choice_a",
+              "choice_text": "현재 점검 구역 기준을 유지하고, 한 사람을 중심에 두는 항목을 다시 만들지 않는다.",
+              "next_node_id": "special_001_stable",
+              "state_delta": 2,
+              "delay_range": {
+                "min": 1,
+                "max": 1
+              }
+            },
+            {
+              "choice_id": "special_001_report_004_choice_b",
+              "choice_text": "점검 책임을 명확히 하기 위해 선두 확인자와 후방 기록자를 다시 지정한다.",
+              "next_node_id": "special_001_failure_001",
+              "state_delta": -3,
+              "delay_range": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        }
+      ],
+      "stable_nodes": [
+        {
+          "node_id": "special_001_stable",
+          "node_type": "special_stable",
+          "title": "배웅 순서표 안정화 복귀",
+          "body": "인원 배치표는 분산 점검 기준으로 유지되었다.\n\n현장 인원은 서로의 앞뒤에 서지 않았고, 중앙 대기자도 지정되지 않았다. 이후 배치표와 관련된 반복 이동이나 대기 진술은 발생하지 않았다.",
+          "result": "returned_to_stable",
+          "state_delta": 2
+        }
+      ],
+      "failure_nodes": [
+        {
+          "node_id": "special_001_failure_001",
+          "node_type": "special_failure",
+          "title": "배치표 고정 실패",
+          "body": "배치표가 확정되면서 인원이 선두, 후방, 중앙 위치에 맞춰 배치되었다.\n\n중앙에 선 직원은 “이제 가면 됩니다”라고 말했고, 앞뒤 인원은 자신들이 인솔하고 있다고 판단했다. 배치표는 안전 관리 절차로 작성되었으나, 실제 현장은 한 사람을 가운데 둔 배웅 대형으로 고정되었다.\n\n결과:",
+          "result": "containment_failed"
+        }
+      ]
+    },
+    {
+      "event_id": "special_event_002",
+      "title": "빈 조문줄",
+      "start_node_id": "special_002_report_001",
+      "nodes": [
+        {
+          "node_id": "special_002_report_001",
+          "node_type": "special_report",
+          "title": "한 줄 점검 절차 보고",
+          "body": "꼭두는 차폐 상태로 보관 중이며, 직접 노출은 제한되어 있었다.\n\n그러나 안정화 이후 현장 점검을 위해 인원을 한 명씩 통과시키는 절차가 작성되었다. 처음에는 단순한 출입 통제였으나, 점검 인원은 차폐물 앞에서 자연스럽게 말을 줄이고 한 줄로 서서 차례를 기다렸다.\n\n줄 끝에 있던 직원 한 명이 “다들 보고 가시면 제가 나가면 됩니다”라고 말한 뒤, 자신이 줄을 따라 이동하지 않고 줄이 끝나기를 기다렸다.",
+          "choices": [
+            {
+              "choice_id": "special_002_report_001_choice_a",
+              "choice_text": "한 줄 점검을 유지하되, 통과 순서를 문서에 명확히 적는다.",
+              "next_node_id": "special_002_report_003",
+              "state_delta": -2,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            },
+            {
+              "choice_id": "special_002_report_001_choice_b",
+              "choice_text": "한 줄 대기를 중단하고, 인원을 서로 다른 시간과 구역에서 확인한다.",
+              "next_node_id": "special_002_report_002",
+              "state_delta": 1,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            },
+            {
+              "choice_id": "special_002_report_001_choice_c",
+              "choice_text": "줄 끝 담당자를 지정해 마지막 확인을 맡긴다.",
+              "next_node_id": "special_002_report_003",
+              "state_delta": -2,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            }
+          ]
+        },
+        {
+          "node_id": "special_002_report_002",
+          "node_type": "special_report",
+          "title": "분산 점검 전환 보고",
+          "body": "한 줄 점검 절차가 폐지되었다.\n\n점검 인원은 차례를 기다리지 않고, 분리된 시간과 구역에서 개별 확인을 수행했다. 누구도 줄의 끝이나 선두, 중앙 위치에 서지 않도록 배치되었다.\n\n일부 담당자는 출입 확인이 늦어질 수 있다며, 최소한의 통과 순서는 필요하다고 보고했다.",
+          "choices": [
+            {
+              "choice_id": "special_002_report_002_choice_a",
+              "choice_text": "개별 확인 기준을 유지하고, 순서 대기와 한 줄 통과 절차를 만들지 않는다.",
+              "next_node_id": "special_002_report_004",
+              "state_delta": 1,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            },
+            {
+              "choice_id": "special_002_report_002_choice_b",
+              "choice_text": "출입 확인을 위해 짧은 대기 줄과 마지막 확인 담당자를 둔다.",
+              "next_node_id": "special_002_report_003",
+              "state_delta": -1,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            }
+          ]
+        },
+        {
+          "node_id": "special_002_report_003",
+          "node_type": "special_report",
+          "title": "조용한 대기줄 보고",
+          "body": "점검 인원이 다시 한 줄로 서는 절차가 작성되었다.\n\n현장 인원은 차폐물 앞에서 말을 줄이고, 순서가 올 때까지 조용히 기다렸다. 줄 끝에 선 직원은 자신이 줄을 따라 이동하지 않고, 다른 인원이 모두 통과하기를 기다렸다.\n\n해당 직원은 “다들 보고 가시면 제가 나가면 됩니다”, “이제 제 차례입니다”라고 말했다.",
+          "choices": [
+            {
+              "choice_id": "special_002_report_003_choice_a",
+              "choice_text": "한 줄 대기를 중단하고, 인원을 서로 다른 시간과 구역으로 다시 배정한다.",
+              "next_node_id": "special_002_report_004",
+              "state_delta": 1,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            },
+            {
+              "choice_id": "special_002_report_003_choice_b",
+              "choice_text": "줄을 유지하고, 마지막 직원이 통과할 때까지 순서를 지키게 한다.",
+              "next_node_id": "special_002_failure_001",
+              "state_delta": -3,
+              "delay_range": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        },
+        {
+          "node_id": "special_002_report_004",
+          "node_type": "special_report",
+          "title": "점검 동선 종결 보고",
+          "body": "한 줄 점검 절차는 폐지되었고, 차폐물 점검은 분산 확인 방식으로 정리되었다.\n\n점검 인원은 순서를 기다리지 않았고, 줄 끝이나 중앙 위치를 맡은 사람도 없었다. 차폐물 앞에서 조용히 줄을 서는 행동은 더 보고되지 않았다.\n\n이후 “다들 보고 가시면 제가 나가면 됩니다”라는 진술도 접수되지 않았다.",
+          "choices": [
+            {
+              "choice_id": "special_002_report_004_choice_a",
+              "choice_text": "현재 개별 확인 기준을 유지하고, 한 줄 통과 절차를 다시 만들지 않는다.",
+              "next_node_id": "special_002_stable",
+              "state_delta": 2,
+              "delay_range": {
+                "min": 1,
+                "max": 1
+              }
+            },
+            {
+              "choice_id": "special_002_report_004_choice_b",
+              "choice_text": "출입 기록을 위해 마지막 확인 담당자와 통과 순서를 다시 지정한다.",
+              "next_node_id": "special_002_failure_001",
+              "state_delta": -3,
+              "delay_range": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        }
+      ],
+      "stable_nodes": [
+        {
+          "node_id": "special_002_stable",
+          "node_type": "special_stable",
+          "title": "빈 조문줄 안정화 복귀",
+          "body": "차폐물 점검은 분산 확인 방식으로 유지되었다.\n\n점검 인원은 한 줄로 서지 않았고, 마지막 통과자나 중앙 대기자도 지정되지 않았다. 이후 점검 절차와 관련된 반복 대기 진술은 발생하지 않았다.",
+          "result": "returned_to_stable",
+          "state_delta": 2
+        }
+      ],
+      "failure_nodes": [
+        {
+          "node_id": "special_002_failure_001",
+          "node_type": "special_failure",
+          "title": "조문줄 고정 실패",
+          "body": "한 줄 점검과 마지막 확인 담당자 지정이 유지되었다.\n\n현장 인원은 차폐물 앞에서 조용히 순서를 기다렸고, 줄 끝의 직원은 자신이 마지막으로 나가야 한다고 말했다. 해당 직원은 “다들 보고 가시면 제가 나가면 됩니다”, “이제 제 차례입니다”라고 반복했다.\n\n점검 절차는 출입 통제 문서로 작성되었으나, 실제 현장은 빈 조문줄처럼 고정되었다.\n\n결과:",
+          "result": "containment_failed"
+        }
+      ]
+    }
+  ]
+}

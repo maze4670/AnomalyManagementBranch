@@ -1,0 +1,9 @@
+{
+  "case_id": "case_008",
+  "display_id": "CASE-GN-001",
+  "alias": "돌아보는 꼭두",
+  "category": "개체형",
+  "basic_description": "CASE-GN-001은 ████년 ██월 ██일 ███ 지역의 마을회관 뒤편 창고에서 발견되었다.\n\n해당 이상현상은 오래된 상여 부속품과 함께 보관되어 있던 작은 꼭두 인형의 얼굴 방향이, 일정 기간마다 미세하게 달라지는 현상으로 분류된다.\n\n초기 조사에서 해당 꼭두는 낡은 장례 물품의 일부로 추정되었으나, 이후 꼭두가 향한 방향에 있던 인원이 특정 방향으로 반복 이동하려는 행동을 보이며 이상현상관리지부로 이관되었다.",
+  "additional_descriptions": [],
+  "image_path": "res://assets/anomalies/case_008.png"
+}

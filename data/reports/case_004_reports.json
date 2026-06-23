@@ -1,0 +1,642 @@
+{
+  "case_id": "case_004",
+  "display_id": "CASE-DG-001",
+  "alias": "네 번째 탕",
+  "report_nodes": [
+    {
+      "node_id": "report_001",
+      "node_type": "report",
+      "title": "최초 발견 보고",
+      "body": "폐업한 동네 목욕탕 건물의 철거 전 안전 점검 중, 도면상 존재하지 않는 복도 끝에서 ‘제4탕’ 표지가 확인되었다.\n\n기존 시설 도면에는 온탕, 냉탕, 열탕으로 분류된 3개 탕만 기재되어 있었으며, 추가 욕실 구역은 확인되지 않았다.\n\n점검자는 처음에 해당 표지를 잔존 안내판 또는 개보수 흔적으로 판단했다. 그러나 ‘제4탕’ 표지 옆 복도는 기존 도면상 벽으로 처리된 구역 뒤로 이어져 있었고, 내부에서는 물이 흐르거나 탕에 물이 차 있는 듯한 소리가 들렸다고 기록했다.\n\n이후 점검자는 출구 표지판을 따라 이동했으나 현실 출구로 나오지 못하고, 처음 들어온 탈의실과 유사한 공간에 다시 도달했다.\n\n재도착한 탈의실의 사물함 번호 배열은 최초 확인 시점보다 커져 있었으며, 일부 사물함 열쇠 번호는 실제 사물함 수와 맞지 않았다.",
+      "choices": [
+        {
+          "choice_id": "report_001_choice_a",
+          "choice_text": "제4탕 표지가 확인된 복도를 중심 격리 구역으로 지정하고, 주변 접근을 제한한다.",
+          "next_node_id": "report_002",
+          "state_delta": -1,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        },
+        {
+          "choice_id": "report_001_choice_b",
+          "choice_text": "출구 표지판과 내부 안내선을 다시 정리해, 점검자가 안내를 따라 이동할 수 있게 한다.",
+          "next_node_id": "report_003",
+          "state_delta": -2,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        },
+        {
+          "choice_id": "report_001_choice_c",
+          "choice_text": "진입자가 지나온 구역과 다시 도착한 탈의실 기록을 비교한다.",
+          "next_node_id": "report_004",
+          "state_delta": 1,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        }
+      ]
+    },
+    {
+      "node_id": "report_002",
+      "node_type": "report",
+      "title": "제4탕 중심 격리 이후 보고",
+      "body": "제4탕 표지가 확인된 복도 주변에 임시 차단선이 설치되었다. 외부 점검 동선에서는 해당 구역 접근이 제한되었고, 도면상 벽 뒤 구역 확인 작업도 중지되었다.\n\n그러나 내부 진입자는 무전에서 “다른 쪽 탕 입구가 보인다”고 보고했다. 해당 입구에는 제4탕이 아닌 식별 불명의 탕 표지가 걸려 있었으며, 도면상 해당 위치는 탈의실 뒤편 벽으로 처리되어 있다.\n\n차단선 설치 이후에도 물소리는 사라지지 않았다. 오히려 제4탕 복도와 떨어진 다른 탕 입구 주변에서 유사한 배수음이 기록되었다.\n\n점검자는 “제4탕만 막으면 될 줄 알았는데, 복도 끝에 다른 탕이 또 있다”고 보고했다.",
+      "choices": [
+        {
+          "choice_id": "report_002_choice_a",
+          "choice_text": "제4탕 외에 확인된 탕 입구들도 같은 격리 대상으로 묶고, 도면에 없는 구역 접근을 차단한다.",
+          "next_node_id": "report_005",
+          "state_delta": -2,
+          "delay_range": {
+            "min": 2,
+            "max": 4
+          }
+        },
+        {
+          "choice_id": "report_002_choice_b",
+          "choice_text": "제4탕 주변 조치보다, 진입자가 지나온 탈의실·탕·복도 순서를 다시 확인한다.",
+          "next_node_id": "report_004",
+          "state_delta": 1,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "choice_id": "report_002_choice_c",
+          "choice_text": "도면에 없는 탕을 별도 구조물로 보고, 낮 시간대 정비 가능 여부를 검토한다.",
+          "next_node_id": "report_006",
+          "state_delta": -1,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        }
+      ]
+    },
+    {
+      "node_id": "report_003",
+      "node_type": "report",
+      "title": "출구 안내 재정렬 이후 보고",
+      "body": "내부 혼선을 줄이기 위해 출구 표지판이 추가로 부착되었고, 바닥에는 현실 출입구 방향을 가리키는 임시 안내선이 표시되었다.\n\n진입자는 안내선을 따라 이동했다고 보고했으나, 다시 탈의실과 유사한 공간에 도착했다. 해당 탈의실의 신발장 방향은 최초 진입 위치와 달랐고, 사물함 번호는 이전보다 더 큰 배열로 표시되어 있었다.\n\n출구 표지판은 계속 확인되었으나, 실제 출입구에서 진입자는 확인되지 않았다.\n\n일부 출구 표지판은 같은 방향을 가리키는 것처럼 보였지만, 진입자가 설명한 이동 결과는 서로 다른 탈의실 또는 다른 탕 입구로 이어졌다.",
+      "choices": [
+        {
+          "choice_id": "report_003_choice_a",
+          "choice_text": "출구 표지판을 더 늘리고, 내부 안내선을 복도와 탕 입구까지 확대한다.",
+          "next_node_id": "report_006",
+          "state_delta": -2,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        },
+        {
+          "choice_id": "report_003_choice_b",
+          "choice_text": "출구 표지판을 따라간 뒤 도착한 위치와 탈의실·신발장 위치를 함께 기록한다.",
+          "next_node_id": "report_004",
+          "state_delta": 1,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "choice_id": "report_003_choice_c",
+          "choice_text": "건물 출입구 주변 통제를 강화하고, 출구 표지판이 가리키는 내부 방향을 우선 추적한다.",
+          "next_node_id": "report_005",
+          "state_delta": -1,
+          "delay_range": {
+            "min": 2,
+            "max": 4
+          }
+        }
+      ]
+    },
+    {
+      "node_id": "report_004",
+      "node_type": "report",
+      "title": "이동 기록 대조 보고",
+      "body": "진입자가 지나온 구역과 다시 도착한 탈의실 기록이 대조되었다.\n\n진입자는 신발장을 지나 탈의실, 탕 입구, 세신실 앞 복도, 출구 표지판 순서로 이동했다고 보고했다. 그러나 같은 순서를 반복한 뒤에도 현실 출입구가 아니라 유사한 탈의실에 다시 도착했다.\n\n처음 도착한 탈의실과 다시 도착한 탈의실은 구조가 거의 같았지만, 사물함 번호와 열쇠 모양, 신발장 방향이 조금씩 달랐다.\n\n점검자는 “나온 줄 알았는데 다시 옷장이 있는 곳”이라고 표현했다. 무전 기록에는 “씻고 나가면 됩니다”, “다음 탕만 확인하고 나가겠습니다”라는 표현이 반복되었다.",
+      "choices": [
+        {
+          "choice_id": "report_004_choice_a",
+          "choice_text": "진입자가 가진 열쇠와 신발장·출구 표지·탈의실 위치를 함께 비교한다.",
+          "next_node_id": "report_007",
+          "state_delta": 2,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        },
+        {
+          "choice_id": "report_004_choice_b",
+          "choice_text": "사물함 번호를 기준으로 내부 위치를 정리하고, 번호가 큰 구역부터 확인한다.",
+          "next_node_id": "report_005",
+          "state_delta": -2,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        },
+        {
+          "choice_id": "report_004_choice_c",
+          "choice_text": "내부 진입자가 말한 순서를 따라가게 하고, 다음 탕 확인 후 출구로 이동하게 한다.",
+          "next_node_id": "report_006",
+          "state_delta": -2,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        }
+      ]
+    },
+    {
+      "node_id": "report_005",
+      "node_type": "report",
+      "title": "사물함 및 온도 표지 변화 보고",
+      "body": "반복 조사 과정에서 사물함 번호 배열과 탕 온도 표지가 이전 기록과 다르게 확인되었다.\n\n같은 위치로 보이는 탈의실에서도 사물함 번호는 더 커져 있었고, 일부 열쇠 번호는 실제 사물함 수와 맞지 않았다.\n\n탕 온도 표지는 현실적인 목욕탕 온도 범위를 벗어나거나, 실제 온도보다 순서나 단계처럼 보이는 방식으로 표시되었다. 일부 표지는 같은 탕 안에서도 서로 다른 숫자를 가리켰다.\n\n배수구를 막은 뒤에도 물소리는 사라지지 않았고, 다른 탕 입구 주변에서 비슷한 배수음이 기록되었다.",
+      "choices": [
+        {
+          "choice_id": "report_005_choice_a",
+          "choice_text": "사물함 번호와 열쇠 번호를 기준으로 내부 지도를 다시 작성한다.",
+          "next_node_id": "report_008",
+          "state_delta": -2,
+          "delay_range": {
+            "min": 2,
+            "max": 4
+          }
+        },
+        {
+          "choice_id": "report_005_choice_b",
+          "choice_text": "탕의 물을 빼고 배수구를 추가로 막아, 물소리가 나는 구역을 줄인다.",
+          "next_node_id": "report_006",
+          "state_delta": -2,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        },
+        {
+          "choice_id": "report_005_choice_c",
+          "choice_text": "사물함 번호 변화, 열쇠 모양, 신발장 방향, 출구 표지 위치를 함께 비교한다.",
+          "next_node_id": "report_007",
+          "state_delta": 1,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        }
+      ]
+    },
+    {
+      "node_id": "report_006",
+      "node_type": "report",
+      "title": "세신실 이후 복도 변화 보고",
+      "body": "세신실 이후 이어지는 복도는 실제 도면상 출구 방향과 일치하지 않았다.\n\n진입자는 세신실을 지난 뒤 “이제 나가는 길인 것 같다”고 보고했으나, 곧이어 다른 탕 입구 또는 처음과 유사한 탈의실을 확인했다고 말했다.\n\n세신실 주변에서는 물소리와 배수음이 오래 남았고, 무전 기록에는 “아직 씻는 절차가 남은 것 같다”, “다음 탕만 확인하고 나가겠다”는 표현이 반복되었다.\n\n출구 표지판은 복도 중간마다 확인되었지만, 이를 따라간 결과가 현실 출입구와 일치하지 않았다.",
+      "choices": [
+        {
+          "choice_id": "report_006_choice_a",
+          "choice_text": "진입자에게 세신실 이후 남은 탕을 확인하게 하고, 내부 순서를 계속 따르게 한다.",
+          "next_node_id": "report_008",
+          "state_delta": -2,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        },
+        {
+          "choice_id": "report_006_choice_b",
+          "choice_text": "세신실 이후 도착한 곳이 다음 탕인지 탈의실인지 확인하고, 신발장·출구 표지 기록과 비교한다.",
+          "next_node_id": "report_007",
+          "state_delta": 2,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        },
+        {
+          "choice_id": "report_006_choice_c",
+          "choice_text": "출구 표지판을 기준으로 수색 인원을 추가 투입해 진입자와 합류하게 한다.",
+          "next_node_id": "failure_003",
+          "state_delta": -3,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        }
+      ]
+    },
+    {
+      "node_id": "report_007",
+      "node_type": "report",
+      "title": "출구 회수 전조 보고",
+      "body": "진입자가 지나온 구역, 사물함 열쇠, 신발장 방향, 출구 표지판 기록이 함께 정리되었다.\n\n모든 기록이 맞아떨어진 것은 아니었으나, 일부 조합에서는 진입자가 다시 탈의실로 돌아오지 않고 현실 출입구 가까운 방향으로 이동하는 정황이 확인되었다.\n\n사물함 번호 증가는 일시적으로 멈췄고, 탕 온도 표지는 현실적인 범위에 가까워졌다.\n\n진입자는 더 이상 “다음 탕만 확인하고 나가겠다”고 말하지 않았다. 무전에서는 “신발장 쪽 문이 보인다”는 표현이 처음 확인되었다.",
+      "choices": [
+        {
+          "choice_id": "report_007_choice_a",
+          "choice_text": "신발장 방향, 열쇠, 출구 표지가 서로 어긋나지 않는 경로만 유지하고, 진입자를 해당 방향으로 회수한다.",
+          "next_node_id": "stable_001",
+          "state_delta": 2,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "choice_id": "report_007_choice_b",
+          "choice_text": "신발장 쪽 문이 확인된 만큼, 주변 탕과 세신실을 추가 확인한 뒤 회수한다.",
+          "next_node_id": "report_006",
+          "state_delta": -1,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        },
+        {
+          "choice_id": "report_007_choice_c",
+          "choice_text": "오류 가능성을 줄이기 위해 출구 표지만 남기고 사물함·신발장 기록은 제외한다.",
+          "next_node_id": "report_008",
+          "state_delta": -2,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        }
+      ]
+    },
+    {
+      "node_id": "report_008",
+      "node_type": "report",
+      "title": "인원별 내부 기록 불일치 보고",
+      "body": "같은 폐업 목욕탕 건물에 들어간 인원들이 서로 같은 복도에 있다고 보고했으나, 실제로는 서로 만나지 못했다.\n\n두 인원은 같은 사물함 번호를 보고했지만, 각자가 설명한 사물함 위치와 열쇠 모양은 일치하지 않았다.\n\n한 인원은 제4탕을 지나 세신실 앞에 있다고 보고했고, 다른 인원은 같은 번호의 사물함 앞에 있다고 말했다. 그러나 서로의 무전에는 상대 인원의 소리나 발소리가 확인되지 않았다.\n\n시설 도면에는 추가 탕 이름과 복도 표시가 늘어났고, 어떤 인원이 어느 탈의실 또는 어느 탕 순서에 있는지 구분하기 어려워졌다.",
+      "choices": [
+        {
+          "choice_id": "report_008_choice_a",
+          "choice_text": "각 인원의 이동 기록을 하나의 도면에 합치지 않고, 인원별로 따로 정리해 회수 경로를 비교한다.",
+          "next_node_id": "report_007",
+          "state_delta": 1,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "choice_id": "report_008_choice_b",
+          "choice_text": "같은 위치에 있다고 보고한 인원들을 찾기 위해 수색 인원을 추가 투입한다.",
+          "next_node_id": "failure_002",
+          "state_delta": -3,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "choice_id": "report_008_choice_c",
+          "choice_text": "각 인원의 사물함 번호와 탕 순서를 하나의 목욕탕 도면 위에 합쳐 정리한다.",
+          "next_node_id": "failure_001",
+          "state_delta": -3,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        }
+      ]
+    }
+  ],
+  "stable_nodes": [
+    {
+      "node_id": "stable_001",
+      "node_type": "stable",
+      "title": "건물 출입구 회수 보고",
+      "body": "내부 진입자는 사물함 열쇠, 탈의실, 출구 표지, 신발장 방향이 서로 맞아떨어진 상태에서 건물 출입구로 회수되었다.\n\n출구 표지판은 여전히 내부에서 확인되었으나, 더 이상 다음 탕이나 반복 탈의실로 이어지지 않았다.\n\n사물함 번호 증가는 멈췄고, 온도 표지는 현실적인 범위로 돌아왔다. 탈의실 거울은 이전 반복의 탕 입구가 아니라 건물 출입구 방향을 비췄다.\n\n도면상 없는 ‘제4탕’ 표지는 복도 깊은 곳이 아니라, 물기 어린 타일 표면에 잠시 비쳤다가 사라지는 정도로 약화되었다.",
+      "result": "stabilized",
+      "state_delta": 3
+    }
+  ],
+  "failure_nodes": [
+    {
+      "node_id": "failure_001",
+      "node_type": "failure",
+      "title": "반복 단계 분리 실패",
+      "body": "시설 도면에는 제4탕 이후의 추가 탕 이름과 복도 표시가 계속 늘어났다.\n\n각 인원이 보고한 탈의실, 탕, 세신실, 사물함 번호는 하나의 도면 위에 정리되었지만, 실제 이동 결과와 맞지 않았다.\n\n한 인원이 출구 표지판을 따라갔다고 보고한 위치는 다른 인원에게는 다음 탕 입구로 기록되었다. 같은 사물함 번호도 인원마다 위치와 열쇠 모양이 달랐다.\n\n기관은 어느 인원이 어느 반복 단계에 있는지 구분하지 못했고, 건물 출입구로 회수할 경로를 지정하지 못했다.",
+      "result": "containment_failed"
+    },
+    {
+      "node_id": "failure_002",
+      "node_type": "failure",
+      "title": "인원별 내부 기록 불일치",
+      "body": "추가 투입된 수색 인원들은 서로 같은 복도에 있다고 보고했으나, 실제로는 만나지 못했다.\n\n각 인원이 확인한 사물함 번호, 탕 순서, 출구 표지판 위치는 서로 맞지 않았다. 일부 인원은 같은 사물함 번호를 보고했지만, 사물함 위치와 열쇠 모양이 모두 달랐다.\n\n무전 기록에는 “다음 탕만 확인하고 나가겠다”, “출구 표지판은 보인다”, “여기가 처음 들어온 탈의실 같다”는 표현이 서로 다른 인원에게서 반복되었다.\n\n각 인원은 같은 폐업 목욕탕 건물 안에 있었으나, 서로 같은 내부 공간을 공유하지 않는 상태로 기록되었다.",
+      "result": "containment_failed"
+    },
+    {
+      "node_id": "failure_003",
+      "node_type": "failure",
+      "title": "출구 표지 오판",
+      "body": "내부 진입자는 출구 표지판을 따라 이동한다고 반복 보고했다.\n\n그러나 건물 출입구에서는 어떤 인원도 확인되지 않았다. 출구 표지판은 복도마다 늘어났고, 일부 표지판은 서로 같은 방향을 가리키는 듯했지만 이동 결과는 서로 다른 탈의실이나 탕 입구로 이어졌다.\n\n진입자는 “출구 표지판은 보인다”고 말했으나, 곧이어 “다음 탕만 확인하고 나가겠다”고 보고했다.\n\n최종 기록에서 출구 표지판은 건물 출입구가 아니라 다음 반복의 시작점처럼 작동한 것으로 정리되었다.",
+      "result": "containment_failed"
+    }
+  ],
+  "special_events": [
+    {
+      "event_id": "special_event_001",
+      "title": "남은 열쇠",
+      "start_node_id": "special_001_report_001",
+      "nodes": [
+        {
+          "node_id": "special_001_report_001",
+          "node_type": "special_report",
+          "title": "남은 열쇠 발견 보고",
+          "body": "안정화 처리 이후, 폐업 목욕탕 정리 과정에서 사물함 열쇠 여러 개가 회수되었다.\n\n그중 일부 열쇠에는 기존 시설 도면과 맞지 않는 번호가 새겨져 있었다. 해당 번호는 안정화 전 내부 진입자가 보고한 사물함 번호와 유사했다.\n\n낮에는 열쇠 외형에 특별한 변화가 없었으나, 야간 기록에서는 열쇠 번호가 더 큰 숫자로 보였다는 보고가 남았다.",
+          "choices": [
+            {
+              "choice_id": "special_001_report_001_choice_a",
+              "choice_text": "열쇠를 폐기하지 않고, 신발장·사물함·출구 표지 기록과 함께 비교한다.",
+              "next_node_id": "special_001_report_002",
+              "state_delta": 1,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            },
+            {
+              "choice_id": "special_001_report_001_choice_b",
+              "choice_text": "혼선을 막기 위해 도면상 존재하지 않는 번호의 열쇠를 폐기한다.",
+              "next_node_id": "special_001_report_003",
+              "state_delta": -2,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            },
+            {
+              "choice_id": "special_001_report_001_choice_c",
+              "choice_text": "열쇠 번호를 시설 기록에 등록하고, 사물함 번호 체계에 반영한다.",
+              "next_node_id": "special_001_report_003",
+              "state_delta": -2,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            }
+          ]
+        },
+        {
+          "node_id": "special_001_report_002",
+          "node_type": "special_report",
+          "title": "열쇠 기록 대조 보고",
+          "body": "회수된 열쇠 번호와 안정화 전 사물함 기록, 신발장 방향, 출구 표지 기록이 함께 대조되었다.\n\n일부 열쇠 번호는 현실 시설의 사물함 번호와 맞지 않았으나, 안정화 직전 회수 경로와 함께 기록하면 설명 가능한 항목으로 정리되었다.\n\n다만 몇몇 열쇠 번호는 독립적인 사물함 위치처럼 기록될 경우, 다시 내부 번호 배열을 늘릴 가능성이 있는 것으로 보고되었다.",
+          "choices": [
+            {
+              "choice_id": "special_001_report_002_choice_a",
+              "choice_text": "열쇠 번호를 새 사물함 번호로 등록하지 않고, 회수 경로 확인용 기록으로만 남긴다.",
+              "next_node_id": "special_001_report_004",
+              "state_delta": 2,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            },
+            {
+              "choice_id": "special_001_report_002_choice_b",
+              "choice_text": "누락된 사물함이 있을 가능성을 고려해 열쇠 번호를 새 사물함 번호로 등록한다.",
+              "next_node_id": "special_001_report_003",
+              "state_delta": -2,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            }
+          ]
+        },
+        {
+          "node_id": "special_001_report_003",
+          "node_type": "special_report",
+          "title": "열쇠 번호 재혼입 보고",
+          "body": "도면상 존재하지 않는 열쇠 번호가 시설 기록에 다시 반영되었다.\n\n이후 폐업 목욕탕 내부 사진에서 사물함 번호 배열이 이전보다 커져 보이는 사례가 확인되었다.\n\n야간 기록에는 같은 번호의 열쇠가 서로 다른 모양으로 찍힌 사진이 남았고, 일부 출구 표지판은 해당 번호가 적힌 사물함 방향을 가리키는 것처럼 보였다.",
+          "choices": [
+            {
+              "choice_id": "special_001_report_003_choice_a",
+              "choice_text": "열쇠 번호를 다시 확인하고, 새 사물함 위치처럼 쓰인 항목을 회수 경로 기록에서 분리한다.",
+              "next_node_id": "special_001_report_004",
+              "state_delta": 1,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            },
+            {
+              "choice_id": "special_001_report_003_choice_b",
+              "choice_text": "열쇠 번호가 확인된 사물함 구역을 추가 조사 대상으로 지정하고, 내부 확인 인원을 투입한다.",
+              "next_node_id": "special_001_failure_001",
+              "state_delta": -3,
+              "delay_range": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        },
+        {
+          "node_id": "special_001_report_004",
+          "node_type": "special_report",
+          "title": "최종 열쇠 기록 정리 보고",
+          "body": "회수된 열쇠 번호와 사물함 기록이 다시 정리되었다.\n\n도면상 존재하지 않는 번호는 독립 사물함 위치로 등록되지 않았고, 안정화 당시 회수 경로를 확인하는 보조 기록으로만 남았다.\n\n이후 야간 기록에서 사물함 번호 배열이 추가로 커지는 현상은 확인되지 않았다.",
+          "choices": [
+            {
+              "choice_id": "special_001_report_004_choice_a",
+              "choice_text": "정리된 열쇠 기록을 유지하고, 해당 번호가 새 사물함 위치로 쓰이지 않게 관리한다.",
+              "next_node_id": "special_001_stable",
+              "state_delta": 2,
+              "delay_range": {
+                "min": 1,
+                "max": 1
+              }
+            },
+            {
+              "choice_id": "special_001_report_004_choice_b",
+              "choice_text": "시설 정리를 위해 남은 열쇠 번호를 사물함 번호 체계에 다시 반영한다.",
+              "next_node_id": "special_001_failure_001",
+              "state_delta": -3,
+              "delay_range": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        }
+      ],
+      "stable_nodes": [
+        {
+          "node_id": "special_001_stable",
+          "node_type": "special_stable",
+          "title": "남은 열쇠 안정화 복귀",
+          "body": "회수된 열쇠는 독립 사물함 위치가 아니라, 안정화 당시의 회수 경로를 확인하는 보조 기록으로만 남았다.\n\n사물함 번호 배열은 더 이상 늘어나지 않았고, 출구 표지판이 열쇠 번호를 따라 다른 탈의실로 이어지는 사례도 확인되지 않았다.",
+          "result": "returned_to_stable",
+          "state_delta": 2
+        }
+      ],
+      "failure_nodes": [
+        {
+          "node_id": "special_001_failure_001",
+          "node_type": "special_failure",
+          "title": "남은 열쇠 실패",
+          "body": "도면상 존재하지 않는 열쇠 번호가 새 사물함 위치로 등록되었다.\n\n이후 내부 사진과 야간 기록에서 사물함 번호 배열이 다시 늘어났고, 같은 번호의 열쇠가 서로 다른 모양으로 확인되었다.\n\n출구 표지판 일부는 새로 등록된 사물함 구역을 가리키는 것처럼 보였으며, 기록상 탈의실 구역이 다시 반복되기 시작했다.",
+          "result": "containment_failed"
+        }
+      ]
+    },
+    {
+      "event_id": "special_event_002",
+      "title": "철거 전 출구 표지",
+      "start_node_id": "special_002_report_001",
+      "nodes": [
+        {
+          "node_id": "special_002_report_001",
+          "node_type": "special_report",
+          "title": "철거 전 출구 표지 회수 보고",
+          "body": "안정화 처리 이후 철거 작업 중, 목욕탕 내부 출구 표지판 일부가 회수되었다.\n\n해당 표지판은 낮에는 낡은 안내판 조각처럼 보였으나, 야간 사진에서는 화살표 방향이 실제 회수 위치와 다르게 찍힌 기록이 남았다.\n\n철거 작업자는 표지판을 폐기할지, 폐업 목욕탕 기록물로 보존할지 결정을 요청했다.",
+          "choices": [
+            {
+              "choice_id": "special_002_report_001_choice_a",
+              "choice_text": "표지판을 폐기하지 않고, 신발장 방향과 실제 회수 위치 기록을 함께 비교한다.",
+              "next_node_id": "special_002_report_002",
+              "state_delta": 1,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            },
+            {
+              "choice_id": "special_002_report_001_choice_b",
+              "choice_text": "혼선을 막기 위해 출구 표지판 조각을 폐기한다.",
+              "next_node_id": "special_002_report_003",
+              "state_delta": -2,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            },
+            {
+              "choice_id": "special_002_report_001_choice_c",
+              "choice_text": "표지판을 철거 기록물로 보존하고, 내부 안내 표지 목록에 등록한다.",
+              "next_node_id": "special_002_report_003",
+              "state_delta": -2,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            }
+          ]
+        },
+        {
+          "node_id": "special_002_report_002",
+          "node_type": "special_report",
+          "title": "출구 표지 기록 대조 보고",
+          "body": "회수된 출구 표지판 조각과 안정화 전 신발장 방향, 탈의실 위치, 실제 회수 위치가 함께 대조되었다.\n\n표지판의 화살표는 단독으로 보면 현실 출입구 방향과 맞지 않았으나, 안정화 당시 회수 경로와 함께 보았을 때 일부 기록과 맞아떨어졌다.\n\n다만 표지판을 독립 안내 표식으로 등록할 경우, 내부에서 다시 출구 표지판이 늘어날 가능성이 있다는 의견이 남았다.",
+          "choices": [
+            {
+              "choice_id": "special_002_report_002_choice_a",
+              "choice_text": "표지판을 새 안내 표식으로 등록하지 않고, 회수 경로 확인용 기록으로만 남긴다.",
+              "next_node_id": "special_002_report_004",
+              "state_delta": 2,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            },
+            {
+              "choice_id": "special_002_report_002_choice_b",
+              "choice_text": "출구 위치 혼선을 줄이기 위해 표지판을 완전히 폐기하고 관련 사진 기록도 제외한다.",
+              "next_node_id": "special_002_report_003",
+              "state_delta": -2,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            }
+          ]
+        },
+        {
+          "node_id": "special_002_report_003",
+          "node_type": "special_report",
+          "title": "출구 표지 재혼입 보고",
+          "body": "출구 표지판 조각이 폐기되거나 독립 안내 표식으로 등록된 뒤, 관련 기록에서 표지판 방향이 불안정하게 남았다.\n\n일부 기록에서는 표지판 정보가 완전히 사라져 안정화 당시 회수 경로와 대조할 수 없었고, 다른 기록에서는 표지판이 목욕탕 내부 안내 기준처럼 등록되었다.\n\n야간 사진에는 출구 표지판 화살표가 다시 탈의실 또는 다른 탕 입구 방향을 가리키는 것처럼 찍혔다.",
+          "choices": [
+            {
+              "choice_id": "special_002_report_003_choice_a",
+              "choice_text": "표지판 기록을 다시 확인하고, 실제 회수 위치와 맞지 않는 항목을 새 안내 표식에서 분리한다.",
+              "next_node_id": "special_002_report_004",
+              "state_delta": 1,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            },
+            {
+              "choice_id": "special_002_report_003_choice_b",
+              "choice_text": "표지판 방향을 내부 안내 기준으로 삼고, 이후 철거 기록에도 같은 방향을 적용한다.",
+              "next_node_id": "special_002_failure_001",
+              "state_delta": -3,
+              "delay_range": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        },
+        {
+          "node_id": "special_002_report_004",
+          "node_type": "special_report",
+          "title": "최종 출구 표지 기록 정리 보고",
+          "body": "회수된 출구 표지판 조각과 관련 사진 기록이 다시 정리되었다.\n\n표지판은 독립 안내 표식으로 등록되지 않았고, 안정화 당시 실제 회수 위치와 대조하는 보조 기록으로만 남았다.\n\n이후 야간 사진에서 표지판 화살표가 다른 탈의실이나 탕 입구를 가리키는 현상은 확인되지 않았다.",
+          "choices": [
+            {
+              "choice_id": "special_002_report_004_choice_a",
+              "choice_text": "정리된 표지판 기록을 유지하고, 해당 표지가 새 안내 기준으로 쓰이지 않게 관리한다.",
+              "next_node_id": "special_002_stable",
+              "state_delta": 2,
+              "delay_range": {
+                "min": 1,
+                "max": 1
+              }
+            },
+            {
+              "choice_id": "special_002_report_004_choice_b",
+              "choice_text": "현장 안내 편의를 위해 표지판 화살표를 내부 안내 기준으로 다시 등록한다.",
+              "next_node_id": "special_002_failure_001",
+              "state_delta": -3,
+              "delay_range": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        }
+      ],
+      "stable_nodes": [
+        {
+          "node_id": "special_002_stable",
+          "node_type": "special_stable",
+          "title": "철거 전 출구 표지 안정화 복귀",
+          "body": "회수된 출구 표지판은 독립 안내 기준이 아니라, 안정화 당시 회수 위치를 확인하는 보조 기록으로만 남았다.\n\n출구 표지판 화살표가 다른 탈의실이나 탕 입구로 이어지는 사례는 다시 확인되지 않았다.",
+          "result": "returned_to_stable",
+          "state_delta": 2
+        }
+      ],
+      "failure_nodes": [
+        {
+          "node_id": "special_002_failure_001",
+          "node_type": "special_failure",
+          "title": "철거 전 출구 표지 실패",
+          "body": "회수된 출구 표지판이 내부 안내 기준으로 다시 등록되었다.\n\n이후 야간 사진에서 출구 표지판 화살표는 현실 출입구가 아니라 다른 탈의실 또는 탕 입구 방향을 가리켰다.\n\n철거 기록에는 출구 표지판 위치가 여러 개로 늘어났고, 일부 표지는 서로 다른 방향을 동시에 가리키는 것처럼 기록되었다.",
+          "result": "containment_failed"
+        }
+      ]
+    }
+  ]
+}

@@ -58,11 +58,40 @@ theme_override_constants/separation = 8
 layout_mode = 2
 text = "보고서 상세"
 
-[node name="DetailText" type="RichTextLabel" parent="RootContainer/ContentContainer/DetailContainer"]
+[node name="DetailScrollContainer" type="ScrollContainer" parent="RootContainer/ContentContainer/DetailContainer"]
 layout_mode = 2
+size_flags_vertical = 3
+
+[node name="DetailBodyContainer" type="HBoxContainer" parent="RootContainer/ContentContainer/DetailContainer/DetailScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 12
+
+[node name="DetailText" type="RichTextLabel" parent="RootContainer/ContentContainer/DetailContainer/DetailScrollContainer/DetailBodyContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "보고서 목록에서 항목을 선택해 주세요."
 fit_content = true
+
+[node name="AnomalyImageSlot" type="Control" parent="RootContainer/ContentContainer/DetailContainer/DetailScrollContainer/DetailBodyContainer"]
+visible = false
+custom_minimum_size = Vector2(360, 240)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="AnomalyImageRect" type="TextureRect" parent="RootContainer/ContentContainer/DetailContainer/DetailScrollContainer/DetailBodyContainer/AnomalyImageSlot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
 
 [node name="CompletedStampLabel" type="Label" parent="RootContainer/ContentContainer/DetailContainer"]
 visible = false

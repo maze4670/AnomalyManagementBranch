@@ -1,0 +1,642 @@
+{
+  "case_id": "case_003",
+  "display_id": "CASE-BS-001",
+  "alias": "철거 전 골목",
+  "report_nodes": [
+    {
+      "node_id": "report_001",
+      "node_type": "report",
+      "title": "최초 발견 및 구조 요청 보고",
+      "body": "야간 철거 현장 순찰 중, 펜스 안쪽 빈터에서 철거 완료된 슈퍼 간판 불빛이 확인되었다.\n\n해당 슈퍼는 수년 전 철거 완료된 건물로 확인되었으며, 현장 도면상 동일 위치에는 빈터와 폐자재 적치 구역만 남아 있었다.\n\n같은 시간대에 실종 신고자가 휴대전화로 구조 요청을 보냈다. 신고자는 자신이 “전파사 앞”에 있다고 진술했으나, 해당 전파사는 이미 철거된 건물로 확인되었다.\n\n야간 현장 기록에는 흐릿한 간판 불빛, 닫힌 셔터, 낮은 담장, 좁은 계단 형태가 기재되었다. 주간 재확인에서는 같은 위치에 펜스, 철거 잔해, 안전 표지판만 확인되었다.\n\n현재까지 현장 내부에서 실종자의 신체 흔적이나 명확한 이동 경로는 확인되지 않았다.",
+      "choices": [
+        {
+          "choice_id": "report_001_choice_a",
+          "choice_text": "철거 현장 외곽 펜스를 보강하고, 야간 출입 통제와 순찰 구역을 확대한다.",
+          "next_node_id": "report_002",
+          "state_delta": -1,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        },
+        {
+          "choice_id": "report_001_choice_b",
+          "choice_text": "현재 현장 지도와 철거 도면를 기준으로 실종자의 위치를 재산정하고, 해당 지점 주변을 우선 수색한다.",
+          "next_node_id": "report_003",
+          "state_delta": -2,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        },
+        {
+          "choice_id": "report_001_choice_c",
+          "choice_text": "야간 기록 사진과 구조 요청 발언을 대조하고, 반복되는 상호·위치 표현을 추가 수집한다.",
+          "next_node_id": "report_004",
+          "state_delta": 1,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        }
+      ]
+    },
+    {
+      "node_id": "report_002",
+      "node_type": "report",
+      "title": "펜스 보강 이후 보고",
+      "body": "철거 현장 외곽 펜스가 보강되었고, 출입금지 표지판이 추가 설치되었다. 외부 순찰 기록상 일반인의 접근 사례는 줄어든 것으로 보고되었다.\n\n그러나 보강 이후 야간 기록에서는 펜스 안쪽 더 깊은 위치에서 이전보다 오래된 상호가 확인되었다. 구조 요청자는 처음의 “전파사 앞” 외에도 “○○슈퍼 뒤 계단”, “옛 미용실 앞”이라는 표현을 사용했다.\n\n현장 표지판 일부에는 낮에는 확인되지 않았던 옛 지번 형태의 표기가 야간 사진에 흐릿하게 남았다.\n\n외부에서는 현장 경계가 더 명확해진 것처럼 보이나, 내부 진입자의 위치 표현은 현재 현장 출구에서 멀어지는 방향으로 정리되고 있다.",
+      "choices": [
+        {
+          "choice_id": "report_002_choice_a",
+          "choice_text": "펜스 보강과 출입금지 표지판 설치를 추가로 진행하고, 철거선 내부 접근을 전면 제한한다.",
+          "next_node_id": "report_005",
+          "state_delta": -2,
+          "delay_range": {
+            "min": 2,
+            "max": 4
+          }
+        },
+        {
+          "choice_id": "report_002_choice_b",
+          "choice_text": "보강 이후 늘어난 옛 상호와 야간 사진 기록을 정리하고, 구조 요청자의 위치 표현 변화를 함께 비교한다.",
+          "next_node_id": "report_004",
+          "state_delta": 1,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "choice_id": "report_002_choice_c",
+          "choice_text": "펜스 안쪽 잔존 구조물 가능성을 우선 확인하고, 낮 시간대 추가 정비 여부 검토를 지시한다.",
+          "next_node_id": "report_006",
+          "state_delta": -1,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        }
+      ]
+    },
+    {
+      "node_id": "report_003",
+      "node_type": "report",
+      "title": "현재 지도 기준 수색 보고",
+      "body": "현재 현장 지도와 철거 도면를 기준으로 실종자의 위치가 재산정되었다. 구조 요청자가 말한 “전파사 앞”은 현재 지도상 재개발 현장 내부 공터로 표시되었다.\n\n해당 지점 주변을 수색했으나 실종자는 확인되지 않았다. 현장 수색팀은 펜스, 폐자재 적치 구역, 안전 표지판 외에 골목 또는 상점 구조물을 발견하지 못했다.\n\n수색 중 무전 기록에는 현재 지도상 존재하지 않는 “슈퍼 뒤 계단”, “전파사 골목”, “시장 가는 골목”이라는 표현이 반복적으로 남았다.\n\n실종자에게 현재 주소와 현장 출구 방향을 안내했으나, 실종자는 해당 설명을 이해하지 못하고 “그런 길은 여기 없다”고 답했다.",
+      "choices": [
+        {
+          "choice_id": "report_003_choice_a",
+          "choice_text": "현재 현장 지도와 철거 도면 기준 확인 범위를 넓히고, 추가 수색 인원 배치를 검토한다.",
+          "next_node_id": "report_005",
+          "state_delta": -2,
+          "delay_range": {
+            "min": 2,
+            "max": 4
+          }
+        },
+        {
+          "choice_id": "report_003_choice_b",
+          "choice_text": "수색 무전에 남은 옛 상호와 골목명을 정리하고, 현장 기록에서 같은 표현이 반복되는지 확인한다.",
+          "next_node_id": "report_004",
+          "state_delta": 1,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "choice_id": "report_003_choice_c",
+          "choice_text": "혼선을 줄이기 위해 구조 요청 및 수색 기록에서 옛 상호와 지번 표기를 보류한다.",
+          "next_node_id": "report_006",
+          "state_delta": -2,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        }
+      ]
+    },
+    {
+      "node_id": "report_004",
+      "node_type": "report",
+      "title": "야간 기록 및 구조 요청 대조 보고",
+      "body": "야간 기록 사진, 구조 요청 녹취, 수색 무전 기록을 함께 대조한 결과, 사라진 상호와 옛 골목명이 반복적으로 등장하는 것이 확인되었다.\n\n반복되는 표현은 “전파사 앞”, “○○슈퍼 뒤 계단”, “옛 미용실 앞”, “시장 가는 골목” 등이었다. 해당 장소들은 현재 지도상 건물이나 도로로 남아 있지 않다.\n\n인근 전 상인과 주민 일부는 해당 상호와 골목 위치를 기억하고 있었으나, 같은 표현을 그대로 따라가면 현재 수색 지점보다 더 안쪽 동선을 설명하게 되는 경우가 있었다.\n\n현재 단계에서는 옛 상호가 단순 혼동인지, 내부 진입자가 이해할 수 있는 위치 표현인지 확정되지 않았다. 다만 현재 주소만으로는 구조 요청자와 위치를 맞추기 어렵다는 점은 확인되었다.",
+      "choices": [
+        {
+          "choice_id": "report_004_choice_a",
+          "choice_text": "옛 상호와 지번을 혼동 가능성이 있는 항목으로 분류하고, 이후 구조 요청 및 수색 기록에서 표기를 보류한다.",
+          "next_node_id": "report_006",
+          "state_delta": -2,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        },
+        {
+          "choice_id": "report_004_choice_b",
+          "choice_text": "주민 기억과 옛 상호 목록을 수집하되, 즉시 수색 경로로 반영하지 않고 별도 기록으로 보류한다.",
+          "next_node_id": "report_005",
+          "state_delta": 0,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        },
+        {
+          "choice_id": "report_004_choice_c",
+          "choice_text": "반복되는 옛 상호와 현장 외곽 회수 지점의 상대 위치를 비교하고, 구조 요청자의 이동 표현과 함께 대조한다.",
+          "next_node_id": "report_007",
+          "state_delta": 2,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        }
+      ]
+    },
+    {
+      "node_id": "report_005",
+      "node_type": "report",
+      "title": "옛 지번 및 상호 혼입 보고",
+      "body": "임시 수색 지도와 현장 표지판 일부에서 낮에는 확인되지 않던 옛 지번 표기가 야간 기록에 남았다.\n\n일부 수색 기록에는 사라진 상점 이름이 보조 위치명처럼 기입되었다. 기존 현장 출구 표기보다 옛 상호가 더 눈에 띄는 형태로 수정된 기록도 확인되었다.\n\n구조 요청자는 “조금만 더 가면 큰길이 나온다”고 반복했으나, 해당 진술과 현재 현장 출구 위치는 일치하지 않았다.\n\n수색 기록 담당자는 옛 상호와 지번을 모두 삭제하면 기록은 정리되지만, 구조 요청자의 위치 설명이 끊기는 문제가 있다고 보고했다.",
+      "choices": [
+        {
+          "choice_id": "report_005_choice_a",
+          "choice_text": "현장 표지판과 수색 지도에서 옛 지번과 사라진 상호 표기를 제외하고, 현재 주소 기준으로 기록을 정리한다.",
+          "next_node_id": "report_008",
+          "state_delta": -2,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        },
+        {
+          "choice_id": "report_005_choice_b",
+          "choice_text": "옛 상호와 지번을 임시 위치 기준에 포함하고, 주민 기억에 따른 과거 동선을 우선 확인한다.",
+          "next_node_id": "report_006",
+          "state_delta": -2,
+          "delay_range": {
+            "min": 2,
+            "max": 4
+          }
+        },
+        {
+          "choice_id": "report_005_choice_c",
+          "choice_text": "옛 상호와 지번 중 현장 외곽 회수 지점과 대조 가능한 항목을 분리하고, 독립 수색 기준으로 쓰이지 않도록 정리한다.",
+          "next_node_id": "report_007",
+          "state_delta": 1,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        }
+      ]
+    },
+    {
+      "node_id": "report_006",
+      "node_type": "report",
+      "title": "무전상 출구 접근 불일치 보고",
+      "body": "내부 진입자는 무전상으로 “큰길 쪽으로 나오고 있다”, “이제 출구가 보인다”고 보고했다.\n\n그러나 해당 시각 현장 출구 어느 지점에서도 인원은 확인되지 않았다. 외부 수색팀은 출구 주변을 확인했으나 실종자나 이동 흔적을 발견하지 못했다.\n\n무전 기록을 검토한 결과, 내부 진입자가 말한 “큰길”은 현재 도로가 아니라 철거 전 생활 동선에서 사용되던 도로명 또는 골목명과 더 가까운 표현으로 보인다.\n\n일부 수색 인원이 무전상 출구 접근 보고를 따라 내부로 진입하려 했으나, 현장 지도상 해당 방향은 폐자재 적치 구역으로 기록되어 있었다.",
+      "choices": [
+        {
+          "choice_id": "report_006_choice_a",
+          "choice_text": "무전상 출구 접근 보고를 기준으로 추가 수색 인원 배치를 검토하고, 해당 방향을 우선 확인한다.",
+          "next_node_id": "report_008",
+          "state_delta": -2,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        },
+        {
+          "choice_id": "report_006_choice_b",
+          "choice_text": "무전상 출구 접근 위치를 실제 외곽 확인 지점과 대조하고, 일치하지 않는 옛 상호 기준을 별도 표시한다.",
+          "next_node_id": "report_007",
+          "state_delta": 2,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        },
+        {
+          "choice_id": "report_006_choice_c",
+          "choice_text": "외곽 회수 지점 주변 통제를 강화하고, 내부 확인을 위해 별도 수색조를 투입한다.",
+          "next_node_id": "failure_002",
+          "state_delta": -3,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        }
+      ]
+    },
+    {
+      "node_id": "report_007",
+      "node_type": "report",
+      "title": "회수 기준 정리 전조 보고",
+      "body": "반복되는 옛 상호와 지번 일부가 현재 현장 출구와 대조되었다. 모든 과거 기준이 유효한 것은 아니었으나, 일부 표현은 현재 출구와 가까운 방향을 가리키는 것으로 정리되었다.\n\n구조 요청자는 여전히 “전파사 골목”, “옛 슈퍼 앞” 같은 표현을 사용했지만, 해당 표현 중 일부는 현재 펜스 출구와 대응 가능한 위치로 표시되었다.\n\n무전상 출구 접근 보고와 실제 현장 출구 확인 위치가 처음으로 부분적으로 맞아떨어졌다. 야간 기록에서 간판 불빛은 골목 안쪽보다 펜스 가까운 위치에서 짧게 확인되었다.\n\n수색 지도에서는 옛 지번이 독립적으로 늘어나기보다, 현재 출구 대응표 안에 제한적으로 정리되기 시작했다.",
+      "choices": [
+        {
+          "choice_id": "report_007_choice_a",
+          "choice_text": "외곽 회수 지점과 대조된 옛 상호·지번만 구조 요청자 안내에 반영하고, 실제 확인 지점과 계속 대조한다.",
+          "next_node_id": "stable_001",
+          "state_delta": 2,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "choice_id": "report_007_choice_b",
+          "choice_text": "회수 가능성이 확인된 옛 상호 목록을 수색 기준으로 확대하고, 주변 과거 동선을 추가 확인한다.",
+          "next_node_id": "report_006",
+          "state_delta": -1,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        },
+        {
+          "choice_id": "report_007_choice_c",
+          "choice_text": "오류 가능성을 줄이기 위해 옛 상호 안내를 중단하고, 현재 외곽 회수 지점 명칭만 반복 안내한다.",
+          "next_node_id": "report_008",
+          "state_delta": -2,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        }
+      ]
+    },
+    {
+      "node_id": "report_008",
+      "node_type": "report",
+      "title": "과거 동선 심화 보고",
+      "body": "현장 수색 기록에서 현재 출구보다 사라진 상호와 옛 지번이 더 자주 사용되기 시작했다.\n\n구조 요청자는 “조금만 더 가면 큰길이 나온다”고 반복했으나, 현장 출구와의 실제 거리는 확인되지 않았다. 무전상으로는 출구 접근 보고가 반복되었지만, 외부 출구 확인과는 계속 어긋났다.\n\n수색 지도에는 철거 전 골목명이 표준 위치처럼 기입되었고, 일부 기록에서는 현재 주소가 보조 정보처럼 밀려났다.\n\n내부 진입자와 수색 인원 일부가 서로 다른 사라진 상호를 기준으로 위치를 보고하기 시작했다.",
+      "choices": [
+        {
+          "choice_id": "report_008_choice_a",
+          "choice_text": "옛 상호 기준을 다시 점검하고, 외곽 회수 지점과 대조되지 않는 항목을 안내 자료에서 분리한다.",
+          "next_node_id": "report_007",
+          "state_delta": 1,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "choice_id": "report_008_choice_b",
+          "choice_text": "무전상 출구 접근 보고를 회수 직전 신호로 보고, 해당 과거 동선을 따라 회수 절차를 진행한다.",
+          "next_node_id": "failure_001",
+          "state_delta": -3,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "choice_id": "report_008_choice_c",
+          "choice_text": "수색 지도에서 현재 주소보다 옛 상호와 지번을 우선 위치 기준으로 정리한다.",
+          "next_node_id": "failure_003",
+          "state_delta": -3,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        }
+      ]
+    }
+  ],
+  "stable_nodes": [
+    {
+      "node_id": "stable_001",
+      "node_type": "stable",
+      "title": "외곽 회수 지점 대조 이후 보고",
+      "body": "내부 진입자는 여전히 “전파사 골목”, “옛 슈퍼 앞” 같은 표현을 사용했으나, 해당 표현은 현장 외곽 회수 지점과 함께 대조된 상태로 기록되었다.\n\n외부 수색팀은 무전상 접근 보고와 실제 외곽 확인 위치를 대조했고, 처음으로 두 기록이 같은 지점에서 맞아떨어졌다.\n\n구조 요청자는 펜스 가까운 외곽 지점을 통해 회수되었다. 회수 직후 진입자는 현재 주소를 정확히 설명하지는 못했으나, 자신이 따라온 상호와 지번이 외부 기록의 현재 출구와 대응된다는 점은 확인되었다.\n\n야간 철거 현장에서 확인되던 간판 불빛은 완전히 사라졌다고 단정할 수는 없다. 다만 골목 안쪽으로 이어지던 불빛은 더 이상 확인되지 않았고, 펜스 가까운 위치에서 잠시 나타났다 사라지는 수준으로 약화되었다.",
+      "result": "stabilized",
+      "state_delta": 3
+    }
+  ],
+  "failure_nodes": [
+    {
+      "node_id": "failure_001",
+      "node_type": "failure",
+      "title": "회수 기준 오판",
+      "body": "내부 진입자는 무전상으로 계속 “출구가 보인다”고 보고했다.\n\n그러나 현장 출구 어느 지점에서도 인원은 확인되지 않았다. 무전 기록에 남은 출구 표현은 현재 현장 출구가 아니라 철거 전 골목에서 사용되던 큰길 또는 옛 상호 기준에 가까웠다.\n\n회수 기준으로 지정된 옛 상호는 실제 외곽 확인 지점과 맞지 않았고, 구조 요청자는 해당 기준을 따라 더 깊은 골목으로 이동한 것으로 추정된다.\n\n이후 무전에서는 현재 주소가 사라지고, 사라진 상호와 옛 골목명만 반복되었다.",
+      "result": "containment_failed"
+    },
+    {
+      "node_id": "failure_002",
+      "node_type": "failure",
+      "title": "내부 인원 분산",
+      "body": "추가 투입된 수색 인원들은 각자 다른 위치를 보고했다.\n\n한 명은 “옛 미용실 앞”, 다른 한 명은 “슈퍼 뒤 계단”, 또 다른 인원은 “시장 가는 골목”이라고 무전했다. 해당 위치들은 현재 현장 지도상 서로 연결되지 않는 공터와 철거 잔해 구역으로 표시되어 있었다.\n\n무전상으로는 서로 가까운 골목에 있는 것처럼 보고되었으나, 실제 외곽 확인 지점에서는 어떤 인원도 확인되지 않았다.\n\n수색 인원은 현재 기준으로 같은 구역에 있어야 했지만, 기록상으로는 서로 다른 철거 전 생활 동선 안에 분산된 상태가 되었다.",
+      "result": "containment_failed"
+    },
+    {
+      "node_id": "failure_003",
+      "node_type": "failure",
+      "title": "수색 기준 단절",
+      "body": "수색 지도에서 현재 주소 표기는 보조 정보처럼 밀려났고, 사라진 상호와 옛 지번이 주요 위치 기준으로 사용되었다.\n\n현장 표지판 일부에도 낮에는 없던 옛 지번 표기가 야간 기록으로 남았다. 무전 기록에서는 현재 출구명보다 “전파사 골목”, “옛 미용실 앞”, “시장 가는 길”이 반복되었다.\n\n무전상으로는 여러 인원이 출구에 접근 중이라고 보고했으나, 실제 외곽 확인 지점에서는 인원이 확인되지 않았다.\n\n해당 구역의 수색 기록은 현재 위치 체계와 연결되지 않은 상태로 정리되었으며, 기관은 내부 진입자와 수색 기록을 현재 현장 기준으로 확인하지 못했다.",
+      "result": "containment_failed"
+    }
+  ],
+  "special_events": [
+    {
+      "event_id": "special_event_001",
+      "title": "새 현장 안내도",
+      "start_node_id": "special_001_report_001",
+      "nodes": [
+        {
+          "node_id": "special_001_report_001",
+          "node_type": "special_report",
+          "title": "새 현장 안내도 보고",
+          "body": "안정화 처리 이후, 재개발 구역 안전 안내도와 임시 현장도가 새로 작성되었다.\n\n해당 안내도에는 철거 전 상호 일부가 보조 위치명처럼 기입되어 있었다. 그중 “○○슈퍼”, “전파사 골목” 표기는 현재 출구와 대응 관계가 명확하지 않은 상태였다.\n\n야간 확인에서 “○○슈퍼”로 표기된 위치 주변에 간판 불빛이 다시 확인되었다. 낮에는 해당 위치에 폐자재와 빈터만 남아 있었다.",
+          "choices": [
+            {
+              "choice_id": "special_001_report_001_choice_a",
+              "choice_text": "새 현장 안내도에 포함된 옛 상호 표기를 보류하고, 현재 출구와의 대응 여부를 별도 확인한다.",
+              "next_node_id": "special_001_report_002",
+              "state_delta": 1,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            },
+            {
+              "choice_id": "special_001_report_001_choice_b",
+              "choice_text": "옛 상호 표기가 현장 이해에 도움이 되므로 안내도에 보조 위치명으로 유지한다.",
+              "next_node_id": "special_001_report_003",
+              "state_delta": -2,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            },
+            {
+              "choice_id": "special_001_report_001_choice_c",
+              "choice_text": "안내도 적용을 보류하고, 야간 간판 불빛과 표기 위치의 변화만 추가 관찰한다.",
+              "next_node_id": "special_001_report_003",
+              "state_delta": -1,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            }
+          ]
+        },
+        {
+          "node_id": "special_001_report_002",
+          "node_type": "special_report",
+          "title": "안내도 표기 대조 보고",
+          "body": "새 현장 안내도에 포함된 옛 상호 표기가 현재 출구와 대조되었다.\n\n일부 상호는 현재 출구 접근 방향과 맞았으나, 일부 상호는 철거 전 골목 안쪽 동선을 가리키는 것으로 확인되었다.\n\n야간 간판 불빛은 안내도상 옛 상호 표기가 남은 지점에서 더 오래 유지되었다.",
+          "choices": [
+            {
+              "choice_id": "special_001_report_002_choice_a",
+              "choice_text": "현재 출구와 대응된 옛 상호만 안내도 보조 자료로 제한하고, 나머지 표기는 별도 기록으로 분리한다.",
+              "next_node_id": "special_001_report_004",
+              "state_delta": 2,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            },
+            {
+              "choice_id": "special_001_report_002_choice_b",
+              "choice_text": "혼선을 줄이기 위해 옛 상호 표기를 전부 삭제하고, 현재 주소만 남긴다.",
+              "next_node_id": "special_001_report_003",
+              "state_delta": -1,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            }
+          ]
+        },
+        {
+          "node_id": "special_001_report_003",
+          "node_type": "special_report",
+          "title": "안내 기준 재혼입 보고",
+          "body": "안내도 일부에서 철거 전 상호가 현장 위치 기준처럼 사용되기 시작했다.\n\n수색 보조 기록에는 “○○슈퍼 뒤”, “전파사 골목 옆” 같은 표현이 다시 기입되었다. 일부 기록은 현재 출구와 대응되지 않은 상호도 현장 안내 위치로 사용했다.\n\n야간 현장에서는 간판 불빛이 펜스 가까운 위치가 아니라 골목 안쪽처럼 보이는 방향에서 확인되었다.",
+          "choices": [
+            {
+              "choice_id": "special_001_report_003_choice_a",
+              "choice_text": "안내도와 수색 보조 기록의 옛 상호 표기를 다시 대조하고, 현재 출구와 맞지 않는 항목을 분리한다.",
+              "next_node_id": "special_001_report_004",
+              "state_delta": 1,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            },
+            {
+              "choice_id": "special_001_report_003_choice_b",
+              "choice_text": "옛 상호를 현장 안내 기준으로 확정하고, 이후 수색 기록에도 같은 표기를 적용한다.",
+              "next_node_id": "special_001_failure_001",
+              "state_delta": -3,
+              "delay_range": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        },
+        {
+          "node_id": "special_001_report_004",
+          "node_type": "special_report",
+          "title": "최종 안내도 정리 보고",
+          "body": "새 현장 안내도와 임시 수색 지도가 다시 정리되었다.\n\n옛 상호 표기는 현재 출구와 대응되는 항목에 한해 보조 자료로 남았고, 독립적인 현장 위치 기준으로 사용되지는 않았다.\n\n야간 확인에서 간판 불빛은 골목 안쪽으로 이어지지 않고, 펜스 가까운 위치에서 짧게 확인되었다.",
+          "choices": [
+            {
+              "choice_id": "special_001_report_004_choice_a",
+              "choice_text": "정리된 안내도 기준을 유지하고, 옛 상호가 독립 위치 기준으로 사용되지 않는지 확인한다.",
+              "next_node_id": "special_001_stable",
+              "state_delta": 2,
+              "delay_range": {
+                "min": 1,
+                "max": 1
+              }
+            },
+            {
+              "choice_id": "special_001_report_004_choice_b",
+              "choice_text": "현장 이해를 돕기 위해 옛 상호 표기를 안내도 전면에 다시 표시한다.",
+              "next_node_id": "special_001_failure_001",
+              "state_delta": -3,
+              "delay_range": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        }
+      ],
+      "stable_nodes": [
+        {
+          "node_id": "special_001_stable",
+          "node_type": "special_stable",
+          "title": "새 현장 안내도 안정화 복귀",
+          "body": "새 현장 안내도에서 옛 상호는 현재 출구와 대응된 보조 자료로만 남았다.\n\n수색 지도와 현장 표지판에서는 현재 출구와 대응되지 않은 과거 기준이 독립적으로 작동하지 않도록 정리되었다.\n\n야간 간판 불빛은 펜스 가까운 위치에서 짧게 확인된 뒤 사라졌다.",
+          "result": "returned_to_stable",
+          "state_delta": 2
+        }
+      ],
+      "failure_nodes": [
+        {
+          "node_id": "special_001_failure_001",
+          "node_type": "special_failure",
+          "title": "새 현장 안내도 실패",
+          "body": "옛 상호가 새 현장 안내도와 임시 수색 지도에서 주요 위치 기준으로 확정되었다.\n\n이후 무전 기록에서는 현재 출구보다 “○○슈퍼 뒤”, “전파사 골목” 같은 표현이 반복되었다.\n\n야간 현장에서는 간판 불빛이 다시 골목 안쪽 방향으로 이어졌고, 현재 출구와 대응되지 않은 과거 기준이 수색 기록을 지배하기 시작했다.",
+          "result": "containment_failed"
+        }
+      ]
+    },
+    {
+      "event_id": "special_event_002",
+      "title": "남은 간판",
+      "start_node_id": "special_002_report_001",
+      "nodes": [
+        {
+          "node_id": "special_002_report_001",
+          "node_type": "special_report",
+          "title": "남은 간판 발견 보고",
+          "body": "안정화 처리 이후, 철거 잔해 정리 과정에서 이미 철거된 슈퍼의 간판 일부가 발견되었다.\n\n해당 간판은 낮에는 단순 폐자재처럼 보였으나, 야간 기록에서는 일부 글자에 불빛이 켜진 것처럼 남았다.\n\n현장 기록 담당자는 해당 간판을 폐기할지, 철거 전 골목 정리 자료로 보존할지 결정을 요청했다.",
+          "choices": [
+            {
+              "choice_id": "special_002_report_001_choice_a",
+              "choice_text": "간판과 상호 기록을 폐기하지 않고, 현재 출구 대응 자료로 사용할 수 있는지 확인한다.",
+              "next_node_id": "special_002_report_002",
+              "state_delta": 1,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            },
+            {
+              "choice_id": "special_002_report_001_choice_b",
+              "choice_text": "혼선을 막기 위해 간판을 폐기하고, 관련 상호 기록도 현장 자료에서 삭제한다.",
+              "next_node_id": "special_002_report_003",
+              "state_delta": -2,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            },
+            {
+              "choice_id": "special_002_report_001_choice_c",
+              "choice_text": "철거 전 골목 복원 자료로 보존하고, 과거 상호 위치를 현장 기록에 자세히 남긴다.",
+              "next_node_id": "special_002_report_003",
+              "state_delta": -2,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            }
+          ]
+        },
+        {
+          "node_id": "special_002_report_002",
+          "node_type": "special_report",
+          "title": "간판 기록 대조 보고",
+          "body": "발견된 간판의 상호와 과거 지번이 현재 현장 출구와 대조되었다.\n\n상호 자체는 구조 요청자가 이해할 수 있는 위치 표현이었으나, 과거 위치를 그대로 따르면 골목 안쪽 동선으로 이어질 가능성이 있었다.\n\n야간 기록에서 간판 불빛은 현장 출구와 가까운 방향, 그리고 골목 안쪽처럼 보이는 방향에서 번갈아 확인되었다.",
+          "choices": [
+            {
+              "choice_id": "special_002_report_002_choice_a",
+              "choice_text": "간판 상호를 현재 출구와 대응된 귀환 자료로 제한하고, 과거 위치 설명은 별도 기록으로 분리한다.",
+              "next_node_id": "special_002_report_004",
+              "state_delta": 2,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            },
+            {
+              "choice_id": "special_002_report_002_choice_b",
+              "choice_text": "간판이 혼선을 유발하므로 실물과 관련 기록을 모두 폐기한다.",
+              "next_node_id": "special_002_report_003",
+              "state_delta": -2,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            }
+          ]
+        },
+        {
+          "node_id": "special_002_report_003",
+          "node_type": "special_report",
+          "title": "간판 기준 혼선 보고",
+          "body": "간판 폐기 또는 복원 자료화 이후, 현장 기록에서 해당 상호의 취급이 불안정해졌다.\n\n일부 기록에서는 상호가 완전히 삭제되어 구조 요청자의 위치 표현과 대조할 수 없었고, 다른 기록에서는 상호가 철거 전 골목의 기준점처럼 자세히 복원되었다.\n\n야간 현장에서는 간판 불빛이 골목 안쪽으로 이어지는 방향에서 다시 확인되었다.",
+          "choices": [
+            {
+              "choice_id": "special_002_report_003_choice_a",
+              "choice_text": "간판 상호를 현재 출구와 대조 가능한 범위로 다시 정리하고, 독립 수색 기준으로 쓰이지 않게 한다.",
+              "next_node_id": "special_002_report_004",
+              "state_delta": 1,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            },
+            {
+              "choice_id": "special_002_report_003_choice_b",
+              "choice_text": "간판 상호를 철거 전 골목 복원 기준으로 삼고, 관련 상호와 지번을 현장 기록에 확대 반영한다.",
+              "next_node_id": "special_002_failure_001",
+              "state_delta": -3,
+              "delay_range": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        },
+        {
+          "node_id": "special_002_report_004",
+          "node_type": "special_report",
+          "title": "최종 간판 기록 정리 보고",
+          "body": "발견된 간판과 상호 기록이 다시 정리되었다.\n\n간판은 폐기되거나 복원 표식으로 사용되지 않았고, 현재 출구와 대응 가능한 귀환 자료로만 제한 기록되었다.\n\n야간 기록에서 간판 불빛은 골목 안쪽으로 이어지지 않았으며, 펜스 가까운 위치에서 짧게 확인된 뒤 사라졌다.",
+          "choices": [
+            {
+              "choice_id": "special_002_report_004_choice_a",
+              "choice_text": "간판 상호를 현재 출구 대응 자료로만 유지하고, 현장 안내 기준으로 확장하지 않는다.",
+              "next_node_id": "special_002_stable",
+              "state_delta": 2,
+              "delay_range": {
+                "min": 1,
+                "max": 1
+              }
+            },
+            {
+              "choice_id": "special_002_report_004_choice_b",
+              "choice_text": "보존 가치를 고려해 간판 상호와 철거 전 위치를 현장 안내 자료에 반영한다.",
+              "next_node_id": "special_002_failure_001",
+              "state_delta": -3,
+              "delay_range": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        }
+      ],
+      "stable_nodes": [
+        {
+          "node_id": "special_002_stable",
+          "node_type": "special_stable",
+          "title": "남은 간판 안정화 복귀",
+          "body": "간판과 상호 기록은 현재 출구와 대응된 귀환 자료로만 제한 관리되었다.\n\n해당 상호는 수색 지도나 현장 안내 기준으로 독립 사용되지 않았고, 구조 요청자의 위치 표현을 현재 출구와 대조하는 자료로만 남았다.\n\n야간 간판 불빛은 펜스 가까운 위치에서 짧게 확인된 뒤 사라졌다.",
+          "result": "returned_to_stable",
+          "state_delta": 2
+        }
+      ],
+      "failure_nodes": [
+        {
+          "node_id": "special_002_failure_001",
+          "node_type": "special_failure",
+          "title": "남은 간판 실패",
+          "body": "발견된 간판 상호가 철거 전 골목 복원 기준으로 사용되었다.\n\n이후 현장 기록에는 사라진 상호와 옛 지번이 자세히 복원되었고, 야간 현장에서는 간판 불빛이 골목 안쪽으로 길게 이어졌다.\n\n구조 요청 기록에서도 현재 출구보다 해당 상호가 더 중요한 위치 기준으로 사용되기 시작했다.",
+          "result": "containment_failed"
+        }
+      ]
+    }
+  ]
+}

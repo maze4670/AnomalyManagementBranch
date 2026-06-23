@@ -1,0 +1,9 @@
+{
+  "case_id": "case_003",
+  "display_id": "CASE-BS-001",
+  "alias": "철거 전 골목",
+  "category": "공간형",
+  "basic_description": "CASE-BS-001은 ████년 ██월 ██일 ███ 지역의 재개발 구역에서 발견되었다.\n\n해당 이상현상은 야간 특정 시간대에 이미 철거된 골목 일부가 철거 전 상태로 다시 이어지는 현상으로 분류된다.\n\n낮에는 펜스와 빈터만 확인되나, 야간에는 사라진 상점 간판, 오래된 담장, 계단, 골목길이 제한적으로 확인된다.",
+  "additional_descriptions": [],
+  "image_path": "res://assets/anomalies/case_003.png"
+}

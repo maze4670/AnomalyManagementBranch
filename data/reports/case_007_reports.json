@@ -1,0 +1,642 @@
+{
+  "case_id": "case_007",
+  "display_id": "CASE-JN-001",
+  "alias": "우물 속 색동저고리",
+  "report_nodes": [
+    {
+      "node_id": "report_001",
+      "node_type": "report",
+      "title": "폐쇄 공동우물 최초 보고",
+      "body": "마을회관 뒤편에 위치한 폐쇄 공동우물에서 덮개와 철망 일부가 밀려난 상태가 확인되었다.\n\n우물 안쪽 수면 위에는 젖은 색동저고리처럼 보이는 형체가 떠 있었다. 최초 신고자는 이를 오래된 옷가지 또는 외부인이 버린 물건으로 보았으나, 현장 확인자 일부는 “옷이라기보다 아이가 등을 돌리고 앉아 있는 것 같다”고 진술했다.\n\n우물가에는 낡은 두레박 줄이 남아 있었고, 줄 일부가 우물 안쪽으로 축 늘어져 있었다. 얼굴로 볼 만한 부분은 확인되지 않았다.",
+      "choices": [
+        {
+          "choice_id": "report_001_choice_a",
+          "choice_text": "우물 내부 추가 확인은 보류하고, 현장 진술과 사진 기록을 먼저 정리한다.",
+          "next_node_id": "report_002",
+          "state_delta": 1,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        },
+        {
+          "choice_id": "report_001_choice_b",
+          "choice_text": "우물가 접근을 제한하고, 현장 인원의 추가 확인을 막는다.",
+          "next_node_id": "report_003",
+          "state_delta": 0,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        },
+        {
+          "choice_id": "report_001_choice_c",
+          "choice_text": "남아 있는 두레박과 줄을 이용해 수면 위 형체를 조심스럽게 건져 본다.",
+          "next_node_id": "report_004",
+          "state_delta": -1,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        }
+      ]
+    },
+    {
+      "node_id": "report_002",
+      "node_type": "report",
+      "title": "관찰자 진술 정리 보고",
+      "body": "현장 진술과 사진 기록을 정리하는 과정에서, 우물 안 형체에 대한 표현이 일정하게 달라지는 경향이 확인되었다.\n\n최초 기록에는 “젖은 옷가지”, “색동저고리 같은 천”이라는 표현이 많았으나, 뒤쪽 진술에서는 “등”, “어깨선”, “목덜미”라는 표현이 반복되었다.\n\n사진에서는 얼굴로 볼 만한 부분이 확인되지 않았다. 그러나 일부 검토자는 사진을 오래 볼수록 물체의 등이 더 뚜렷해 보인다고 보고했다.",
+      "choices": [
+        {
+          "choice_id": "report_002_choice_a",
+          "choice_text": "사진과 영상을 추가 판독해 얼굴이나 손처럼 식별할 수 있는 부분이 있는지 확인한다.",
+          "next_node_id": "report_005",
+          "state_delta": -1,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "choice_id": "report_002_choice_b",
+          "choice_text": "사진·영상의 반복 판독을 줄이고, 기존 진술은 서로 섞이지 않게 따로 정리한다.",
+          "next_node_id": "report_008",
+          "state_delta": 1,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        },
+        {
+          "choice_id": "report_002_choice_c",
+          "choice_text": "현장 인원에게 우물 안 형체를 자세히 설명하게 하고, 공통으로 보이는 부분을 모은다.",
+          "next_node_id": "report_007",
+          "state_delta": -2,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        }
+      ]
+    },
+    {
+      "node_id": "report_003",
+      "node_type": "report",
+      "title": "접근 제한 이후 음향 보고",
+      "body": "우물가 접근 제한 이후, 현장에서 울음소리로 해석되는 불명확한 음향이 보고되었다.\n\n녹음 자료에는 물방울 소리, 줄이 벽면에 닿는 소리, 바람 소리가 섞여 있었다. 그러나 현장에 있던 일부 인원은 이를 “아이가 우는 소리”라고 받아들였다.\n\n접근 제한을 강화한 뒤, 현장 인원 일부는 “막아서 못 나오는 것 같다”, “확인만 해봐야 한다”고 말했다.",
+      "choices": [
+        {
+          "choice_id": "report_003_choice_a",
+          "choice_text": "접근 제한을 더 강화하고, 우물 주변에 현장 인원을 추가 배치한다.",
+          "next_node_id": "report_006",
+          "state_delta": -2,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "choice_id": "report_003_choice_b",
+          "choice_text": "음향을 반복 청취하지 않도록 하고, 현장 확인을 줄이는 절차를 검토한다.",
+          "next_node_id": "report_008",
+          "state_delta": 1,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        },
+        {
+          "choice_id": "report_003_choice_c",
+          "choice_text": "울음소리 여부를 확인하기 위해 현장 인원이 우물 안쪽을 짧게 확인한다.",
+          "next_node_id": "report_007",
+          "state_delta": -2,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        }
+      ]
+    },
+    {
+      "node_id": "report_004",
+      "node_type": "report",
+      "title": "두레박 회수 기록",
+      "body": "우물가에 남아 있던 두레박과 줄을 이용해 수면 위 형체를 회수하려는 시도가 있었다.\n\n회수된 것은 젖은 천 조각, 색실 몇 올, 작은 단추 하나로 기록되었다. 그러나 현장 인원 일부는 “조각만 올라온 것 같다”, “아직 본체가 남아 있다”고 진술했다.\n\n우물 안 수면 위의 형체는 회수 이후에도 여전히 남아 있는 것으로 보였으며, 얼굴은 확인되지 않았다.",
+      "choices": [
+        {
+          "choice_id": "report_004_choice_a",
+          "choice_text": "두레박과 갈고리를 사용해 남아 있는 형체를 다시 건져 본다.",
+          "next_node_id": "report_006",
+          "state_delta": -2,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "choice_id": "report_004_choice_b",
+          "choice_text": "건져 올린 천 조각과 단추는 따로 보관하고, 추가 회수 시도는 중단한다.",
+          "next_node_id": "report_008",
+          "state_delta": 1,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        },
+        {
+          "choice_id": "report_004_choice_c",
+          "choice_text": "건져 올린 물건이 색동저고리 일부인지 확인하기 위해 사진 기록과 비교한다.",
+          "next_node_id": "report_005",
+          "state_delta": -1,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        }
+      ]
+    },
+    {
+      "node_id": "report_005",
+      "node_type": "report",
+      "title": "사진·영상 판독 보고",
+      "body": "사진과 영상 자료를 반복 확인한 결과, 우물 안 형체의 얼굴은 여전히 확인되지 않았다.\n\n그러나 일부 판독자는 등과 어깨선, 목덜미가 이전보다 분명해 보인다고 보고했다. 영상에서 형체가 움직이는 장면은 확인되지 않았다.\n\n기록 검토자는 “얼굴만 확인되면 구조 대상 여부를 판단할 수 있다”고 보고했으며, 현장 추가 촬영을 요청했다.",
+      "choices": [
+        {
+          "choice_id": "report_005_choice_a",
+          "choice_text": "얼굴이나 손이 확인될 때까지 사진·영상 판독과 추가 촬영을 계속한다.",
+          "next_node_id": "failure_003",
+          "state_delta": -3,
+          "delay_range": {
+            "min": 1,
+            "max": 1
+          }
+        },
+        {
+          "choice_id": "report_005_choice_b",
+          "choice_text": "사진·영상 판독을 중단하고, 절차 지시문에는 현장 형체에 대한 세부 설명을 넣지 않는다.",
+          "next_node_id": "report_008",
+          "state_delta": 2,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "choice_id": "report_005_choice_c",
+          "choice_text": "현장 사진을 수행 인원에게 공유해 절차 전에 대상 위치를 파악하게 한다.",
+          "next_node_id": "report_007",
+          "state_delta": -2,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        }
+      ]
+    },
+    {
+      "node_id": "report_006",
+      "node_type": "report",
+      "title": "봉쇄 및 매립 시도 보고",
+      "body": "우물 주변 봉쇄를 강화하고, 우물 내부를 흙과 자갈로 메우려는 시도가 있었다.\n\n투입된 자재는 기록상 상당량이었으나, 우물 안쪽 수위나 깊이는 정상적으로 줄어든 것으로 확인되지 않았다. 일부 현장 인원은 “아직 덜 찼다”, “더 넣어야 올라온다”고 말했다.\n\n봉쇄 이후 울음소리로 해석되는 음향은 더 자주 보고되었다. 현장 주변에 모인 주민 일부는 “막고만 있으면 안 된다”고 항의했다.",
+      "choices": [
+        {
+          "choice_id": "report_006_choice_a",
+          "choice_text": "봉쇄와 매립을 계속 진행하고, 주민 접근을 더 강하게 제한한다.",
+          "next_node_id": "failure_002",
+          "state_delta": -3,
+          "delay_range": {
+            "min": 1,
+            "max": 1
+          }
+        },
+        {
+          "choice_id": "report_006_choice_b",
+          "choice_text": "매립을 중단하고, 사람이 직접 내려가는 방식이 아닌 절차를 검토한다.",
+          "next_node_id": "report_008",
+          "state_delta": 1,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        },
+        {
+          "choice_id": "report_006_choice_c",
+          "choice_text": "주민 협조를 받아 우물 안 대상을 함께 확인하고 구조 가능성을 판단한다.",
+          "next_node_id": "failure_003",
+          "state_delta": -3,
+          "delay_range": {
+            "min": 1,
+            "max": 1
+          }
+        }
+      ]
+    },
+    {
+      "node_id": "report_007",
+      "node_type": "report",
+      "title": "구조 인원 행동 변화 보고",
+      "body": "우물 안을 직접 확인했거나, 우물 안 형체에 대한 자세한 설명을 들은 인원 중 일부가 현장을 떠나지 못하려는 행동을 보였다.\n\n해당 인원은 처음에는 “확인만 하겠다”고 말했으나, 이후 “내가 내려가야 한다”, “내가 잡아야 한다”고 반복했다.\n\n일부 기록에서는 현장 체류 인원과 보고서상 인원 수가 일치하지 않았고, 같은 보고서에 우물 수위 변화가 함께 기재되었다.",
+      "choices": [
+        {
+          "choice_id": "report_007_choice_a",
+          "choice_text": "해당 인원을 실제 구조 절차에 투입해 신속하게 상황을 종료한다.",
+          "next_node_id": "failure_001",
+          "state_delta": -3,
+          "delay_range": {
+            "min": 1,
+            "max": 1
+          }
+        },
+        {
+          "choice_id": "report_007_choice_b",
+          "choice_text": "해당 인원을 현장에서 분리하고, 현장 설명을 받지 않은 별도 인원으로 절차를 다시 검토한다.",
+          "next_node_id": "report_008",
+          "state_delta": 2,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "choice_id": "report_007_choice_c",
+          "choice_text": "구조 필요성을 확인하기 위해 해당 인원의 진술을 반복 청취하고 세부 묘사를 기록한다.",
+          "next_node_id": "failure_003",
+          "state_delta": -3,
+          "delay_range": {
+            "min": 1,
+            "max": 1
+          }
+        }
+      ]
+    },
+    {
+      "node_id": "report_008",
+      "node_type": "report",
+      "title": "대체 절차 준비 보고",
+      "body": "실제 구조 인원을 투입하지 않는 절차가 검토되었다.\n\n제안된 절차는 사람 크기와 무게를 맞춘 대체물을 밧줄에 묶어 우물 안으로 내리는 방식이다. 절차 수행 인원에게 어느 정도의 현장 정보를 제공할지가 논의되었다.\n\n일부 담당자는 수행 인원이 대상의 위치와 형태를 알아야 한다고 주장했다. 다른 담당자는 현장 형체를 자세히 설명하는 내용은 지시문에서 제외해야 한다고 보고했다.",
+      "choices": [
+        {
+          "choice_id": "report_008_choice_a",
+          "choice_text": "수행 인원에게 우물 안 형체의 위치와 모습을 설명하고, 목표물을 정확히 지정한다.",
+          "next_node_id": "failure_003",
+          "state_delta": -3,
+          "delay_range": {
+            "min": 1,
+            "max": 1
+          }
+        },
+        {
+          "choice_id": "report_008_choice_b",
+          "choice_text": "수행 인원에게는 우물 안 확인 금지만 전달하고, 준비된 대체물을 줄에 연결해 내린다.",
+          "next_node_id": "stable_001",
+          "state_delta": 3,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "choice_id": "report_008_choice_c",
+          "choice_text": "대체물에 실제 직원의 이름표와 작업복을 붙여 사람처럼 보이게 한다.",
+          "next_node_id": "failure_001",
+          "state_delta": -3,
+          "delay_range": {
+            "min": 1,
+            "max": 1
+          }
+        }
+      ]
+    }
+  ],
+  "stable_nodes": [
+    {
+      "node_id": "stable_001",
+      "node_type": "stable",
+      "title": "대체 절차 종료 보고",
+      "body": "현장 형체에 대한 세부 설명을 받지 않은 수행 인원이 우물 안을 보지 않은 채 절차를 진행했다.\n\n대체물은 사람 크기와 무게만 맞춘 형태로 준비되었으며, 이름표, 사진, 소지품은 포함되지 않았다. 수행 인원은 밧줄을 이용해 대상을 우물 안으로 내렸고, 우물 내부 확인은 수행하지 않았다.\n\n일정 시점 이후 줄에서 무게가 느껴지지 않았고, 울음소리로 해석되던 음향도 멎은 것으로 보고되었다.\n\n절차 종료 기록에는 “우물 내부 미확인”, “회수물명 없음”, “절차 종료”만 남았다. 이후 현장 인원이 “내가 내려가야 한다”고 말하는 사례는 줄어들었고, 우물 안 형체가 더 구체화되는 보고도 중단되었다.",
+      "result": "stabilized",
+      "state_delta": 3
+    }
+  ],
+  "failure_nodes": [
+    {
+      "node_id": "failure_001",
+      "node_type": "failure",
+      "title": "실제 구조자 이탈 실패",
+      "body": "실제 구조 인원 또는 이름표와 소지품이 붙은 대체물이 절차에 투입되었다.\n\n이후 해당 인원은 현장을 떠나지 못하고 “내가 내려가야 한다”, “아직 잡지 못했다”고 반복했다. 대체물에 연결된 이름표나 소지품이 있었던 경우, 그 이름과 연결된 인원이 우물 앞을 떠나지 못하려는 행동을 보였다.\n\n최종 보고에서는 현장 체류 인원과 기록상 인원 수가 일치하지 않았으며, 우물 수위 변화가 함께 기재되었다. 우물 안 형체는 여전히 등을 돌린 채 남아 있는 것으로 기록되었다.",
+      "result": "containment_failed"
+    },
+    {
+      "node_id": "failure_002",
+      "node_type": "failure",
+      "title": "회수 시도 반복",
+      "body": "두레박, 갈고리, 매립 자재를 이용한 회수와 봉쇄가 반복되었다.\n\n건져 올린 것은 젖은 천 조각, 색실, 작은 단추뿐이었고, 현장 인원은 “아직 본체가 남았다”고 판단했다. 우물을 메우기 위해 투입한 흙과 자갈은 깊이나 수위에 정상적으로 반영되지 않았다.\n\n이후 현장에서는 “더 넣어야 올라온다”, “아직 잡을 수 있다”는 진술이 반복되었고, 회수 시도는 중단되지 않았다.",
+      "result": "containment_failed"
+    },
+    {
+      "node_id": "failure_003",
+      "node_type": "failure",
+      "title": "재확인 요구 확산",
+      "body": "사진·영상 판독, 현장 재확인, 주민 진술 수집, 수행 인원 대상 설명이 반복되었다.\n\n우물 안 형체의 얼굴은 확인되지 않았으나, 기록을 볼수록 등과 목덜미가 더 분명하다는 보고가 늘었다. 우물 안을 직접 보지 않은 인원도 현장 형체에 대한 설명을 들은 뒤 “내가 내려가야 한다”고 말했다.\n\n구조 필요성은 현장 인원뿐 아니라 기록 검토자와 주민에게까지 확산되었고, 우물 안 대상은 확인되지 않은 채 더 구체적인 구조 대상으로 취급되었다.",
+      "result": "containment_failed"
+    }
+  ],
+  "special_events": [
+    {
+      "event_id": "special_event_001",
+      "title": "회수 확인서",
+      "start_node_id": "special_001_report_001",
+      "nodes": [
+        {
+          "node_id": "special_001_report_001",
+          "node_type": "special_report",
+          "title": "회수 확인서 작성 문의",
+          "body": "가짜 구조 대상 투입 절차 이후, 후속 행정 처리 과정에서 회수 확인서 작성 문의가 접수되었다.\n\n초기 확인서에는 “우물 내부 미확인”, “대상 특정 불가”, “절차 종료”만 기재되어 있었다. 그러나 검토 담당자는 “무엇을 회수한 것으로 기록해야 하는지”를 문의했다.\n\n일부 검토자는 “색동저고리 형태 대상 회수 추정”, “아동 의류 추정”, “구조 완료” 같은 문구를 추가해야 한다고 주장했다.",
+          "choices": [
+            {
+              "choice_id": "special_001_report_001_choice_a",
+              "choice_text": "회수 확인서에 색동저고리 형태 대상 회수 추정 문구를 추가한다.",
+              "next_node_id": "special_001_report_003",
+              "state_delta": -1,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            },
+            {
+              "choice_id": "special_001_report_001_choice_b",
+              "choice_text": "회수물명은 쓰지 않고, 우물 내부 미확인과 절차 종료만 기록한다.",
+              "next_node_id": "special_001_report_002",
+              "state_delta": 1,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            },
+            {
+              "choice_id": "special_001_report_001_choice_c",
+              "choice_text": "절차 완료 여부를 확인하기 위해 우물 내부 재확인 일정을 잡는다.",
+              "next_node_id": "special_001_report_003",
+              "state_delta": -2,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            }
+          ]
+        },
+        {
+          "node_id": "special_001_report_002",
+          "node_type": "special_report",
+          "title": "대상 특정 없는 기록 보고",
+          "body": "회수 확인서는 대상 특정 없이 정리되었다.\n\n문서에는 “우물 내부 미확인”, “회수물명 없음”, “절차 종료”만 남았고, 색동저고리나 아동 의류라는 표현은 추가되지 않았다.\n\n그러나 일부 검토자는 문서가 지나치게 비어 있어 이후 인계나 보관 절차에서 문제가 될 수 있다고 보고했다.",
+          "choices": [
+            {
+              "choice_id": "special_001_report_002_choice_a",
+              "choice_text": "현재 기록 기준을 유지하고, 회수물명과 인계 대상은 추가하지 않는다.",
+              "next_node_id": "special_001_report_004",
+              "state_delta": 1,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            },
+            {
+              "choice_id": "special_001_report_002_choice_b",
+              "choice_text": "후속 행정을 위해 회수물명과 인계 담당자를 보완 기재한다.",
+              "next_node_id": "special_001_report_003",
+              "state_delta": -1,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            }
+          ]
+        },
+        {
+          "node_id": "special_001_report_003",
+          "node_type": "special_report",
+          "title": "회수 대상 구체화 보고",
+          "body": "확인서에 구조 대상 또는 회수물 명칭을 추가하려는 검토가 진행되었다.\n\n문서에 “색동저고리”, “아동 의류”, “구조 완료” 같은 표현이 들어가자, 검토 담당자 일부가 “정말 회수된 것이 맞는지 확인해야 한다”고 말했다.\n\n일부 담당자는 우물 내부 재확인 또는 수행 인원 재진술을 요청했다.",
+          "choices": [
+            {
+              "choice_id": "special_001_report_003_choice_a",
+              "choice_text": "추가된 표현을 삭제하고, 우물 내부 미확인과 회수물명 없음 기록으로 되돌린다.",
+              "next_node_id": "special_001_report_004",
+              "state_delta": 1,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            },
+            {
+              "choice_id": "special_001_report_003_choice_b",
+              "choice_text": "회수 완료를 확인하기 위해 수행 인원 재진술과 우물 재확인을 진행한다.",
+              "next_node_id": "special_001_failure_001",
+              "state_delta": -3,
+              "delay_range": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        },
+        {
+          "node_id": "special_001_report_004",
+          "node_type": "special_report",
+          "title": "확인서 종결 보고",
+          "body": "회수 확인서가 대상 특정 없이 종결되었다.\n\n문서에는 구조 대상명, 회수물명, 인계 대상이 기재되지 않았다. 절차 담당자에게 추가 진술을 요구하지 않았고, 우물 내부 재확인도 진행하지 않았다.\n\n이후 회수 확인서 검토 과정에서 “무엇을 구조했는지 확인해야 한다”는 문의는 더 접수되지 않았다.",
+          "choices": [
+            {
+              "choice_id": "special_001_report_004_choice_a",
+              "choice_text": "현재 기준을 유지하고, 회수 확인서에 대상명과 인계 대상을 추가하지 않는다.",
+              "next_node_id": "special_001_stable",
+              "state_delta": 2,
+              "delay_range": {
+                "min": 1,
+                "max": 1
+              }
+            },
+            {
+              "choice_id": "special_001_report_004_choice_b",
+              "choice_text": "기록 보완을 위해 색동저고리 형태 대상 회수 추정 문구를 다시 추가한다.",
+              "next_node_id": "special_001_failure_001",
+              "state_delta": -3,
+              "delay_range": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        }
+      ],
+      "stable_nodes": [
+        {
+          "node_id": "special_001_stable",
+          "node_type": "special_stable",
+          "title": "회수 확인서 안정화 복귀",
+          "body": "회수 확인서는 대상 특정 없이 유지되었다.\n\n우물 내부 확인은 수행되지 않았고, 절차 종료 기록도 수정되지 않았다. 이후 확인서와 관련된 추가 구조 요구는 발생하지 않았다.",
+          "result": "returned_to_stable",
+          "state_delta": 2
+        }
+      ],
+      "failure_nodes": [
+        {
+          "node_id": "special_001_failure_001",
+          "node_type": "special_failure",
+          "title": "문서상 구조 절차 재개",
+          "body": "회수 확인서에 구조 대상 또는 회수물 명칭이 추가되면서, 절차가 문서상 다시 열린 것으로 처리되었다.\n\n검토 담당자는 “무엇을 구조했는지 확인해야 한다”고 반복했고, 수행 인원 재진술과 우물 내부 확인 요청이 이어졌다.\n\n이후 문서 검토자 중 일부가 우물 앞 현장 확인을 요구했으며, “대상이 아직 남아 있을 수 있다”는 표현이 다시 기록에 등장했다.\n\n결과:",
+          "result": "containment_failed"
+        }
+      ]
+    },
+    {
+      "event_id": "special_event_002",
+      "title": "젖은 보관 봉투",
+      "start_node_id": "special_002_report_001",
+      "nodes": [
+        {
+          "node_id": "special_002_report_001",
+          "node_type": "special_report",
+          "title": "젖은 보관 봉투 발견",
+          "body": "절차 종료 후 장비를 정리하던 중, 젖은 방수 보관 봉투 하나가 발견되었다.\n\n봉투 안에는 아무것도 없거나, 물에 젖은 색실 몇 올과 작은 단추 하나가 들어 있었다. 해당 봉투가 우물 안에서 회수된 것인지는 확인되지 않았다.\n\n장비 정리 담당자는 “이건 우물에서 나온 것 같습니다”, “보관만 하면 안 되고 인계해야 하는 것 아닙니까”라고 진술했다.",
+          "choices": [
+            {
+              "choice_id": "special_002_report_001_choice_a",
+              "choice_text": "봉투 안 내용물을 우물에서 나온 회수물로 등록한다.",
+              "next_node_id": "special_002_report_003",
+              "state_delta": -1,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            },
+            {
+              "choice_id": "special_002_report_001_choice_b",
+              "choice_text": "봉투와 내용물을 회수물로 확정하지 않고, 출처 미확정 장비로 따로 보관한다.",
+              "next_node_id": "special_002_report_002",
+              "state_delta": 1,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            },
+            {
+              "choice_id": "special_002_report_001_choice_c",
+              "choice_text": "봉투의 출처를 확인하기 위해 우물 주변과 수행 장비를 다시 조사한다.",
+              "next_node_id": "special_002_report_003",
+              "state_delta": -2,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            }
+          ]
+        },
+        {
+          "node_id": "special_002_report_002",
+          "node_type": "special_report",
+          "title": "무명 장비 격리 보고",
+          "body": "젖은 보관 봉투는 회수물로 등록되지 않았다.\n\n색실과 단추는 구조 대상의 일부로 분류하지 않았고, 봉투에는 인계 대상도 지정하지 않았다. 장비 정리 담당자는 봉투를 계속 보관하지 않도록 분리되었다.\n\n다만 일부 기록 담당자는 “분류명 없이 보관하면 나중에 다시 확인해야 할 수 있다”고 의견을 남겼다.",
+          "choices": [
+            {
+              "choice_id": "special_002_report_002_choice_a",
+              "choice_text": "출처 미확정 장비 기준을 유지하고, 봉투의 회수물명과 인계 대상은 지정하지 않는다.",
+              "next_node_id": "special_002_report_004",
+              "state_delta": 1,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            },
+            {
+              "choice_id": "special_002_report_002_choice_b",
+              "choice_text": "후속 혼선을 줄이기 위해 봉투를 아동 의류 관련 회수물로 임시 분류한다.",
+              "next_node_id": "special_002_report_003",
+              "state_delta": -1,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            }
+          ]
+        },
+        {
+          "node_id": "special_002_report_003",
+          "node_type": "special_report",
+          "title": "회수물 분류 확산 보고",
+          "body": "젖은 보관 봉투가 회수물 후보로 분류되었다.\n\n색실과 단추는 색동저고리의 일부일 수 있다는 의견이 붙었고, 일부 담당자는 인계 대상자를 찾아야 한다고 보고했다.\n\n봉투를 다룬 인원 중 일부가 “돌려줘야 한다”, “주인을 찾아야 한다”고 말하기 시작했다.",
+          "choices": [
+            {
+              "choice_id": "special_002_report_003_choice_a",
+              "choice_text": "봉투와 내용물의 회수물 분류를 취소하고, 출처 미확정 장비로 되돌린다.",
+              "next_node_id": "special_002_report_004",
+              "state_delta": 1,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            },
+            {
+              "choice_id": "special_002_report_003_choice_b",
+              "choice_text": "인계 대상을 찾기 위해 주민 확인과 우물 주변 재조사를 진행한다.",
+              "next_node_id": "special_002_failure_001",
+              "state_delta": -3,
+              "delay_range": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        },
+        {
+          "node_id": "special_002_report_004",
+          "node_type": "special_report",
+          "title": "보관 절차 종결 보고",
+          "body": "젖은 보관 봉투는 회수물로 확정되지 않았다.\n\n색실과 단추는 구조 대상의 일부로 분류하지 않았고, 인계 대상도 지정하지 않았다. 봉투는 출처 미확정 장비로 따로 보관되었으며, 장비 담당자가 계속 들고 있지 않도록 조치되었다.\n\n이후 봉투와 관련해 “돌려줘야 한다”거나 “주인을 찾아야 한다”는 진술은 더 접수되지 않았다.",
+          "choices": [
+            {
+              "choice_id": "special_002_report_004_choice_a",
+              "choice_text": "현재 보관 기준을 유지하고, 봉투를 회수물이나 인계 대상으로 등록하지 않는다.",
+              "next_node_id": "special_002_stable",
+              "state_delta": 2,
+              "delay_range": {
+                "min": 1,
+                "max": 1
+              }
+            },
+            {
+              "choice_id": "special_002_report_004_choice_b",
+              "choice_text": "기록 보완을 위해 봉투 안 색실과 단추를 색동저고리 일부로 임시 등록한다.",
+              "next_node_id": "special_002_failure_001",
+              "state_delta": -3,
+              "delay_range": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        }
+      ],
+      "stable_nodes": [
+        {
+          "node_id": "special_002_stable",
+          "node_type": "special_stable",
+          "title": "젖은 보관 봉투 안정화 복귀",
+          "body": "젖은 보관 봉투는 회수물로 분류되지 않았다.\n\n봉투에는 회수물명이나 인계 대상이 지정되지 않았고, 우물 내부 확인도 다시 수행되지 않았다. 이후 보관 봉투와 관련된 구조 요구는 발생하지 않았다.",
+          "result": "returned_to_stable",
+          "state_delta": 2
+        }
+      ],
+      "failure_nodes": [
+        {
+          "node_id": "special_002_failure_001",
+          "node_type": "special_failure",
+          "title": "인계 절차 재개",
+          "body": "젖은 보관 봉투가 회수물로 등록되면서, 인계 절차가 새로 열렸다.\n\n색실과 단추는 색동저고리 일부일 수 있다는 기록이 붙었고, 담당자 일부는 “주인을 찾아야 한다”, “돌려줘야 한다”고 반복했다.\n\n이후 주민 확인과 우물 주변 재조사 요청이 이어졌으며, 우물 안 대상이 다시 회수되지 않은 대상으로 기록되었다.\n\n결과:",
+          "result": "containment_failed"
+        }
+      ]
+    }
+  ]
+}

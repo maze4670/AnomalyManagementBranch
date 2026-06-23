@@ -1,0 +1,642 @@
+{
+  "case_id": "case_009",
+  "display_id": "CASE-GB-001",
+  "alias": "뒤 없는 그림자",
+  "report_nodes": [
+    {
+      "node_id": "report_001",
+      "node_type": "report",
+      "title": "행사 물품실 병풍 그림자 보고",
+      "body": "마을회관 행사 물품실에서 오래된 접이식 병풍을 정리하던 중, 병풍 앞면에 사람 형태의 그림자가 보인다는 신고가 접수되었다.\n\n신고자는 처음에 병풍 뒤쪽에 사람이 앉아 있거나, 물건이 기대어 있어 그림자가 생긴 것으로 판단했다. 그러나 병풍 뒤편을 확인했을 때 사람이나 물체는 없었다.\n\n병풍을 다시 앞쪽에서 보자, 무릎을 꿇고 앉은 사람의 뒷모습처럼 보이는 그림자가 그대로 남아 있었다. 현장 조명은 천장 조명과 측면 창문에서 들어오는 약한 자연광이 섞여 있었으나, 병풍 위 그림자는 어느 광원 방향과도 일치하지 않았다.",
+      "choices": [
+        {
+          "choice_id": "report_001_choice_a",
+          "choice_text": "병풍 뒤편과 주변 벽면을 다시 확인해 그림자를 만들 만한 물체가 있는지 조사한다.",
+          "next_node_id": "report_002",
+          "state_delta": 0,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        },
+        {
+          "choice_id": "report_001_choice_b",
+          "choice_text": "현장 조명 방향을 정리하고, 병풍 위 그림자의 방향과 비교한다.",
+          "next_node_id": "report_003",
+          "state_delta": 0,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        },
+        {
+          "choice_id": "report_001_choice_c",
+          "choice_text": "병풍 앞에서 정리 작업을 했던 인원의 발밑 그림자 변화를 확인한다.",
+          "next_node_id": "report_004",
+          "state_delta": 1,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        }
+      ]
+    },
+    {
+      "node_id": "report_002",
+      "node_type": "report",
+      "title": "병풍 뒤 확인 보고",
+      "body": "병풍 뒤편과 주변 벽면, 바닥을 확인했으나 사람이나 물체는 발견되지 않았다.\n\n병풍 뒤쪽에는 그림자를 만들 만한 장치, 조명, 인형, 구조물도 없었다. 현장 인원은 병풍 앞뒤를 여러 차례 오가며 그림자 위치를 대조했다.\n\n대조 과정에서 병풍 앞면의 그림자는 사라지지 않았고, 오히려 “뒤에는 없는데 앞에는 있다”는 불일치가 더 명확해졌다는 보고가 남았다.",
+      "choices": [
+        {
+          "choice_id": "report_002_choice_a",
+          "choice_text": "병풍 뒤쪽과 벽면을 더 정밀하게 반복 조사한다.",
+          "next_node_id": "report_003",
+          "state_delta": -1,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "choice_id": "report_002_choice_b",
+          "choice_text": "병풍 앞뒤 대조를 중단하고, 병풍 앞 접근 시간을 줄인다.",
+          "next_node_id": "report_008",
+          "state_delta": 1,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        },
+        {
+          "choice_id": "report_002_choice_c",
+          "choice_text": "병풍을 접어 뒤쪽과 접힘 폭 사이를 함께 확인한다.",
+          "next_node_id": "report_006",
+          "state_delta": -1,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        }
+      ]
+    },
+    {
+      "node_id": "report_003",
+      "node_type": "report",
+      "title": "광원 방향 대조 보고",
+      "body": "병풍 위 그림자가 광원 착시인지 확인하기 위해 현장 조명 방향을 정리했다.\n\n천장 조명, 측면 창문, 휴대용 손전등의 방향을 각각 기록했으나, 병풍 위 그림자는 어느 방향과도 정확히 일치하지 않았다. 일부 조사 인원은 강한 측면 작업등을 사용하면 경계가 더 분명해질 수 있다고 보고했다.\n\n대조 과정에 참여한 인원 중 한 명은 며칠 뒤 밝은 복도에서도 발밑 그림자가 짧게 끊겨 보인다는 보고를 남겼다.",
+      "choices": [
+        {
+          "choice_id": "report_003_choice_a",
+          "choice_text": "손전등과 측면 작업등을 사용해 그림자 방향을 다시 확인한다.",
+          "next_node_id": "report_004",
+          "state_delta": -1,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "choice_id": "report_003_choice_b",
+          "choice_text": "측면 광원을 줄이고, 천장 조명 기준으로 상태를 다시 정리한다.",
+          "next_node_id": "report_008",
+          "state_delta": 1,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        },
+        {
+          "choice_id": "report_003_choice_c",
+          "choice_text": "조명을 끄고 암실 보관으로 병풍 위 그림자 반응을 확인한다.",
+          "next_node_id": "report_005",
+          "state_delta": -2,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        }
+      ]
+    },
+    {
+      "node_id": "report_004",
+      "node_type": "report",
+      "title": "최초 피영향자 그림자 흐림 보고",
+      "body": "병풍 앞에서 정리 작업을 했던 인원의 발밑 그림자가 며칠 뒤부터 흐려지는 현상이 보고되었다.\n\n해당 인원은 통증이나 기억 이상을 호소하지 않았으나, 밝은 복도에서도 그림자가 짧게 끊겨 보였다. 걸음을 멈춘 뒤에도 그림자가 늦게 정지하는 현상이 확인되었다.\n\n현장 담당자는 해당 인원을 병풍 앞에 다시 세워 병풍 위 그림자와 체형을 대조하면 원인을 확인할 수 있을 것으로 보고했다.",
+      "choices": [
+        {
+          "choice_id": "report_004_choice_a",
+          "choice_text": "피영향자를 병풍 앞에 세워 병풍 위 그림자와 대조한다.",
+          "next_node_id": "report_007",
+          "state_delta": -2,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "choice_id": "report_004_choice_b",
+          "choice_text": "병풍과 분리된 공간에서 짧은 이동과 정지 상태만 확인한다.",
+          "next_node_id": "report_008",
+          "state_delta": 2,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "choice_id": "report_004_choice_c",
+          "choice_text": "발밑 그림자를 더 선명하게 보기 위해 측면 조명을 사용한다.",
+          "next_node_id": "report_003",
+          "state_delta": -1,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        }
+      ]
+    },
+    {
+      "node_id": "report_005",
+      "node_type": "report",
+      "title": "암실 보관 이후 보고",
+      "body": "병풍을 임시 암실에 보관한 직후에는 병풍 위 그림자가 보이지 않았고, 현장 보고에는 “반응 없음”으로 기록되었다.\n\n그러나 후속 확인에서 보관 담당자 한 명의 출입 기록이 마지막 확인 이후 이어지지 않았다. 담당자의 발밑 그림자가 흐려졌다는 이전 보고도 함께 확인되었다.\n\n암실을 다시 열어 조명 아래에서 병풍을 펼치자, 기존 그림자 옆에 무릎을 꿇고 앉은 사람 형태의 흐린 그림자가 하나 더 보인다는 보고가 접수되었다.",
+      "choices": [
+        {
+          "choice_id": "report_005_choice_a",
+          "choice_text": "암실 보관을 유지하고, 반응 없음 상태가 지속되는지 관찰한다.",
+          "next_node_id": "failure_001",
+          "state_delta": -3,
+          "delay_range": {
+            "min": 1,
+            "max": 1
+          }
+        },
+        {
+          "choice_id": "report_005_choice_b",
+          "choice_text": "병풍을 다시 펼친 상태로 두고, 조명 아래에서 관리 조건을 재검토한다.",
+          "next_node_id": "report_008",
+          "state_delta": 1,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "choice_id": "report_005_choice_c",
+          "choice_text": "확인되지 않는 담당자와 관련된 인원을 단독 격리해 경과를 본다.",
+          "next_node_id": "report_007",
+          "state_delta": -2,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        }
+      ]
+    },
+    {
+      "node_id": "report_006",
+      "node_type": "report",
+      "title": "병풍 접힘 및 가림 처리 보고",
+      "body": "병풍을 접은 뒤에는 앞면의 그림자가 사라진 것처럼 보였다.\n\n그러나 접힌 폭 사이에서 검은 선이나 손가락처럼 보이는 그림자 일부가 확인되었다. 병풍을 다시 펼쳤을 때, 그림자는 하나의 사람 형태가 아니라 병풍 폭마다 나뉘어 남아 있었다.\n\n이후 현장 담당자는 그림자를 직접 보지 않도록 보존지나 천으로 병풍 위 그림자를 가리는 방식을 검토했다. 가림 처리 후에는 가장자리와 보존지 경계선을 따라 더 진한 검은 띠가 남았다.",
+      "choices": [
+        {
+          "choice_id": "report_006_choice_a",
+          "choice_text": "병풍을 접은 상태로 유지하고, 접힘 폭 사이의 검은 선을 관찰한다.",
+          "next_node_id": "failure_002",
+          "state_delta": -3,
+          "delay_range": {
+            "min": 1,
+            "max": 1
+          }
+        },
+        {
+          "choice_id": "report_006_choice_b",
+          "choice_text": "병풍 위 그림자를 보존지나 천으로 가려 관측 혼선을 줄인다.",
+          "next_node_id": "failure_002",
+          "state_delta": -3,
+          "delay_range": {
+            "min": 1,
+            "max": 1
+          }
+        },
+        {
+          "choice_id": "report_006_choice_c",
+          "choice_text": "병풍을 펼친 상태로 되돌리고, 기존 그림자는 지우거나 가리지 않는다.",
+          "next_node_id": "report_008",
+          "state_delta": 2,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        }
+      ]
+    },
+    {
+      "node_id": "report_007",
+      "node_type": "report",
+      "title": "피영향자 대조 및 격리 보고",
+      "body": "피영향자를 병풍 앞에 세워 병풍 위 그림자와 대조한 뒤, 해당 인원의 그림자 지연 현상이 더 뚜렷해졌다.\n\n이후 해당 인원은 병풍과 떨어진 공간에서도 발밑 그림자가 흐리게 보였으며, 움직임과 그림자의 정지 시점이 맞지 않았다. 현장 담당자는 단독 격리로 변화를 관찰하는 방안을 제안했다.\n\n다만 이전 암실 보관 기록과 대조하면, 관찰 간격 사이에 대상자를 놓칠 가능성이 있다는 의견도 함께 제출되었다.",
+      "choices": [
+        {
+          "choice_id": "report_007_choice_a",
+          "choice_text": "피영향자를 병풍 앞에 다시 세워 그림자 변화를 최종 대조한다.",
+          "next_node_id": "failure_003",
+          "state_delta": -3,
+          "delay_range": {
+            "min": 1,
+            "max": 1
+          }
+        },
+        {
+          "choice_id": "report_007_choice_b",
+          "choice_text": "피영향자를 단독 격리하고, 일정 간격으로 확인한다.",
+          "next_node_id": "failure_003",
+          "state_delta": -3,
+          "delay_range": {
+            "min": 1,
+            "max": 1
+          }
+        },
+        {
+          "choice_id": "report_007_choice_c",
+          "choice_text": "병풍과 분리된 점검실에서 동행 관찰로 짧은 이동만 확인한다.",
+          "next_node_id": "report_008",
+          "state_delta": 2,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        }
+      ]
+    },
+    {
+      "node_id": "report_008",
+      "node_type": "report",
+      "title": "상부 조명 및 분리 점검 준비 보고",
+      "body": "병풍을 접거나 가리거나 암실에 넣지 않는 관리 방식이 검토되었다.\n\n제안된 방식은 병풍을 펼친 상태로 유지하고, 병풍 위 기존 그림자는 지우거나 가리지 않는 것이다. 병풍 앞에는 발 위치선과 접근 제한선을 설정하고, 점검자는 지정된 거리 밖에서만 확인하도록 하는 방안이 포함되었다.\n\n조명은 천장 쪽 기준으로 정리하고, 손전등과 측면 작업등은 점검 대상에서 제외하는 방안이 함께 검토되었다. 피영향자는 병풍과 분리된 점검실에서 동행 관찰 하에 짧은 이동만 확인하는 절차가 제안되었다.",
+      "choices": [
+        {
+          "choice_id": "report_008_choice_a",
+          "choice_text": "병풍을 펼친 상태로 두고, 위쪽 조명 기준과 접근 위치를 정리한 뒤 피영향자는 별도 점검실에서 확인한다.",
+          "next_node_id": "stable_001",
+          "state_delta": 3,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "choice_id": "report_008_choice_b",
+          "choice_text": "병풍 위 기존 그림자를 보존지로 가려 관측 혼선을 줄인다.",
+          "next_node_id": "failure_002",
+          "state_delta": -3,
+          "delay_range": {
+            "min": 1,
+            "max": 1
+          }
+        },
+        {
+          "choice_id": "report_008_choice_c",
+          "choice_text": "피영향자를 병풍 앞에 세워 최종적으로 그림자 변화 여부를 대조한다.",
+          "next_node_id": "failure_003",
+          "state_delta": -3,
+          "delay_range": {
+            "min": 1,
+            "max": 1
+          }
+        }
+      ]
+    }
+  ],
+  "stable_nodes": [
+    {
+      "node_id": "stable_001",
+      "node_type": "stable",
+      "title": "상부 조명 및 분리 점검 이후 보고",
+      "body": "병풍은 펼친 상태로 유지되었으며, 병풍 위 기존 그림자는 지우거나 가리지 않았다.\n\n병풍 앞에는 발 위치선과 접근 제한선이 설정되었다. 조명은 천장 쪽 기준으로 정리되었고, 손전등과 측면 작업등은 사용하지 않았다.\n\n점검자는 지정된 거리 밖에서만 확인했으며, 병풍 쪽으로 몸을 기울이지 않았다. 피영향자는 병풍과 분리된 점검실에서 동행 관찰 하에 짧은 이동과 정지 상태만 확인했다.\n\n이후 병풍 위 기존 그림자는 남아 있었으나, 새 그림자 증가는 중단된 것으로 보고되었다.",
+      "result": "stabilized",
+      "state_delta": 3
+    }
+  ],
+  "failure_nodes": [
+    {
+      "node_id": "failure_001",
+      "node_type": "failure",
+      "title": "암실 보관 실패",
+      "body": "병풍은 암실에 보관되었고, 병풍 위 그림자는 보이지 않는 상태로 보고되었다.\n\n현장 기록에는 “반응 없음”이 반복되었으나, 후속 확인 시 보관 담당자 한 명이 실제 공간에서 확인되지 않았다. 같은 시각 병풍을 다시 펼쳐 조명 아래에서 확인한 결과, 기존 그림자 옆에 해당 담당자의 자세와 체형을 닮은 흐린 그림자가 하나 추가되어 있었다.",
+      "result": "containment_failed"
+    },
+    {
+      "node_id": "failure_002",
+      "node_type": "failure",
+      "title": "그림자 처리 실패",
+      "body": "병풍을 접거나, 병풍 위 그림자를 보존지와 천으로 가리거나, 표면을 처리하는 절차가 반복되었다.\n\n접힌 폭 사이에는 검은 선이 남았고, 다시 펼친 병풍에는 폭마다 나뉜 그림자가 확인되었다. 가림막과 보존지 가장자리에는 더 진한 검은 띠가 생겼고, 가림 범위를 넓힐수록 검은 띠는 사람 형태에 가까워졌다.\n\n후속 확인에서 피영향자 한 명이 실제 공간에서 확인되지 않았고, 병풍 위 그림자 수가 하나 늘었다.",
+      "result": "containment_failed"
+    },
+    {
+      "node_id": "failure_003",
+      "node_type": "failure",
+      "title": "피영향자 확인 실패",
+      "body": "피영향자를 병풍 앞에 세워 반복 대조하거나, 단독 격리 후 일정 간격으로 확인하는 절차가 유지되었다.\n\n대조 이후 피영향자의 발밑 그림자는 더 흐려졌고, 움직임보다 늦게 따라오는 현상이 뚜렷해졌다. 단독 격리 중에는 직접적인 이상 행동이 보고되지 않았으나, 다음 확인 때 해당 인원은 격리실 내부에서 확인되지 않았다.\n\n같은 시각 병풍 위에는 해당 인원의 자세와 체형을 닮은 흐린 그림자가 하나 추가되어 있었다.",
+      "result": "containment_failed"
+    }
+  ],
+  "special_events": [
+    {
+      "event_id": "special_event_001",
+      "title": "안전선 안쪽",
+      "start_node_id": "special_001_report_001",
+      "nodes": [
+        {
+          "node_id": "special_001_report_001",
+          "node_type": "special_report",
+          "title": "정기 점검 CCTV 확인 보고",
+          "body": "안정화 이후 정기 점검 중, 병풍 차폐 상태와 상부 조명 작동 여부를 확인한 직원 1명이 점검 직후에는 이상 없음으로 보고했다.\n\n다만 CCTV 확인 결과, 해당 직원은 병풍 하단의 고정 상태를 확인하기 위해 지정된 발 위치선보다 한 걸음 안쪽으로 들어섰고, 상체를 병풍 쪽으로 기울인 상태에서 약 3초간 정지했다.\n\n당시 천장 조명은 켜져 있었으나, 직원의 팔과 상체 그림자가 병풍 하단까지 길어진 것으로 보인다는 기록이 남았다.",
+          "choices": [
+            {
+              "choice_id": "special_001_report_001_choice_a",
+              "choice_text": "상부 조명이 켜져 있었으므로 이상 없음으로 처리한다.",
+              "next_node_id": "special_001_report_003",
+              "state_delta": -1,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            },
+            {
+              "choice_id": "special_001_report_001_choice_b",
+              "choice_text": "해당 직원을 병풍 앞 안전선에 세워 그림자 변화 여부를 대조한다.",
+              "next_node_id": "special_001_report_003",
+              "state_delta": -2,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            },
+            {
+              "choice_id": "special_001_report_001_choice_c",
+              "choice_text": "해당 직원을 병풍과 분리된 점검실로 옮겨 짧은 이동만 동행 관찰한다.",
+              "next_node_id": "special_001_report_002",
+              "state_delta": 1,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            }
+          ]
+        },
+        {
+          "node_id": "special_001_report_002",
+          "node_type": "special_report",
+          "title": "분리 점검실 관찰 보고",
+          "body": "해당 직원은 병풍과 분리된 점검실로 이동했다.\n\n점검실 조명은 천장 조명만 사용했고, 직원은 동행자와 함께 짧은 직선 이동과 정지 상태만 확인했다. 병풍 앞 재대조, 손전등 사용, 측면 보조등 사용은 진행하지 않았다.\n\n직원의 발밑 그림자는 여전히 흐렸으나, 이동 후 늦게 정지하는 현상은 더 진행되지 않은 것으로 보고되었다.",
+          "choices": [
+            {
+              "choice_id": "special_001_report_002_choice_a",
+              "choice_text": "현재 관찰 기준을 유지하고, 병풍 보관실 점검 절차에 발 위치선과 상체 접근 제한을 추가한다.",
+              "next_node_id": "special_001_report_004",
+              "state_delta": 1,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            },
+            {
+              "choice_id": "special_001_report_002_choice_b",
+              "choice_text": "발밑 그림자를 더 선명히 확인하기 위해 측면 보조등을 사용한다.",
+              "next_node_id": "special_001_report_003",
+              "state_delta": -2,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            }
+          ]
+        },
+        {
+          "node_id": "special_001_report_003",
+          "node_type": "special_report",
+          "title": "재대조 및 보조등 검토 보고",
+          "body": "해당 직원에 대한 병풍 앞 재대조 또는 측면 보조등 사용이 검토되었다.\n\n일부 담당자는 상부 조명이 켜져 있었기 때문에 병풍 앞에서 짧게 확인해도 위험이 낮다고 판단했다. 다른 담당자는 당시 자세와 그림자 길이를 재현하기 위해 손전등 또는 측면 조명을 사용할 수 있다고 보고했다.\n\n직원의 발밑 그림자는 이전보다 짧게 끊겨 보였으며, 정지 이후 그림자가 늦게 멈추는 현상도 다시 보고되었다.",
+          "choices": [
+            {
+              "choice_id": "special_001_report_003_choice_a",
+              "choice_text": "병풍 앞 재대조와 측면 보조등 사용을 중단하고, 분리 점검실 관찰 기준으로 되돌린다.",
+              "next_node_id": "special_001_report_004",
+              "state_delta": 1,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            },
+            {
+              "choice_id": "special_001_report_003_choice_b",
+              "choice_text": "병풍 앞 안전선에 직원을 다시 세우고, 손전등으로 팔과 상체 그림자를 재현한다.",
+              "next_node_id": "special_001_failure_001",
+              "state_delta": -3,
+              "delay_range": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        },
+        {
+          "node_id": "special_001_report_004",
+          "node_type": "special_report",
+          "title": "점검 절차 보완 보고",
+          "body": "병풍 보관실 점검 절차가 보완되었다.\n\n발 위치선은 기존보다 바깥쪽으로 조정되었고, 점검자는 병풍 쪽으로 몸을 기울이지 않도록 제한되었다. 하단 고정 상태는 긴 도구로 찌르거나 들추지 않고, 고정된 관찰 위치에서 표식 변화만 확인하도록 변경되었다.\n\n해당 직원은 병풍 앞에 다시 서지 않았고, 분리 점검실에서의 동행 관찰만 유지되었다.",
+          "choices": [
+            {
+              "choice_id": "special_001_report_004_choice_a",
+              "choice_text": "보완된 점검 기준을 유지하고, 병풍 앞 재대조를 진행하지 않는다.",
+              "next_node_id": "special_001_stable",
+              "state_delta": 2,
+              "delay_range": {
+                "min": 1,
+                "max": 1
+              }
+            },
+            {
+              "choice_id": "special_001_report_004_choice_b",
+              "choice_text": "절차 보완 효과를 확인하기 위해 해당 직원을 기존 점검 위치에서 다시 확인한다.",
+              "next_node_id": "special_001_failure_001",
+              "state_delta": -3,
+              "delay_range": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        }
+      ],
+      "stable_nodes": [
+        {
+          "node_id": "special_001_stable",
+          "node_type": "special_stable",
+          "title": "안전선 안쪽 안정화 복귀",
+          "body": "보관실 점검 절차는 보완된 기준으로 유지되었다.\n\n점검자는 지정된 발 위치선 안쪽으로 들어가지 않았고, 병풍 쪽으로 몸을 기울이지 않았다. 피영향 가능성이 있는 직원은 병풍과 분리된 점검실에서만 확인되었다.\n\n이후 병풍 하단에 닿는 팔과 상체 그림자는 추가로 보고되지 않았다.",
+          "result": "returned_to_stable",
+          "state_delta": 2
+        }
+      ],
+      "failure_nodes": [
+        {
+          "node_id": "special_001_failure_001",
+          "node_type": "special_failure",
+          "title": "안전선 재대조 실패",
+          "body": "해당 직원은 병풍 앞 안전선 안쪽에서 다시 확인되었다.\n\n손전등과 측면 보조등을 사용해 팔과 상체 그림자를 재현하는 과정에서, 직원의 그림자가 병풍 하단까지 길게 이어졌다. 이후 해당 직원의 발밑 그림자는 급격히 흐려졌고, 정지 후 그림자가 늦게 멈추는 현상이 반복되었다.\n\n후속 확인에서 해당 직원은 실제 공간에서 확인되지 않았으며, 병풍 위에는 해당 직원의 자세와 체형을 닮은 흐린 그림자가 하나 추가되어 있었다.\n\n결과:",
+          "result": "containment_failed"
+        }
+      ]
+    },
+    {
+      "event_id": "special_event_002",
+      "title": "가려진 하단",
+      "start_node_id": "special_002_report_001",
+      "nodes": [
+        {
+          "node_id": "special_002_report_001",
+          "node_type": "special_report",
+          "title": "하단부 보존지 부착 보고",
+          "body": "안정화 이후 병풍 위 기존 그림자의 하단부가 점검 사진에서 이전보다 선명하게 보인다는 보고가 접수되었다.\n\n현장 담당자는 그림자를 지우거나 훼손하지 않기 위해, 그리고 관측자가 해당 부분을 오래 보지 않도록 병풍 하단 일부에 불투명 보존지 또는 임시 차광 시트를 부착했다.\n\n보존지는 병풍면을 훼손하지 않는 방식으로 설치되었으나, 부착 이후 보존지 가장자리 아래쪽에 검은 띠 형태의 그림자가 생겼다.",
+          "choices": [
+            {
+              "choice_id": "special_002_report_001_choice_a",
+              "choice_text": "관측 혼선을 줄이기 위해 가림 범위를 넓힌다.",
+              "next_node_id": "special_002_report_003",
+              "state_delta": -2,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            },
+            {
+              "choice_id": "special_002_report_001_choice_b",
+              "choice_text": "보존지와 임시 가림막을 제거하고, 점검 시간과 확인 위치를 따로 정한다.",
+              "next_node_id": "special_002_report_002",
+              "state_delta": 1,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            },
+            {
+              "choice_id": "special_002_report_001_choice_c",
+              "choice_text": "검은 띠가 생긴 가장자리를 추가 보존지로 덮는다.",
+              "next_node_id": "special_002_report_003",
+              "state_delta": -2,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            }
+          ]
+        },
+        {
+          "node_id": "special_002_report_002",
+          "node_type": "special_report",
+          "title": "가림막 제거 및 관측 제한 보고",
+          "body": "병풍 하단의 보존지와 임시 가림막이 제거되었다.\n\n기존 그림자는 지우거나 가리지 않았으며, 검은 띠가 생긴 가장자리도 추가로 덮지 않았다. 점검자는 병풍 하단을 오래 응시하지 않고, 지정된 위치에서 짧은 상태 변화만 확인하도록 조정되었다.\n\n다만 일부 담당자는 하단부가 선명해진 상태를 그대로 두면 관측 혼선이 늘어날 수 있다고 보고했다.",
+          "choices": [
+            {
+              "choice_id": "special_002_report_002_choice_a",
+              "choice_text": "현재 확인 기준을 유지하고, 병풍면을 추가로 가리지 않는다.",
+              "next_node_id": "special_002_report_004",
+              "state_delta": 1,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            },
+            {
+              "choice_id": "special_002_report_002_choice_b",
+              "choice_text": "관측 혼선을 줄이기 위해 하단부 일부만 다시 가린다.",
+              "next_node_id": "special_002_report_003",
+              "state_delta": -1,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            }
+          ]
+        },
+        {
+          "node_id": "special_002_report_003",
+          "node_type": "special_report",
+          "title": "가림 범위 확대 보고",
+          "body": "병풍 하단의 가림 범위가 확대되었다.\n\n검은 띠가 생긴 가장자리는 추가 보존지로 덮였고, 점검 사진에서 선명해 보이는 부분도 단계적으로 가려졌다. 현장 담당자는 병풍면을 직접 오래 보지 않아도 된다는 점을 장점으로 보고했다.\n\n그러나 가림막의 새 가장자리 아래쪽에서도 검은 띠가 추가로 생겼고, 일부 띠는 사람의 발목이나 무릎처럼 보인다는 기록이 남았다.",
+          "choices": [
+            {
+              "choice_id": "special_002_report_003_choice_a",
+              "choice_text": "보존지와 임시 가림막을 제거하고, 정해진 시간과 위치에서만 확인하는 기준으로 되돌린다.",
+              "next_node_id": "special_002_report_004",
+              "state_delta": 1,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            },
+            {
+              "choice_id": "special_002_report_003_choice_b",
+              "choice_text": "검은 띠가 보이지 않도록 가림 범위를 더 넓힌다.",
+              "next_node_id": "special_002_failure_001",
+              "state_delta": -3,
+              "delay_range": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        },
+        {
+          "node_id": "special_002_report_004",
+          "node_type": "special_report",
+          "title": "하단부 점검 절차 종결 보고",
+          "body": "병풍 하단부 점검 절차는 가림막 없이 진행하는 기준으로 정리되었다.\n\n기존 그림자는 지우거나 가리지 않았고, 점검자는 지정된 위치에서 짧은 상태 변화만 확인했다. 병풍면 자체를 덮는 조치는 추가로 진행하지 않았다.\n\n이후 보존지 가장자리 아래에 생기던 검은 띠는 추가로 확장되지 않았다.",
+          "choices": [
+            {
+              "choice_id": "special_002_report_004_choice_a",
+              "choice_text": "현재 점검 기준을 유지하고, 병풍 하단에는 추가 가림막을 붙이지 않는다.",
+              "next_node_id": "special_002_stable",
+              "state_delta": 2,
+              "delay_range": {
+                "min": 1,
+                "max": 1
+              }
+            },
+            {
+              "choice_id": "special_002_report_004_choice_b",
+              "choice_text": "하단부가 다시 선명해질 경우를 대비해 임시 차광 시트를 준비한다.",
+              "next_node_id": "special_002_failure_001",
+              "state_delta": -3,
+              "delay_range": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        }
+      ],
+      "stable_nodes": [
+        {
+          "node_id": "special_002_stable",
+          "node_type": "special_stable",
+          "title": "가려진 하단 안정화 복귀",
+          "body": "병풍 하단부는 가림막 없이 관리되었다.\n\n점검자는 지정된 위치에서 짧게 상태 변화를 확인했으며, 병풍면을 오래 응시하거나 병풍 하단을 추가로 덮지 않았다. 이후 가림막 가장자리에서 생기던 검은 띠는 추가로 보고되지 않았다.",
+          "result": "returned_to_stable",
+          "state_delta": 2
+        }
+      ],
+      "failure_nodes": [
+        {
+          "node_id": "special_002_failure_001",
+          "node_type": "special_failure",
+          "title": "하단 가림 확대 실패",
+          "body": "병풍 하단부의 가림 범위가 계속 확대되었다.\n\n보존지와 임시 차광 시트의 가장자리 아래쪽에는 검은 띠가 반복적으로 생겼고, 검은 띠는 점차 사람 형태에 가까워졌다. 가림막을 더 넓히자 병풍 하단부 전체가 어두운 형태로 연결되었다.\n\n후속 확인에서 피영향자 한 명이 실제 공간에서 확인되지 않았고, 병풍 위 그림자 수가 하나 늘어난 것으로 보고되었다.\n\n결과:",
+          "result": "containment_failed"
+        }
+      ]
+    }
+  ]
+}

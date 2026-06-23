@@ -1,0 +1,531 @@
+{
+  "case_id": "case_010",
+  "display_id": "CASE-DJ-001",
+  "alias": "셔터 내린 지하상가",
+  "report_nodes": [
+    {
+      "node_id": "report_001",
+      "node_type": "report",
+      "title": "폐점 후 지하상가 최초 보고",
+      "body": "폐점 시간이 지난 오래된 지하상가 일부 구역에서 출구 표지 위치가 평소와 다르게 보인다는 신고가 접수되었다.\n\n해당 구역의 양쪽 점포 셔터는 대부분 내려가 있었고, 통로에는 일부 형광등만 점등되어 있었다. 신고자는 출구 표지를 따라 이동했으나, 지상 계단이나 지하철역 연결통로가 아니라 다시 셔터가 모두 내려간 다른 통로 앞에 도착했다고 진술했다.\n\n일부 셔터 아래 좁은 틈에서는 어두운 점포 내부가 아니라 다른 폐점 통로의 형광등 빛처럼 보이는 빛이 확인되었다. 사람, 괴물, 손, 얼굴, 신체 일부는 확인되지 않았다.",
+      "choices": [
+        {
+          "choice_id": "report_001_choice_a",
+          "choice_text": "야간 통제를 위해 해당 구역의 출입을 막고, 내려간 셔터 상태를 기준으로 현장을 정리한다.",
+          "next_node_id": "report_002",
+          "state_delta": -1,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        },
+        {
+          "choice_id": "report_001_choice_b",
+          "choice_text": "출구 표지와 상가 안내도를 기준으로 순찰 동선을 재확인한다.",
+          "next_node_id": "report_003",
+          "state_delta": 0,
+          "delay_range": {
+            "min": 2,
+            "max": 3
+          }
+        },
+        {
+          "choice_id": "report_001_choice_c",
+          "choice_text": "탐색 인원에게 로프를 연결한 뒤 제한적으로 진입시킨다.",
+          "next_node_id": "report_008",
+          "state_delta": 2,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        }
+      ]
+    },
+    {
+      "node_id": "report_002",
+      "node_type": "report",
+      "title": "전 구역 폐쇄 이후 보고",
+      "body": "야간 통제를 위해 해당 구역의 출입이 제한되었고, 내려간 셔터 상태를 기준으로 현장이 정리되었다.\n\n외부 시민 출입은 줄었으나, 현장 사진에서는 통로 전체가 이전보다 더 닫힌 상가 내부처럼 보인다는 보고가 남았다. 원래 지상 출구 표지가 보여야 할 통로 끝에는 또 다른 줄의 닫힌 셔터가 확인되었다.\n\n일부 출구 표지는 정상적인 형태를 유지했지만, 그 아래쪽 공간은 계단이나 연결통로가 아니라 닫힌 점포 구역과 유사하게 보였다.",
+      "choices": [
+        {
+          "choice_id": "report_002_choice_a",
+          "choice_text": "폐쇄 상태를 유지하고 모든 셔터를 같은 기준으로 내린다.",
+          "next_node_id": "failure_001",
+          "state_delta": -3,
+          "delay_range": {
+            "min": 1,
+            "max": 1
+          }
+        },
+        {
+          "choice_id": "report_002_choice_b",
+          "choice_text": "출구 표지와 안내도를 기준으로 폐쇄 구역 내부를 재탐색한다.",
+          "next_node_id": "report_003",
+          "state_delta": -1,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "choice_id": "report_002_choice_c",
+          "choice_text": "일부 실제 출구를 개방 상태로 유지하고, 탐색 기준을 다시 검토한다.",
+          "next_node_id": "report_008",
+          "state_delta": 1,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        }
+      ]
+    },
+    {
+      "node_id": "report_003",
+      "node_type": "report",
+      "title": "출구 표지 추적 보고",
+      "body": "탐색 인원은 출구 표지와 출구 번호를 따라 이동했다.\n\n탐색 중 “계단을 확인했다”, “출구 앞이다”라는 보고가 접수되었으나, 실제 지상 출구에서는 해당 인원이 확인되지 않았다. 이어지는 위치 설명은 계속 닫힌 셔터 구역과 일치했다.\n\n같은 출구 번호가 서로 다른 위치에서 반복 확인되었으며, 일부 표지는 정상적인 방향을 가리키고 있음에도 다른 폐점 통로로 이어지는 것처럼 보인다는 기록이 남았다.",
+      "choices": [
+        {
+          "choice_id": "report_003_choice_a",
+          "choice_text": "중복 출구 번호를 상가 안내도와 대조한다.",
+          "next_node_id": "report_004",
+          "state_delta": -1,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "choice_id": "report_003_choice_b",
+          "choice_text": "출구 표지 대신 바닥 표식을 설치해 이동 경로를 표시한다.",
+          "next_node_id": "report_006",
+          "state_delta": -2,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "choice_id": "report_003_choice_c",
+          "choice_text": "탐색 인원에게 로프를 연결하고 표지보다 복귀 기준을 우선하게 한다.",
+          "next_node_id": "report_008",
+          "state_delta": 2,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        }
+      ]
+    },
+    {
+      "node_id": "report_004",
+      "node_type": "report",
+      "title": "상가 안내도 대조 보고",
+      "body": "상가 안내도와 관리 도면을 기준으로 이동 경로를 대조했다.\n\n안내도상 점포 위치와 통로 배치는 대부분 맞아 보였다. 그러나 현장에서는 통로와 닫힌 점포 앞 공간의 구분이 흐려졌다는 보고가 남았다.\n\n안내도에 없는 구역명이 탐색 중 반복 보고되었고, 일부 점포 번호는 길 찾기 표지보다 칸 번호처럼 반복되는 것으로 기록되었다.",
+      "choices": [
+        {
+          "choice_id": "report_004_choice_a",
+          "choice_text": "안내도에 새 구역명을 추가하고 수정 안내도를 기준으로 재탐색한다.",
+          "next_node_id": "report_006",
+          "state_delta": -2,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "choice_id": "report_004_choice_b",
+          "choice_text": "안내도 사용을 중단하고, 로프 연결 탐색으로 복귀 기준을 확보한다.",
+          "next_node_id": "report_008",
+          "state_delta": 2,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "choice_id": "report_004_choice_c",
+          "choice_text": "구역명이 바뀌는 지점을 임시 대기 구역으로 지정한다.",
+          "next_node_id": "report_007",
+          "state_delta": -1,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        }
+      ]
+    },
+    {
+      "node_id": "report_005",
+      "node_type": "report",
+      "title": "셔터 강제 개방 보고",
+      "body": "셔터 아래 틈에서 형광등 빛처럼 보이는 빛이 확인된 점포를 우선 개방했다.\n\n그러나 개방된 셔터 뒤에서는 점포 내부가 아니라 또 다른 폐점 통로처럼 보이는 공간이 확인되었다. 바닥 타일과 형광등 위치는 지하상가 통로와 유사했고, 반대편에도 닫힌 셔터가 이어져 있었다.\n\n이후 해당 셔터 주변에서는 출구 표지와 점포 번호가 서로 다른 방향을 가리키는 현상이 보고되었다.",
+      "choices": [
+        {
+          "choice_id": "report_005_choice_a",
+          "choice_text": "열린 셔터 뒤 통로를 우회 경로로 사용한다.",
+          "next_node_id": "failure_002",
+          "state_delta": -3,
+          "delay_range": {
+            "min": 1,
+            "max": 1
+          }
+        },
+        {
+          "choice_id": "report_005_choice_b",
+          "choice_text": "개방한 셔터를 닫고, 해당 지점을 출입구 기준에서 제외한다.",
+          "next_node_id": "report_008",
+          "state_delta": 1,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "choice_id": "report_005_choice_c",
+          "choice_text": "다른 셔터도 열어 내부 구조를 비교한다.",
+          "next_node_id": "failure_002",
+          "state_delta": -3,
+          "delay_range": {
+            "min": 1,
+            "max": 1
+          }
+        }
+      ]
+    },
+    {
+      "node_id": "report_006",
+      "node_type": "report",
+      "title": "임시 표식 설치 보고",
+      "body": "탐색 경로 표시를 위해 바닥 화살표와 야광 테이프가 설치되었다.\n\n초기에는 표식이 이동 경로 확인에 도움이 되는 것으로 보였다. 그러나 후속 확인에서 일부 야광 테이프가 기존 상가 안내 화살표와 구분되지 않는 형태로 보인다는 보고가 접수되었다.\n\n일부 표식은 셔터 아래 틈 방향으로 이어진 것으로 기록되었고, 표식이 붙은 바닥 주변의 점포 번호가 다시 배열된 것처럼 보인다는 보고도 남았다.",
+      "choices": [
+        {
+          "choice_id": "report_006_choice_a",
+          "choice_text": "표식을 더 크게 늘리고 방향 표시를 반복한다.",
+          "next_node_id": "failure_001",
+          "state_delta": -3,
+          "delay_range": {
+            "min": 1,
+            "max": 1
+          }
+        },
+        {
+          "choice_id": "report_006_choice_b",
+          "choice_text": "표식 사용을 중단하고, 물리적으로 회수 가능한 기준만 사용한다.",
+          "next_node_id": "report_008",
+          "state_delta": 2,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "choice_id": "report_006_choice_c",
+          "choice_text": "표식이 향하는 셔터 아래 틈을 확인한다.",
+          "next_node_id": "failure_002",
+          "state_delta": -3,
+          "delay_range": {
+            "min": 1,
+            "max": 1
+          }
+        }
+      ]
+    },
+    {
+      "node_id": "report_007",
+      "node_type": "report",
+      "title": "인원 집결 대기 보고",
+      "body": "남은 인원을 한곳에 모아 대기시키는 절차가 시행되었다.\n\n초기에는 통신 유지와 인원 확인에 도움이 되는 것으로 보고되었다. 그러나 일정 시간 이후 해당 지점 주변의 셔터가 더 촘촘히 닫힌 것처럼 보인다는 기록이 남았다.\n\n출구 표지는 대기 지점을 중심으로 다시 배열된 것처럼 확인되었고, 대기 지점은 임시 피난 지점이 아니라 닫힌 상가 내부의 한 구역처럼 처리되기 시작했다.",
+      "choices": [
+        {
+          "choice_id": "report_007_choice_a",
+          "choice_text": "대기 지점을 공식 집결 구역으로 지정하고 표식을 설치한다.",
+          "next_node_id": "failure_001",
+          "state_delta": -3,
+          "delay_range": {
+            "min": 1,
+            "max": 1
+          }
+        },
+        {
+          "choice_id": "report_007_choice_b",
+          "choice_text": "인원을 로프에 연결해 원 진입 방향으로 회수한다.",
+          "next_node_id": "report_008",
+          "state_delta": 2,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "choice_id": "report_007_choice_c",
+          "choice_text": "대기 지점 주변 셔터를 열어 탈출로를 만든다.",
+          "next_node_id": "failure_002",
+          "state_delta": -3,
+          "delay_range": {
+            "min": 1,
+            "max": 1
+          }
+        }
+      ]
+    },
+    {
+      "node_id": "report_008",
+      "node_type": "report",
+      "title": "로프 연결 탐색 보고",
+      "body": "탐색 인원에게 로프를 연결한 뒤 내부 진입이 진행되었다.\n\n탐색 인원은 출구 표지와 안내도를 보조 정보로만 사용했고, 일정 시간 뒤 로프를 따라 복귀했다. 구조 절차로는 부분적인 효과가 있는 것으로 보고되었다.\n\n다만 탐색 종료 후 로프를 어떻게 처리할지에 대한 판단은 아직 내려지지 않았다. 현장 담당자는 로프를 회수해 출입 금지선만 남기는 방안, 출구 표지가 붙은 계단 난간에 묶는 방안, 반대편에서 외부 확인이 된 지점에 묶어 두는 방안을 함께 제출했다.",
+      "choices": [
+        {
+          "choice_id": "report_008_choice_a",
+          "choice_text": "탐색 종료 후 로프를 회수하고, 출입 금지선만 유지한다.",
+          "next_node_id": "failure_004",
+          "state_delta": -3,
+          "delay_range": {
+            "min": 1,
+            "max": 1
+          }
+        },
+        {
+          "choice_id": "report_008_choice_b",
+          "choice_text": "로프 끝을 출구 표지가 붙은 계단 난간에 고정한다.",
+          "next_node_id": "failure_003",
+          "state_delta": -3,
+          "delay_range": {
+            "min": 1,
+            "max": 1
+          }
+        },
+        {
+          "choice_id": "report_008_choice_c",
+          "choice_text": "복귀에 사용한 로프를 반대편 외부 확인 지점에 묶어 두고, 다음 야간까지 회수하지 않는다.",
+          "next_node_id": "report_009",
+          "state_delta": 2,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        }
+      ]
+    },
+    {
+      "node_id": "report_009",
+      "node_type": "report",
+      "title": "로프 유지 검토 보고",
+      "body": "진입 지점과 반대편에서 외부 확인이 된 지점 사이에 로프가 묶였다.\n\n로프는 탐색 종료 이후에도 회수되지 않았고, 다음 야간에도 같은 위치에 유지되었다. 해당 구간에서는 출구 표지의 어긋남이 줄었고, 셔터 아래 틈에서 다른 통로처럼 보이던 형광등 빛도 보고되지 않았다.\n\n통로는 여전히 폐점 후 지하상가처럼 보였으나, 로프가 남아 있던 구간의 이동 기록은 전일과 일치했다.",
+      "choices": [
+        {
+          "choice_id": "report_009_choice_a",
+          "choice_text": "설치된 로프를 그대로 두고, 양끝이 묶인 상태를 다음 야간까지 유지한다.",
+          "next_node_id": "stable_001",
+          "state_delta": 3,
+          "delay_range": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "choice_id": "report_009_choice_b",
+          "choice_text": "통행 방해를 줄이기 위해 로프를 회수하고 안내 표식으로 대체한다.",
+          "next_node_id": "failure_004",
+          "state_delta": -3,
+          "delay_range": {
+            "min": 1,
+            "max": 1
+          }
+        },
+        {
+          "choice_id": "report_009_choice_c",
+          "choice_text": "출구 표지가 붙은 계단 쪽에도 보조 로프를 추가한다.",
+          "next_node_id": "failure_003",
+          "state_delta": -3,
+          "delay_range": {
+            "min": 1,
+            "max": 1
+          }
+        }
+      ]
+    }
+  ],
+  "stable_nodes": [
+    {
+      "node_id": "stable_001",
+      "node_type": "stable",
+      "title": "로프 유지 이후 보고",
+      "body": "진입 지점과 반대편에서 외부 확인이 된 지점 사이의 로프는 회수되지 않았다.\n\n양끝이 묶인 상태는 다음 야간까지 유지되었고, 로프 주변 접근은 제한되었다. 해당 구간에서 출구 표지의 어긋남은 추가로 보고되지 않았다.\n\n셔터 아래 틈에서 다른 통로처럼 보이던 형광등 빛도 확인되지 않았다. 통로는 여전히 폐점 후 지하상가처럼 보였으나, 로프가 남아 있던 구간의 이동 기록은 전일 기록과 일치했다.",
+      "result": "stabilized",
+      "state_delta": 3
+    }
+  ],
+  "failure_nodes": [
+    {
+      "node_id": "failure_001",
+      "node_type": "failure",
+      "title": "전 구역 폐점화 실패",
+      "body": "전 구역 폐쇄와 셔터 하강 상태가 유지되었다.\n\n출구 번호와 안내도 기준 탐색이 반복되면서, 지하상가 구역 전체는 지상 출구 없는 폐점 후 통로처럼 고정되었다. 계단을 올랐다고 보고한 인원은 다른 닫힌 셔터 구역 앞에 도착했고, 같은 출구 번호는 여러 위치에서 반복 확인되었다.\n\n탐색 인원과의 통신은 일정 시간 후 끊겼다. 이후 동일 구역의 셔터 아래 틈에서는 무전 잡음처럼 들리는 소리만 보고되었다.",
+      "result": "containment_failed"
+    },
+    {
+      "node_id": "failure_002",
+      "node_type": "failure",
+      "title": "셔터 내부화 실패",
+      "body": "셔터를 강제로 열거나, 셔터 아래 틈에서 보이는 형광등 빛을 따라가는 절차가 진행되었다.\n\n열린 셔터 뒤에서는 점포 내부가 아니라 또 다른 폐점 통로가 확인되었다. 점포 번호와 출구 표지는 셔터 안쪽 기준으로 재배열되었고, 탐색 인원은 점포 내부가 아니라 더 깊은 닫힌 통로로 들어간 것으로 보고되었다.\n\n후속 확인에서 해당 셔터는 다시 닫힌 상태였으나, 아래 틈에서는 무전 잡음처럼 끊긴 소리가 들렸다.",
+      "result": "containment_failed"
+    },
+    {
+      "node_id": "failure_003",
+      "node_type": "failure",
+      "title": "잘못된 로프 고정 실패",
+      "body": "로프는 외부 확인이 된 지점이 아니라, 출구 표지가 붙은 내부 계단 난간에 묶였다.\n\n이후 해당 계단을 오른 인원은 실제 지상 출구로 나오지 못했다. 계단 주변에는 새로운 폐점 구역처럼 닫힌 셔터가 이어져 있었고, 같은 출구 번호가 다른 통로에서도 반복 확인되었다.\n\n로프는 남아 있었으나, 해당 계단을 지난 인원은 외부로 나오지 못했다.",
+      "result": "containment_failed"
+    },
+    {
+      "node_id": "failure_004",
+      "node_type": "failure",
+      "title": "로프 회수 실패",
+      "body": "로프는 탐색 인원을 복귀시킨 뒤 회수되었다.\n\n출입 금지선과 안내 표식은 남겨졌으나, 다음 야간 같은 구역에서 출구 표지 어긋남이 다시 보고되었다. 셔터 아래 틈에서는 다른 통로의 형광등 빛처럼 보이는 빛이 다시 확인되었다.\n\n이전에 안전해 보였던 통로는 다시 닫힌 셔터 구역처럼 보였고, 후속 탐색 인원은 출구 표지 앞에서도 외부로 나오지 못할 위험이 있다고 보고되었다.",
+      "result": "containment_failed"
+    }
+  ],
+  "special_events": [
+    {
+      "event_id": "special_event_001",
+      "title": "갈라진 기준선",
+      "start_node_id": "special_001_report_001",
+      "nodes": [
+        {
+          "node_id": "special_001_report_001",
+          "node_type": "special_report",
+          "title": "기준선 갈라짐 보고",
+          "body": "안정화 이후 보관 중이던 로프 설치 구간에서 이상이 보고되었다.\n\n야간 CCTV와 현장 시야에서는 로프가 여러 갈래로 갈라져 보였다. 일부는 원래 통로 중앙을 따라 이어졌고, 일부는 출구 표지가 붙은 계단 쪽으로 휘어졌으며, 일부는 셔터 아래 틈으로 들어간 것처럼 보였다.\n\n그러나 설치 기록상 로프는 하나뿐이었고, 회수나 추가 설치 기록도 없었다.",
+          "choices": [
+            {
+              "choice_id": "special_001_report_001_choice_a",
+              "choice_text": "통로 중앙에 가장 가까워 보이는 로프를 따라 점검 인원을 투입한다.",
+              "next_node_id": "special_001_report_003",
+              "state_delta": -1,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            },
+            {
+              "choice_id": "special_001_report_001_choice_b",
+              "choice_text": "출구 표지 쪽으로 휘어진 로프를 따라 실제 출구 여부를 확인한다.",
+              "next_node_id": "special_001_failure_001",
+              "state_delta": -3,
+              "delay_range": {
+                "min": 1,
+                "max": 1
+              }
+            },
+            {
+              "choice_id": "special_001_report_001_choice_c",
+              "choice_text": "최초 설치 기록과 현장 봉인 위치를 대조해 실제로 로프가 바뀌었는지 먼저 확인한다.",
+              "next_node_id": "special_001_report_002",
+              "state_delta": 1,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            }
+          ]
+        },
+        {
+          "node_id": "special_001_report_002",
+          "node_type": "special_report",
+          "title": "설치 기록 대조 보고",
+          "body": "최초 설치 당시의 로프 고정 위치, 매듭, 봉인 위치가 확인되었다.\n\n현장 설치 기록과 대조한 결과, 기준선 회수나 추가 설치 기록은 없었다. 갈라져 보이는 로프들은 이동 기준으로 사용하지 않았고, 설치 기록과 일치하는 로프 주변 접근은 제한되었다.\n\n일부 담당자는 갈라진 로프를 정리하지 않으면 현장 혼선이 남을 수 있다고 보고했다.",
+          "choices": [
+            {
+              "choice_id": "special_001_report_002_choice_a",
+              "choice_text": "설치 기록과 맞는 로프 위치만 유지 대상으로 두고, 주변 접근을 제한한다.",
+              "next_node_id": "special_001_stable",
+              "state_delta": 2,
+              "delay_range": {
+                "min": 1,
+                "max": 1
+              }
+            },
+            {
+              "choice_id": "special_001_report_002_choice_b",
+              "choice_text": "갈라져 보이는 로프를 절단해 원래 위치만 남긴다.",
+              "next_node_id": "special_001_failure_001",
+              "state_delta": -3,
+              "delay_range": {
+                "min": 1,
+                "max": 1
+              }
+            },
+            {
+              "choice_id": "special_001_report_002_choice_c",
+              "choice_text": "로프 전체를 회수하고 새 기준선을 설치한다.",
+              "next_node_id": "special_001_failure_001",
+              "state_delta": -3,
+              "delay_range": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        },
+        {
+          "node_id": "special_001_report_003",
+          "node_type": "special_report",
+          "title": "갈라진 로프 추적 보고",
+          "body": "점검 인원이 통로 중앙에 가장 가까워 보이는 로프를 따라 이동했다.\n\n이동 중 로프의 위치는 설치 기록과 계속 맞지 않았고, 일부 구간에서는 셔터 아래 틈 방향으로 이어져 보였다. 현장 인원은 갈라진 로프 중 어느 쪽이 기존 기준선인지 시야만으로는 구분하기 어렵다고 보고했다.\n\n출구 표지 쪽으로 휘어진 로프를 따라가면 실제 출구 여부를 확인할 수 있다는 의견과, 환풍구나 관리구를 새 외부 기준으로 삼아야 한다는 의견이 함께 제출되었다.",
+          "choices": [
+            {
+              "choice_id": "special_001_report_003_choice_a",
+              "choice_text": "추적을 중단하고 최초 설치 기록 기준으로 되돌린다.",
+              "next_node_id": "special_001_report_002",
+              "state_delta": 1,
+              "delay_range": {
+                "min": 1,
+                "max": 2
+              }
+            },
+            {
+              "choice_id": "special_001_report_003_choice_b",
+              "choice_text": "출구 표지 쪽으로 휘어진 로프를 따라간다.",
+              "next_node_id": "special_001_failure_001",
+              "state_delta": -3,
+              "delay_range": {
+                "min": 1,
+                "max": 1
+              }
+            },
+            {
+              "choice_id": "special_001_report_003_choice_c",
+              "choice_text": "환풍구나 관리구를 새 외부 기준으로 삼아 확인한다.",
+              "next_node_id": "special_001_failure_001",
+              "state_delta": -3,
+              "delay_range": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        }
+      ],
+      "stable_nodes": [
+        {
+          "node_id": "special_001_stable",
+          "node_type": "special_stable",
+          "title": "갈라진 로프 안정화 복귀",
+          "body": "갈라져 보이는 로프는 이동 기준으로 사용되지 않았다.\n\n기관은 최초 설치 기록에 남은 로프 고정 위치, 매듭, 봉인 위치만 유지 대상으로 삼았고, 로프 주변 접근을 제한했다. 추가 로프 설치나 기준선 회수는 진행하지 않았다.\n\n이후 기준선이 유지된 구간에서는 새 출구 표지 어긋남이 보고되지 않았다.",
+          "result": "returned_to_stable",
+          "state_delta": 2
+        }
+      ],
+      "failure_nodes": [
+        {
+          "node_id": "special_001_failure_001",
+          "node_type": "special_failure",
+          "title": "로프 훼손 실패",
+          "body": "갈라져 보이는 로프를 따라가거나, 로프가 오염되었다고 판단해 절단 또는 회수하는 절차가 진행되었다.\n\n출구 표지 쪽으로 이어진 로프를 따라간 탐색 인원은 “출구 계단 앞”이라고 보고했으나, 실제 외부에서는 해당 인원이 확인되지 않았다. 이후 통신은 닫힌 셔터 아래 틈에서만 들렸다.\n\n로프가 설치되어 있던 통로 중앙에는 여러 갈래의 로프 그림자 같은 선이 남았고, 다음 야간 같은 통로의 출구 표지가 다시 어긋난 것으로 보고되었다.\n\n결과:",
+          "result": "containment_failed"
+        }
+      ]
+    }
+  ]
+}

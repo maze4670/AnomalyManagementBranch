@@ -7,10 +7,13 @@ const DATA_MANAGER_SCRIPT := preload("res://scripts/data/data_manager.gd")
 @onready var empty_label: Label = $CenterContainer/ContentContainer/EmptyLabel
 @onready var archive_list_title_label: Label = $CenterContainer/ContentContainer/ArchiveListTitleLabel
 @onready var archive_list_container: VBoxContainer = $CenterContainer/ContentContainer/ArchiveListContainer
+@onready var anomaly_image_slot: Control = $CenterContainer/ContentContainer/AnomalyImageSlot
+@onready var anomaly_image_rect: TextureRect = $CenterContainer/ContentContainer/AnomalyImageSlot/ArchiveAnomalyImageRect
 @onready var detail_label: Label = $CenterContainer/ContentContainer/DetailLabel
 
 
 func _ready() -> void:
+	_clear_anomaly_image()
 	_load_archive_list()
 
 
@@ -20,6 +23,7 @@ func _on_main_menu_button_pressed() -> void:
 
 func _load_archive_list() -> void:
 	_clear_archive_list()
+	_clear_anomaly_image()
 	detail_label.text = "기록을 선택해 주세요."
 	detail_label.visible = true
 
@@ -67,6 +71,7 @@ func _show_empty_archive() -> void:
 	archive_list_container.visible = false
 	detail_label.text = ""
 	detail_label.visible = false
+	_clear_anomaly_image()
 
 
 func _get_archive_case_label(case_document: Dictionary) -> String:
@@ -87,6 +92,7 @@ func _get_case_document(case_id: String) -> Dictionary:
 
 func _on_archive_case_pressed(case_id: String, case_archive_data: Dictionary) -> void:
 	detail_label.visible = true
+	_update_anomaly_image(_get_case_document(case_id))
 	detail_label.text = _build_archive_detail_text(case_id, case_archive_data)
 
 
@@ -161,3 +167,24 @@ func _get_visible_node_ids(case_id: String, case_archive_data: Dictionary) -> Ar
 		node_ids.append(key_parts[1])
 
 	return node_ids
+
+
+func _update_anomaly_image(case_document: Dictionary) -> void:
+	var image_path: String = str(case_document.get("image_path", ""))
+	if image_path.is_empty() or not ResourceLoader.exists(image_path):
+		_clear_anomaly_image()
+		return
+
+	var texture_resource: Resource = load(image_path)
+	var texture: Texture2D = texture_resource as Texture2D
+	if texture == null:
+		_clear_anomaly_image()
+		return
+
+	anomaly_image_rect.texture = texture
+	anomaly_image_slot.visible = true
+
+
+func _clear_anomaly_image() -> void:
+	anomaly_image_rect.texture = null
+	anomaly_image_slot.visible = false

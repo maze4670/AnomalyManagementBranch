@@ -11,26 +11,73 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_current")
 
-[node name="CenterContainer" type="CenterContainer" parent="."]
+[node name="RootContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="ContentContainer" type="VBoxContainer" parent="CenterContainer"]
-layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="TitleLabel" type="Label" parent="CenterContainer/ContentContainer"]
+[node name="TitleLabel" type="Label" parent="RootContainer"]
 layout_mode = 2
 text = "현재 관리 중인 이상현상"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="GuideLabel" type="Label" parent="CenterContainer/ContentContainer"]
+[node name="ContentContainer" type="HBoxContainer" parent="RootContainer"]
 layout_mode = 2
-text = "이상현상 문서는 이후 단계에서 표시됩니다."
-horizontal_alignment = 1
-vertical_alignment = 1
+size_flags_vertical = 3
+theme_override_constants/separation = 16
+
+[node name="AnomalyListContainer" type="VBoxContainer" parent="RootContainer/ContentContainer"]
+layout_mode = 2
+custom_minimum_size = Vector2(260, 0)
+theme_override_constants/separation = 8
+
+[node name="AnomalyListLabel" type="Label" parent="RootContainer/ContentContainer/AnomalyListContainer"]
+layout_mode = 2
+text = "이상현상 목록"
+
+[node name="AnomalyButtonTemplate" type="Button" parent="RootContainer/ContentContainer/AnomalyListContainer"]
+visible = false
+custom_minimum_size = Vector2(240, 40)
+layout_mode = 2
+text = "CASE-000 / 별칭"
+
+[node name="DetailContainer" type="VBoxContainer" parent="RootContainer/ContentContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 8
+
+[node name="DetailTitleLabel" type="Label" parent="RootContainer/ContentContainer/DetailContainer"]
+layout_mode = 2
+text = "문서 상세"
+
+[node name="DetailScrollContainer" type="ScrollContainer" parent="RootContainer/ContentContainer/DetailContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="DetailBodyContainer" type="VBoxContainer" parent="RootContainer/ContentContainer/DetailContainer/DetailScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 12
+
+[node name="AnomalyImageSlot" type="MarginContainer" parent="RootContainer/ContentContainer/DetailContainer/DetailScrollContainer/DetailBodyContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_bottom = 8
+
+[node name="AnomalyImageRect" type="TextureRect" parent="RootContainer/ContentContainer/DetailContainer/DetailScrollContainer/DetailBodyContainer/AnomalyImageSlot"]
+custom_minimum_size = Vector2(360, 220)
+layout_mode = 2
+expand_mode = 3
+stretch_mode = 5
+
+[node name="DetailText" type="RichTextLabel" parent="RootContainer/ContentContainer/DetailContainer/DetailScrollContainer/DetailBodyContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+fit_content = true
+text = "이상현상 목록에서 항목을 선택해 주세요."

@@ -1,16 +1,8 @@
 {
   "is_test_data": true,
-  "note": "기능 확인용 테스트 case 목록이며 최종 콘텐츠 구조가 아닙니다.",
-  "starting_cases": [
-    {
-      "case_id": "case_001",
-      "start_node_id": "report_001"
-    }
-  ],
-  "introducible_cases": [
-    {
-      "case_id": "case_002",
-      "start_node_id": "report_001"
-    }
-  ]
+  "note": "이상현상 파일은 data/anomalies와 data/reports에서 자동 인식합니다. 이 파일은 시작 수와 예외 목록만 관리합니다.",
+  "starting_case_count": 3,
+  "exclude_from_starting_pool": [],
+  "exclude_from_introduction_pool": [],
+  "late_game_only_cases": []
 }

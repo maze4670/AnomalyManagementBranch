@@ -4,5 +4,6 @@
   "alias": "주의하십시오",
   "category": "인식형",
   "basic_description": "CASE-CN-001은 ████년 ██월 ██일 ███ 지역의 농촌 마을에서 발견되었다.\n\n해당 이상현상은 마을 안내 방송으로 특정 장소나 행동에 대한 주의 문구가 송출된 뒤, 며칠 이내에 해당 문구와 유사한 사고가 발생하는 현상으로 분류된다.\n\n초기 조사에서 폭우 이후 저수지 접근 주의 방송이 송출되었으며, 이후 해당 저수지 접근로 인근에서 방송 내용을 언급한 주민의 사고가 보고되었다.",
-  "additional_descriptions": []
+  "additional_descriptions": [],
+  "image_path": "res://assets/anomalies/case_006.png"
 }
