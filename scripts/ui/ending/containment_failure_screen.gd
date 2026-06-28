@@ -4,13 +4,13 @@ const ENDING_SCENE_PATH := "res://scenes/ending/EndingScreen.tscn"
 const DATA_MANAGER_SCRIPT := preload("res://scripts/data/data_manager.gd")
 const SAVE_MANAGER_SCRIPT := preload("res://scripts/save/save_manager.gd")
 
-@onready var screen_title_label: Label = $RootContainer/ContentContainer/ScreenTitleLabel
-@onready var notice_label: Label = $RootContainer/ContentContainer/NoticeLabel
-@onready var display_id_label: Label = $RootContainer/ContentContainer/DisplayIdLabel
-@onready var alias_label: Label = $RootContainer/ContentContainer/AliasLabel
-@onready var report_title_label: Label = $RootContainer/ContentContainer/ReportTitleLabel
-@onready var report_body_label: RichTextLabel = $RootContainer/ContentContainer/ReportBodyLabel
-@onready var confirm_button: Button = $RootContainer/ContentContainer/ConfirmButton
+@onready var screen_title_label: Label = $CenterContainer/FailurePanel/ContentContainer/HeaderPanel/ScreenTitleLabel
+@onready var notice_label: Label = $CenterContainer/FailurePanel/ContentContainer/NoticeLabel
+@onready var display_id_label: Label = $CenterContainer/FailurePanel/ContentContainer/CaseMetaContainer/DisplayIdLabel
+@onready var alias_label: Label = $CenterContainer/FailurePanel/ContentContainer/CaseMetaContainer/AliasLabel
+@onready var report_title_label: Label = $CenterContainer/FailurePanel/ContentContainer/ReportTitleLabel
+@onready var report_body_label: RichTextLabel = $CenterContainer/FailurePanel/ContentContainer/ReportBodyLabel
+@onready var confirm_button: Button = $CenterContainer/FailurePanel/ContentContainer/ConfirmButton
 
 var current_case_id: String = ""
 var current_node_id: String = ""

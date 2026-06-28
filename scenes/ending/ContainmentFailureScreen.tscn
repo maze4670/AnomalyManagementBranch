@@ -1,6 +1,66 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=12 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/ending/containment_failure_screen.gd" id="1_containment_failure"]
+[ext_resource type="Texture2D" path="res://assets/ui/ui_work_terminal_background.png" id="2_background"]
+[ext_resource type="Texture2D" path="res://assets/ui/ui_report_body_panel.png" id="3_body_panel"]
+[ext_resource type="Texture2D" path="res://assets/ui/ui_report_header_panel.png" id="4_header_panel"]
+[ext_resource type="Texture2D" path="res://assets/ui/ui_danger_button.png" id="5_danger_button"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBox_failure_panel"]
+texture = ExtResource("3_body_panel")
+texture_margin_left = 28.0
+texture_margin_top = 28.0
+texture_margin_right = 28.0
+texture_margin_bottom = 28.0
+content_margin_left = 44.0
+content_margin_top = 34.0
+content_margin_right = 44.0
+content_margin_bottom = 34.0
+modulate_color = Color(0.68, 0.47, 0.42, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBox_header"]
+texture = ExtResource("4_header_panel")
+texture_margin_left = 28.0
+texture_margin_top = 20.0
+texture_margin_right = 28.0
+texture_margin_bottom = 20.0
+content_margin_left = 22.0
+content_margin_top = 10.0
+content_margin_right = 22.0
+content_margin_bottom = 10.0
+modulate_color = Color(0.62, 0.36, 0.31, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBox_danger_normal"]
+texture = ExtResource("5_danger_button")
+texture_margin_left = 30.0
+texture_margin_top = 16.0
+texture_margin_right = 30.0
+texture_margin_bottom = 16.0
+modulate_color = Color(0.82, 0.74, 0.66, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBox_danger_hover"]
+texture = ExtResource("5_danger_button")
+texture_margin_left = 30.0
+texture_margin_top = 16.0
+texture_margin_right = 30.0
+texture_margin_bottom = 16.0
+modulate_color = Color(1.08, 0.88, 0.7, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBox_danger_pressed"]
+texture = ExtResource("5_danger_button")
+texture_margin_left = 30.0
+texture_margin_top = 16.0
+texture_margin_right = 30.0
+texture_margin_bottom = 16.0
+modulate_color = Color(0.64, 0.5, 0.43, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBox_danger_disabled"]
+texture = ExtResource("5_danger_button")
+texture_margin_left = 30.0
+texture_margin_top = 16.0
+texture_margin_right = 30.0
+texture_margin_bottom = 16.0
+modulate_color = Color(0.4, 0.38, 0.36, 0.72)
 
 [node name="ContainmentFailureScreen" type="Control"]
 layout_mode = 3
@@ -11,58 +71,144 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_containment_failure")
 
-[node name="RootContainer" type="MarginContainer" parent="."]
+[node name="Background" type="TextureRect" parent="."]
+modulate = Color(0.68, 0.68, 0.66, 1)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 32.0
-offset_top = 24.0
-offset_right = -32.0
-offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_background")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="ReadabilityOverlay" type="ColorRect" parent="."]
+modulate = Color(1, 1, 1, 0.52)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.025, 0.018, 0.018, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = 18.0
+offset_right = -24.0
+offset_bottom = -22.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ContentContainer" type="VBoxContainer" parent="RootContainer"]
+[node name="FailurePanel" type="PanelContainer" parent="CenterContainer"]
+custom_minimum_size = Vector2(980, 820)
 layout_mode = 2
-theme_override_constants/separation = 12
+theme_override_styles/panel = SubResource("StyleBox_failure_panel")
 
-[node name="ScreenTitleLabel" type="Label" parent="RootContainer/ContentContainer"]
+[node name="ContentContainer" type="VBoxContainer" parent="CenterContainer/FailurePanel"]
 layout_mode = 2
+theme_override_constants/separation = 13
+
+[node name="HeaderPanel" type="PanelContainer" parent="CenterContainer/FailurePanel/ContentContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBox_header")
+
+[node name="ScreenTitleLabel" type="Label" parent="CenterContainer/FailurePanel/ContentContainer/HeaderPanel"]
+custom_minimum_size = Vector2(0, 46)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.56, 0.48, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.9)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 25
 text = "긴급 격리 실패 보고"
 horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="NoticeLabel" type="Label" parent="RootContainer/ContentContainer"]
+[node name="NoticeLabel" type="Label" parent="CenterContainer/FailurePanel/ContentContainer"]
+custom_minimum_size = Vector2(0, 72)
 layout_mode = 2
+theme_override_colors/font_color = Color(0.78, 0.8, 0.75, 1)
+theme_override_font_sizes/font_size = 16
 text = "관리 대상 이상현상이 통제 가능 범위를 벗어났습니다.\n아래 보고를 확인하십시오."
 horizontal_alignment = 1
+vertical_alignment = 1
 autowrap_mode = 3
 
-[node name="DisplayIdLabel" type="Label" parent="RootContainer/ContentContainer"]
+[node name="NoticeDivider" type="HSeparator" parent="CenterContainer/FailurePanel/ContentContainer"]
+self_modulate = Color(0.72, 0.34, 0.25, 0.85)
 layout_mode = 2
+
+[node name="CaseMetaContainer" type="HBoxContainer" parent="CenterContainer/FailurePanel/ContentContainer"]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="DisplayIdLabel" type="Label" parent="CenterContainer/FailurePanel/ContentContainer/CaseMetaContainer"]
+custom_minimum_size = Vector2(260, 40)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.82, 0.88, 0.84, 1)
+theme_override_font_sizes/font_size = 17
 text = "CASE"
+vertical_alignment = 1
 
-[node name="AliasLabel" type="Label" parent="RootContainer/ContentContainer"]
+[node name="AliasLabel" type="Label" parent="CenterContainer/FailurePanel/ContentContainer/CaseMetaContainer"]
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.72, 0.8, 0.77, 1)
+theme_override_font_sizes/font_size = 17
 text = "Alias"
+vertical_alignment = 1
 
-[node name="ReportTitleLabel" type="Label" parent="RootContainer/ContentContainer"]
+[node name="ReportTitleLabel" type="Label" parent="CenterContainer/FailurePanel/ContentContainer"]
+custom_minimum_size = Vector2(0, 54)
 layout_mode = 2
+theme_override_colors/font_color = Color(0.88, 0.88, 0.8, 1)
+theme_override_font_sizes/font_size = 19
 text = "Report Title"
+vertical_alignment = 1
 autowrap_mode = 3
 
-[node name="ReportBodyLabel" type="RichTextLabel" parent="RootContainer/ContentContainer"]
-custom_minimum_size = Vector2(720, 360)
+[node name="ReportDivider" type="HSeparator" parent="CenterContainer/FailurePanel/ContentContainer"]
+self_modulate = Color(0.62, 0.3, 0.24, 0.75)
+layout_mode = 2
+
+[node name="ReportBodyLabel" type="RichTextLabel" parent="CenterContainer/FailurePanel/ContentContainer"]
+custom_minimum_size = Vector2(840, 300)
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_colors/default_color = Color(0.76, 0.82, 0.78, 1)
+theme_override_font_sizes/normal_font_size = 17
 bbcode_enabled = false
 text = "Report Body"
-fit_content = true
+fit_content = false
 scroll_active = true
 
-[node name="ConfirmButton" type="Button" parent="RootContainer/ContentContainer"]
-custom_minimum_size = Vector2(180, 40)
+[node name="FooterDivider" type="HSeparator" parent="CenterContainer/FailurePanel/ContentContainer"]
+self_modulate = Color(0.62, 0.3, 0.24, 0.75)
 layout_mode = 2
+
+[node name="ConfirmButton" type="Button" parent="CenterContainer/FailurePanel/ContentContainer"]
+custom_minimum_size = Vector2(230, 56)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.94, 0.9, 0.86, 1)
+theme_override_colors/font_hover_color = Color(1, 0.96, 0.9, 1)
+theme_override_colors/font_pressed_color = Color(0.9, 0.82, 0.76, 1)
+theme_override_colors/font_disabled_color = Color(0.5, 0.5, 0.48, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBox_danger_normal")
+theme_override_styles/hover = SubResource("StyleBox_danger_hover")
+theme_override_styles/pressed = SubResource("StyleBox_danger_pressed")
+theme_override_styles/focus = SubResource("StyleBox_danger_hover")
+theme_override_styles/disabled = SubResource("StyleBox_danger_disabled")
 text = "보고 확인"
 
-[connection signal="pressed" from="RootContainer/ContentContainer/ConfirmButton" to="." method="_on_confirm_button_pressed"]
+[connection signal="pressed" from="CenterContainer/FailurePanel/ContentContainer/ConfirmButton" to="." method="_on_confirm_button_pressed"]
