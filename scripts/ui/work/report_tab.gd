@@ -4,18 +4,23 @@ const ENDING_SCENE_PATH := "res://scenes/ending/EndingScreen.tscn"
 const DATA_MANAGER_SCRIPT := preload("res://scripts/data/data_manager.gd")
 const SAVE_MANAGER_SCRIPT := preload("res://scripts/save/save_manager.gd")
 
-@onready var report_list_container: VBoxContainer = $RootContainer/ContentContainer/ReportListContainer
-@onready var report_list_label: Label = $RootContainer/ContentContainer/ReportListContainer/ReportListLabel
-@onready var report_button: Button = $RootContainer/ContentContainer/ReportListContainer/ReportButton
-@onready var detail_text: RichTextLabel = $RootContainer/ContentContainer/DetailContainer/DetailScrollContainer/DetailBodyContainer/DetailText
-@onready var anomaly_image_slot: Control = $RootContainer/ContentContainer/DetailContainer/DetailScrollContainer/DetailBodyContainer/AnomalyImageSlot
-@onready var anomaly_image_rect: TextureRect = $RootContainer/ContentContainer/DetailContainer/DetailScrollContainer/DetailBodyContainer/AnomalyImageSlot/AnomalyImageRect
-@onready var completed_stamp_label: Label = $RootContainer/ContentContainer/DetailContainer/CompletedStampLabel
-@onready var status_label: Label = $RootContainer/ContentContainer/DetailContainer/StatusLabel
-@onready var choice_container: VBoxContainer = $RootContainer/ContentContainer/DetailContainer/ChoiceContainer
-@onready var choice_button_a: Button = $RootContainer/ContentContainer/DetailContainer/ChoiceContainer/ChoiceButtonA
-@onready var choice_button_b: Button = $RootContainer/ContentContainer/DetailContainer/ChoiceContainer/ChoiceButtonB
-@onready var confirm_button: Button = $RootContainer/ContentContainer/DetailContainer/ConfirmButton
+@onready var report_list_container: VBoxContainer = $RootContainer/ContentContainer/ReportListPanel/ReportListContainer
+@onready var report_list_label: Label = $RootContainer/ContentContainer/ReportListPanel/ReportListContainer/ReportListLabel
+@onready var report_button: Button = $RootContainer/ContentContainer/ReportListPanel/ReportListContainer/ReportButton
+@onready var detail_header_text: RichTextLabel = $RootContainer/ContentContainer/ElectronicReportContainer/DetailHeaderPanel/CentralReportContent/DetailHeaderText
+@onready var detail_text: RichTextLabel = $RootContainer/ContentContainer/ElectronicReportContainer/DetailHeaderPanel/CentralReportContent/DetailBodyPanel/DetailScrollContainer/DetailText
+@onready var completed_stamp_label: Label = $RootContainer/ContentContainer/ElectronicReportContainer/DetailHeaderPanel/CentralReportContent/CompletedStampLabel
+@onready var status_label: Label = $RootContainer/ContentContainer/ElectronicReportContainer/DetailHeaderPanel/CentralReportContent/StatusLabel
+@onready var confirmed_choice_label: Label = $RootContainer/ContentContainer/ElectronicReportContainer/DetailHeaderPanel/CentralReportContent/ConfirmedChoiceLabel
+@onready var choice_panel: PanelContainer = $RootContainer/ContentContainer/ElectronicReportContainer/DetailHeaderPanel/CentralReportContent/ChoicePanel
+@onready var choice_container: VBoxContainer = $RootContainer/ContentContainer/ElectronicReportContainer/DetailHeaderPanel/CentralReportContent/ChoicePanel/ChoiceContainer
+@onready var choice_button_a: Button = $RootContainer/ContentContainer/ElectronicReportContainer/DetailHeaderPanel/CentralReportContent/ChoicePanel/ChoiceContainer/ChoiceButtonA
+@onready var choice_button_b: Button = $RootContainer/ContentContainer/ElectronicReportContainer/DetailHeaderPanel/CentralReportContent/ChoicePanel/ChoiceContainer/ChoiceButtonB
+@onready var confirm_button: Button = $RootContainer/ContentContainer/ElectronicReportContainer/DetailHeaderPanel/CentralReportContent/ConfirmButton
+@onready var pdf_meta_text: RichTextLabel = $RootContainer/ContentContainer/PDFDocumentPanel/PDFContentMargin/PDFContentContainer/PDFTopRow/PDFMetaText
+@onready var pdf_description_text: RichTextLabel = $RootContainer/ContentContainer/PDFDocumentPanel/PDFContentMargin/PDFContentContainer/PDFScrollContainer/PDFDocumentBody/PDFDescriptionText
+@onready var anomaly_image_slot: Control = $RootContainer/ContentContainer/PDFDocumentPanel/PDFContentMargin/PDFContentContainer/PDFTopRow/AnomalyImageSlot
+@onready var anomaly_image_rect: TextureRect = $RootContainer/ContentContainer/PDFDocumentPanel/PDFContentMargin/PDFContentContainer/PDFTopRow/AnomalyImageSlot/AnomalyImageRect
 
 var case_documents: Dictionary = {}
 var case_reports_by_id: Dictionary = {}
@@ -60,6 +65,13 @@ func _update_report_list() -> void:
 
 		var report_list_button: Button = Button.new()
 		report_list_button.custom_minimum_size = report_button.custom_minimum_size
+		report_list_button.add_theme_stylebox_override("normal", report_button.get_theme_stylebox("normal"))
+		report_list_button.add_theme_stylebox_override("hover", report_button.get_theme_stylebox("hover"))
+		report_list_button.add_theme_stylebox_override("pressed", report_button.get_theme_stylebox("pressed"))
+		report_list_button.add_theme_stylebox_override("focus", report_button.get_theme_stylebox("focus"))
+		report_list_button.add_theme_color_override("font_color", report_button.get_theme_color("font_color"))
+		report_list_button.add_theme_color_override("font_hover_color", report_button.get_theme_color("font_hover_color"))
+		report_list_button.add_theme_font_size_override("font_size", report_button.get_theme_font_size("font_size"))
 		report_list_button.text = _get_report_list_label(case_id, node_id)
 		report_list_button.pressed.connect(_on_report_list_button_pressed.bind(case_id, node_id))
 		report_list_container.add_child(report_list_button)
@@ -132,27 +144,24 @@ func _on_report_list_button_pressed(case_id: String, node_id: String) -> void:
 
 func _show_current_report_detail() -> void:
 	var case_document: Dictionary = _get_case_document(current_case_id)
-	var detail_lines: PackedStringArray = PackedStringArray([
-		str(case_document.get("display_id", "")),
-		str(case_document.get("alias", ""))
-	])
+	var header_lines: PackedStringArray = PackedStringArray()
+	var report_title: String = _get_report_title(current_report_node)
+	if not report_title.is_empty():
+		header_lines.append(report_title)
 
 	var delayed_label: String = _get_delayed_label(current_case_id, current_node_id)
 	if not delayed_label.is_empty():
-		detail_lines.append(delayed_label)
+		header_lines.append(delayed_label)
+	detail_header_text.text = "\n".join(header_lines)
 
-	detail_lines.append_array(PackedStringArray([
-		"",
-		str(case_document.get("basic_description", ""))
-	]))
-	var report_title: String = _get_report_title(current_report_node)
-	if not report_title.is_empty():
-		detail_lines.append("")
-		detail_lines.append(report_title)
-
-	detail_lines.append("")
-	detail_lines.append(_get_report_body(current_report_node))
-	detail_text.text = "\n".join(detail_lines)
+	var document_meta_lines: PackedStringArray = PackedStringArray([
+		"식별명: %s" % str(case_document.get("display_id", "")),
+		"별칭: %s" % str(case_document.get("alias", "")),
+		"분류: %s" % str(case_document.get("category", ""))
+	])
+	pdf_meta_text.text = "\n".join(document_meta_lines)
+	pdf_description_text.text = str(case_document.get("basic_description", ""))
+	detail_text.text = _get_report_body(current_report_node)
 	_update_anomaly_image(case_document)
 
 	if report_completed:
@@ -161,9 +170,35 @@ func _show_current_report_detail() -> void:
 			"관리자 명령이 접수되었습니다.\n후속 보고는 별도 절차에 따라 전달됩니다."
 		))
 		completed_stamp_label.text = str(ui_messages.get("completed_stamp", "[처리 완료]"))
+		completed_stamp_label.visible = true
+		_update_confirmed_choice_label()
 	else:
 		status_label.text = ""
 		completed_stamp_label.text = ""
+		completed_stamp_label.visible = false
+		confirmed_choice_label.text = ""
+		confirmed_choice_label.visible = false
+
+
+func _update_confirmed_choice_label() -> void:
+	if selected_choice_index < 0 or selected_choice_index >= current_choices.size():
+		confirmed_choice_label.text = ""
+		confirmed_choice_label.visible = false
+		return
+	if typeof(current_choices[selected_choice_index]) != TYPE_DICTIONARY:
+		confirmed_choice_label.text = ""
+		confirmed_choice_label.visible = false
+		return
+
+	var selected_choice: Dictionary = current_choices[selected_choice_index] as Dictionary
+	var selected_choice_text: String = str(selected_choice.get("choice_text", ""))
+	if selected_choice_text.is_empty():
+		confirmed_choice_label.text = ""
+		confirmed_choice_label.visible = false
+		return
+
+	confirmed_choice_label.text = "확정된 대응 절차: %s" % selected_choice_text
+	confirmed_choice_label.visible = true
 
 
 func _on_choice_button_a_pressed() -> void:
@@ -198,6 +233,16 @@ func _ensure_choice_buttons() -> void:
 		var choice_button: Button = Button.new()
 		choice_button.custom_minimum_size = choice_button_a.custom_minimum_size
 		choice_button.toggle_mode = choice_button_a.toggle_mode
+		choice_button.add_theme_stylebox_override("normal", choice_button_a.get_theme_stylebox("normal"))
+		choice_button.add_theme_stylebox_override("hover", choice_button_a.get_theme_stylebox("hover"))
+		choice_button.add_theme_stylebox_override("pressed", choice_button_a.get_theme_stylebox("pressed"))
+		choice_button.add_theme_stylebox_override("focus", choice_button_a.get_theme_stylebox("focus"))
+		choice_button.add_theme_stylebox_override("disabled", choice_button_a.get_theme_stylebox("disabled"))
+		choice_button.add_theme_color_override("font_color", choice_button_a.get_theme_color("font_color"))
+		choice_button.add_theme_color_override("font_hover_color", choice_button_a.get_theme_color("font_hover_color"))
+		choice_button.add_theme_color_override("font_pressed_color", choice_button_a.get_theme_color("font_pressed_color"))
+		choice_button.add_theme_color_override("font_disabled_color", choice_button_a.get_theme_color("font_disabled_color"))
+		choice_button.add_theme_font_size_override("font_size", choice_button_a.get_theme_font_size("font_size"))
 		choice_button.text = ""
 		choice_button.button_pressed = false
 		choice_button.disabled = true
@@ -219,6 +264,12 @@ func _update_choice_button(button: Button, choice_index: int) -> void:
 	button.text = str(choice.get("choice_text", ""))
 	button.button_pressed = choice_index == selected_choice_index
 	button.disabled = report_completed
+	if report_completed and choice_index == selected_choice_index:
+		button.add_theme_stylebox_override("disabled", choice_button_a.get_theme_stylebox("pressed"))
+		button.add_theme_color_override("font_disabled_color", choice_button_a.get_theme_color("font_pressed_color"))
+	else:
+		button.add_theme_stylebox_override("disabled", choice_button_a.get_theme_stylebox("normal"))
+		button.add_theme_color_override("font_disabled_color", Color(0.55, 0.6, 0.59, 1))
 
 
 func _on_confirm_button_pressed() -> void:
@@ -275,11 +326,16 @@ func _update_work_screen_action_label() -> void:
 func _set_report_controls_visible(is_visible: bool) -> void:
 	if not is_visible:
 		_clear_anomaly_image()
+		detail_header_text.text = ""
+		pdf_meta_text.text = ""
+		pdf_description_text.text = ""
+		completed_stamp_label.visible = false
+		confirmed_choice_label.text = ""
+		confirmed_choice_label.visible = false
 
-	choice_container.visible = is_visible
+	choice_panel.visible = is_visible
 	confirm_button.visible = is_visible
 	status_label.visible = is_visible
-	completed_stamp_label.visible = is_visible
 
 
 func _find_choice_index(choice_id: String) -> int:

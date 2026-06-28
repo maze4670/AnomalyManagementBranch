@@ -1,6 +1,115 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=24 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/work/report_tab.gd" id="1_report"]
+[ext_resource type="Texture2D" path="res://assets/ui/ui_report_list_panel.png" id="2_list_panel"]
+[ext_resource type="Texture2D" path="res://assets/ui/ui_report_header_panel.png" id="3_header_panel"]
+[ext_resource type="Texture2D" path="res://assets/ui/ui_report_body_panel.png" id="4_body_panel"]
+[ext_resource type="Texture2D" path="res://assets/ui/ui_choice_panel.png" id="5_choice_panel"]
+[ext_resource type="Texture2D" path="res://assets/ui/ui_action_button_normal.png" id="6_action_normal"]
+[ext_resource type="Texture2D" path="res://assets/ui/ui_action_button_selected.png" id="7_action_selected"]
+[ext_resource type="Texture2D" path="res://assets/ui/ui_confirm_button.png" id="8_confirm"]
+[ext_resource type="Texture2D" path="res://assets/ui/ui_evidence_photo_frame.png" id="9_photo_frame"]
+[ext_resource type="Texture2D" path="res://assets/ui/ui_pdf_document_panel_base.png" id="10_pdf_base"]
+[ext_resource type="Texture2D" path="res://assets/ui/ui_pdf_document_border.png" id="11_pdf_border"]
+[ext_resource type="Texture2D" path="res://assets/ui/ui_scan_noise_overlay.png" id="12_scan_noise"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBox_list_panel"]
+texture = ExtResource("2_list_panel")
+texture_margin_left = 28.0
+texture_margin_top = 28.0
+texture_margin_right = 28.0
+texture_margin_bottom = 28.0
+content_margin_left = 18.0
+content_margin_top = 18.0
+content_margin_right = 18.0
+content_margin_bottom = 18.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBox_header_panel"]
+texture = ExtResource("3_header_panel")
+texture_margin_left = 28.0
+texture_margin_top = 20.0
+texture_margin_right = 28.0
+texture_margin_bottom = 20.0
+content_margin_left = 18.0
+content_margin_top = 10.0
+content_margin_right = 18.0
+content_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBox_body_panel"]
+texture = ExtResource("4_body_panel")
+texture_margin_left = 28.0
+texture_margin_top = 28.0
+texture_margin_right = 28.0
+texture_margin_bottom = 28.0
+content_margin_left = 14.0
+content_margin_top = 12.0
+content_margin_right = 14.0
+content_margin_bottom = 12.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBox_choice_panel"]
+texture = ExtResource("5_choice_panel")
+texture_margin_left = 28.0
+texture_margin_top = 18.0
+texture_margin_right = 28.0
+texture_margin_bottom = 18.0
+content_margin_left = 14.0
+content_margin_top = 10.0
+content_margin_right = 14.0
+content_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBox_action_normal"]
+texture = ExtResource("6_action_normal")
+texture_margin_left = 30.0
+texture_margin_top = 16.0
+texture_margin_right = 30.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBox_action_selected"]
+texture = ExtResource("7_action_selected")
+texture_margin_left = 30.0
+texture_margin_top = 16.0
+texture_margin_right = 30.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBox_confirm"]
+texture = ExtResource("8_confirm")
+texture_margin_left = 28.0
+texture_margin_top = 16.0
+texture_margin_right = 28.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBox_confirm_hover"]
+texture = ExtResource("8_confirm")
+texture_margin_left = 28.0
+texture_margin_top = 16.0
+texture_margin_right = 28.0
+texture_margin_bottom = 16.0
+modulate_color = Color(1.15, 0.9, 0.64, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBox_confirm_pressed"]
+texture = ExtResource("8_confirm")
+texture_margin_left = 28.0
+texture_margin_top = 16.0
+texture_margin_right = 28.0
+texture_margin_bottom = 16.0
+modulate_color = Color(0.78, 0.58, 0.36, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBox_confirm_disabled"]
+texture = ExtResource("8_confirm")
+texture_margin_left = 28.0
+texture_margin_top = 16.0
+texture_margin_right = 28.0
+texture_margin_bottom = 16.0
+modulate_color = Color(0.48, 0.45, 0.4, 0.8)
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_electronic_status"]
+content_margin_left = 12.0
+content_margin_top = 6.0
+content_margin_right = 12.0
+content_margin_bottom = 6.0
+bg_color = Color(0.035, 0.11, 0.1, 0.86)
+border_width_left = 3
+border_color = Color(0.32, 0.78, 0.62, 0.9)
 
 [node name="ReportTab" type="Control"]
 layout_mode = 3
@@ -16,73 +125,187 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 16.0
-offset_top = 16.0
-offset_right = -16.0
-offset_bottom = -16.0
+offset_left = 8.0
+offset_top = 6.0
+offset_right = -8.0
+offset_bottom = -8.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 12
-
-[node name="TitleLabel" type="Label" parent="RootContainer"]
-layout_mode = 2
-text = "보고서 확인"
-horizontal_alignment = 1
-vertical_alignment = 1
+theme_override_constants/separation = 8
 
 [node name="ContentContainer" type="HBoxContainer" parent="RootContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_constants/separation = 16
-
-[node name="ReportListContainer" type="VBoxContainer" parent="RootContainer/ContentContainer"]
-custom_minimum_size = Vector2(260, 0)
-layout_mode = 2
-theme_override_constants/separation = 8
-
-[node name="ReportListLabel" type="Label" parent="RootContainer/ContentContainer/ReportListContainer"]
-layout_mode = 2
-text = "보고서 목록"
-
-[node name="ReportButton" type="Button" parent="RootContainer/ContentContainer/ReportListContainer"]
-custom_minimum_size = Vector2(260, 40)
-layout_mode = 2
-text = "보고서 불러오는 중"
-
-[node name="DetailContainer" type="VBoxContainer" parent="RootContainer/ContentContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/separation = 8
-
-[node name="DetailLabel" type="Label" parent="RootContainer/ContentContainer/DetailContainer"]
-layout_mode = 2
-text = "보고서 상세"
-
-[node name="DetailScrollContainer" type="ScrollContainer" parent="RootContainer/ContentContainer/DetailContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="DetailBodyContainer" type="HBoxContainer" parent="RootContainer/ContentContainer/DetailContainer/DetailScrollContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 theme_override_constants/separation = 12
 
-[node name="DetailText" type="RichTextLabel" parent="RootContainer/ContentContainer/DetailContainer/DetailScrollContainer/DetailBodyContainer"]
+[node name="ReportListPanel" type="PanelContainer" parent="RootContainer/ContentContainer"]
+custom_minimum_size = Vector2(340, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBox_list_panel")
+
+[node name="ReportListContainer" type="VBoxContainer" parent="RootContainer/ContentContainer/ReportListPanel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="ReportListLabel" type="Label" parent="RootContainer/ContentContainer/ReportListPanel/ReportListContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.82, 0.92, 0.9, 1)
+theme_override_font_sizes/font_size = 17
+text = "보고서 목록"
+
+[node name="ReportButton" type="Button" parent="RootContainer/ContentContainer/ReportListPanel/ReportListContainer"]
+custom_minimum_size = Vector2(304, 46)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.82, 0.9, 0.89, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("StyleBox_action_normal")
+theme_override_styles/hover = SubResource("StyleBox_action_selected")
+theme_override_styles/pressed = SubResource("StyleBox_action_selected")
+theme_override_styles/focus = SubResource("StyleBox_action_selected")
+text = "보고서를 불러오는 중"
+
+[node name="ElectronicReportContainer" type="VBoxContainer" parent="RootContainer/ContentContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.65
+theme_override_constants/separation = 6
+
+[node name="DetailHeaderPanel" type="PanelContainer" parent="RootContainer/ContentContainer/ElectronicReportContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBox_body_panel")
+
+[node name="CentralReportContent" type="VBoxContainer" parent="RootContainer/ContentContainer/ElectronicReportContainer/DetailHeaderPanel"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 8
+
+[node name="DetailHeaderText" type="RichTextLabel" parent="RootContainer/ContentContainer/ElectronicReportContainer/DetailHeaderPanel/CentralReportContent"]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+theme_override_colors/default_color = Color(0.88, 0.94, 0.93, 1)
+theme_override_font_sizes/normal_font_size = 16
+fit_content = true
+
+[node name="CompletedStampLabel" type="Label" parent="RootContainer/ContentContainer/ElectronicReportContainer/DetailHeaderPanel/CentralReportContent"]
+visible = false
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.66, 0.94, 0.78, 1)
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("StyleBox_electronic_status")
+text = ""
+
+[node name="ConfirmedChoiceLabel" type="Label" parent="RootContainer/ContentContainer/ElectronicReportContainer/DetailHeaderPanel/CentralReportContent"]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.76, 0.88, 0.82, 1)
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBox_electronic_status")
+text = ""
+autowrap_mode = 2
+
+[node name="StatusLabel" type="Label" parent="RootContainer/ContentContainer/ElectronicReportContainer/DetailHeaderPanel/CentralReportContent"]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.86, 0.9, 0.82, 1)
+theme_override_font_sizes/font_size = 14
+text = ""
+autowrap_mode = 2
+
+[node name="HeaderBodyDivider" type="HSeparator" parent="RootContainer/ContentContainer/ElectronicReportContainer/DetailHeaderPanel/CentralReportContent"]
+layout_mode = 2
+
+[node name="DetailBodyPanel" type="PanelContainer" parent="RootContainer/ContentContainer/ElectronicReportContainer/DetailHeaderPanel/CentralReportContent"]
+custom_minimum_size = Vector2(0, 260)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="DetailScrollContainer" type="ScrollContainer" parent="RootContainer/ContentContainer/ElectronicReportContainer/DetailHeaderPanel/CentralReportContent/DetailBodyPanel"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="DetailText" type="RichTextLabel" parent="RootContainer/ContentContainer/ElectronicReportContainer/DetailHeaderPanel/CentralReportContent/DetailBodyPanel/DetailScrollContainer"]
+custom_minimum_size = Vector2(420, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme_override_colors/default_color = Color(0.86, 0.9, 0.88, 1)
+theme_override_font_sizes/normal_font_size = 17
 text = "보고서 목록에서 항목을 선택해 주세요."
 fit_content = true
 
-[node name="AnomalyImageSlot" type="Control" parent="RootContainer/ContentContainer/DetailContainer/DetailScrollContainer/DetailBodyContainer"]
-visible = false
-custom_minimum_size = Vector2(360, 240)
+[node name="BodyChoiceDivider" type="HSeparator" parent="RootContainer/ContentContainer/ElectronicReportContainer/DetailHeaderPanel/CentralReportContent"]
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
 
-[node name="AnomalyImageRect" type="TextureRect" parent="RootContainer/ContentContainer/DetailContainer/DetailScrollContainer/DetailBodyContainer/AnomalyImageSlot"]
+[node name="ChoicePanel" type="PanelContainer" parent="RootContainer/ContentContainer/ElectronicReportContainer/DetailHeaderPanel/CentralReportContent"]
+visible = false
+layout_mode = 2
+
+[node name="ChoiceContainer" type="VBoxContainer" parent="RootContainer/ContentContainer/ElectronicReportContainer/DetailHeaderPanel/CentralReportContent/ChoicePanel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="ChoiceButtonA" type="Button" parent="RootContainer/ContentContainer/ElectronicReportContainer/DetailHeaderPanel/CentralReportContent/ChoicePanel/ChoiceContainer"]
+custom_minimum_size = Vector2(320, 56)
+layout_mode = 2
+toggle_mode = true
+disabled = true
+theme_override_colors/font_color = Color(0.82, 0.9, 0.89, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_disabled_color = Color(0.55, 0.6, 0.59, 1)
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("StyleBox_action_normal")
+theme_override_styles/hover = SubResource("StyleBox_action_selected")
+theme_override_styles/pressed = SubResource("StyleBox_action_selected")
+theme_override_styles/focus = SubResource("StyleBox_action_selected")
+theme_override_styles/disabled = SubResource("StyleBox_action_normal")
+text = "대응 선택지 1"
+
+[node name="ChoiceButtonB" type="Button" parent="RootContainer/ContentContainer/ElectronicReportContainer/DetailHeaderPanel/CentralReportContent/ChoicePanel/ChoiceContainer"]
+custom_minimum_size = Vector2(320, 56)
+layout_mode = 2
+toggle_mode = true
+disabled = true
+theme_override_colors/font_color = Color(0.82, 0.9, 0.89, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_disabled_color = Color(0.55, 0.6, 0.59, 1)
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("StyleBox_action_normal")
+theme_override_styles/hover = SubResource("StyleBox_action_selected")
+theme_override_styles/pressed = SubResource("StyleBox_action_selected")
+theme_override_styles/focus = SubResource("StyleBox_action_selected")
+theme_override_styles/disabled = SubResource("StyleBox_action_normal")
+text = "대응 선택지 2"
+
+[node name="ConfirmButton" type="Button" parent="RootContainer/ContentContainer/ElectronicReportContainer/DetailHeaderPanel/CentralReportContent"]
+visible = false
+custom_minimum_size = Vector2(210, 52)
+layout_mode = 2
+size_flags_horizontal = 8
+disabled = true
+theme_override_colors/font_color = Color(0.9, 0.96, 0.9, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_disabled_color = Color(0.55, 0.6, 0.56, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBox_confirm")
+theme_override_styles/hover = SubResource("StyleBox_confirm_hover")
+theme_override_styles/pressed = SubResource("StyleBox_confirm_pressed")
+theme_override_styles/focus = SubResource("StyleBox_confirm_hover")
+theme_override_styles/disabled = SubResource("StyleBox_confirm_disabled")
+text = "대응 확정"
+
+[node name="PDFDocumentPanel" type="Control" parent="RootContainer/ContentContainer"]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PDFBase" type="NinePatchRect" parent="RootContainer/ContentContainer/PDFDocumentPanel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -90,46 +313,129 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+texture = ExtResource("10_pdf_base")
+patch_margin_left = 36
+patch_margin_top = 36
+patch_margin_right = 36
+patch_margin_bottom = 36
+
+[node name="ScanNoise" type="TextureRect" parent="RootContainer/ContentContainer/PDFDocumentPanel"]
+modulate = Color(1, 1, 1, 0.12)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("12_scan_noise")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="PDFContentMargin" type="MarginContainer" parent="RootContainer/ContentContainer/PDFDocumentPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 46.0
+offset_top = 42.0
+offset_right = -46.0
+offset_bottom = -42.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PDFContentContainer" type="VBoxContainer" parent="RootContainer/ContentContainer/PDFDocumentPanel/PDFContentMargin"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="PDFTitleLabel" type="Label" parent="RootContainer/ContentContainer/PDFDocumentPanel/PDFContentMargin/PDFContentContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.12, 0.15, 0.14, 1)
+theme_override_font_sizes/font_size = 19
+text = "이상현상 보관 문서"
+horizontal_alignment = 1
+
+[node name="PDFDivider" type="HSeparator" parent="RootContainer/ContentContainer/PDFDocumentPanel/PDFContentMargin/PDFContentContainer"]
+layout_mode = 2
+
+[node name="PDFTopRow" type="HBoxContainer" parent="RootContainer/ContentContainer/PDFDocumentPanel/PDFContentMargin/PDFContentContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="PDFMetaText" type="RichTextLabel" parent="RootContainer/ContentContainer/PDFDocumentPanel/PDFContentMargin/PDFContentContainer/PDFTopRow"]
+custom_minimum_size = Vector2(0, 190)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/default_color = Color(0.12, 0.15, 0.14, 1)
+theme_override_font_sizes/normal_font_size = 15
+fit_content = true
+
+[node name="PDFScrollContainer" type="ScrollContainer" parent="RootContainer/ContentContainer/PDFDocumentPanel/PDFContentMargin/PDFContentContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="PDFDocumentBody" type="VBoxContainer" parent="RootContainer/ContentContainer/PDFDocumentPanel/PDFContentMargin/PDFContentContainer/PDFScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 14
+
+[node name="PDFDescriptionText" type="RichTextLabel" parent="RootContainer/ContentContainer/PDFDocumentPanel/PDFContentMargin/PDFContentContainer/PDFScrollContainer/PDFDocumentBody"]
+custom_minimum_size = Vector2(360, 120)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/default_color = Color(0.14, 0.17, 0.16, 1)
+theme_override_font_sizes/normal_font_size = 15
+fit_content = true
+
+[node name="AnomalyImageSlot" type="Control" parent="RootContainer/ContentContainer/PDFDocumentPanel/PDFContentMargin/PDFContentContainer/PDFTopRow"]
+visible = false
+custom_minimum_size = Vector2(280, 210)
+layout_mode = 2
+
+[node name="AnomalyImageRect" type="TextureRect" parent="RootContainer/ContentContainer/PDFDocumentPanel/PDFContentMargin/PDFContentContainer/PDFTopRow/AnomalyImageSlot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 expand_mode = 1
 stretch_mode = 5
 
-[node name="CompletedStampLabel" type="Label" parent="RootContainer/ContentContainer/DetailContainer"]
-visible = false
-layout_mode = 2
-text = ""
+[node name="EvidencePhotoFrame" type="NinePatchRect" parent="RootContainer/ContentContainer/PDFDocumentPanel/PDFContentMargin/PDFContentContainer/PDFTopRow/AnomalyImageSlot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("9_photo_frame")
+patch_margin_left = 24
+patch_margin_top = 24
+patch_margin_right = 24
+patch_margin_bottom = 24
 
-[node name="StatusLabel" type="Label" parent="RootContainer/ContentContainer/DetailContainer"]
-visible = false
-layout_mode = 2
-text = ""
+[node name="PDFBorder" type="NinePatchRect" parent="RootContainer/ContentContainer/PDFDocumentPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("11_pdf_border")
+patch_margin_left = 36
+patch_margin_top = 36
+patch_margin_right = 36
+patch_margin_bottom = 36
 
-[node name="ChoiceContainer" type="VBoxContainer" parent="RootContainer/ContentContainer/DetailContainer"]
-visible = false
-layout_mode = 2
-theme_override_constants/separation = 8
-
-[node name="ChoiceButtonA" type="Button" parent="RootContainer/ContentContainer/DetailContainer/ChoiceContainer"]
-custom_minimum_size = Vector2(320, 40)
-layout_mode = 2
-toggle_mode = true
-disabled = true
-text = "대응 선택지 1"
-
-[node name="ChoiceButtonB" type="Button" parent="RootContainer/ContentContainer/DetailContainer/ChoiceContainer"]
-custom_minimum_size = Vector2(320, 40)
-layout_mode = 2
-toggle_mode = true
-disabled = true
-text = "대응 선택지 2"
-
-[node name="ConfirmButton" type="Button" parent="RootContainer/ContentContainer/DetailContainer"]
-visible = false
-custom_minimum_size = Vector2(160, 40)
-layout_mode = 2
-disabled = true
-text = "대응 확정"
-
-[connection signal="pressed" from="RootContainer/ContentContainer/ReportListContainer/ReportButton" to="." method="_on_report_button_pressed"]
-[connection signal="pressed" from="RootContainer/ContentContainer/DetailContainer/ChoiceContainer/ChoiceButtonA" to="." method="_on_choice_button_a_pressed"]
-[connection signal="pressed" from="RootContainer/ContentContainer/DetailContainer/ChoiceContainer/ChoiceButtonB" to="." method="_on_choice_button_b_pressed"]
-[connection signal="pressed" from="RootContainer/ContentContainer/DetailContainer/ConfirmButton" to="." method="_on_confirm_button_pressed"]
+[connection signal="pressed" from="RootContainer/ContentContainer/ReportListPanel/ReportListContainer/ReportButton" to="." method="_on_report_button_pressed"]
+[connection signal="pressed" from="RootContainer/ContentContainer/ElectronicReportContainer/DetailHeaderPanel/CentralReportContent/ChoicePanel/ChoiceContainer/ChoiceButtonA" to="." method="_on_choice_button_a_pressed"]
+[connection signal="pressed" from="RootContainer/ContentContainer/ElectronicReportContainer/DetailHeaderPanel/CentralReportContent/ChoicePanel/ChoiceContainer/ChoiceButtonB" to="." method="_on_choice_button_b_pressed"]
+[connection signal="pressed" from="RootContainer/ContentContainer/ElectronicReportContainer/DetailHeaderPanel/CentralReportContent/ConfirmButton" to="." method="_on_confirm_button_pressed"]
