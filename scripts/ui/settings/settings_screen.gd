@@ -12,12 +12,12 @@ const TEXT_PREVIEW_FONT_SIZES := {
 	"large": 24
 }
 
-@onready var volume_slider: HSlider = $CenterContainer/ContentContainer/VolumeContainer/VolumeSlider
-@onready var volume_value_label: Label = $CenterContainer/ContentContainer/VolumeContainer/VolumeValueLabel
-@onready var screen_mode_button: Button = $CenterContainer/ContentContainer/ScreenModeContainer/ScreenModeButton
-@onready var text_size_button: Button = $CenterContainer/ContentContainer/TextSizeContainer/TextSizeButton
-@onready var text_preview_label: Label = $CenterContainer/ContentContainer/TextPreviewLabel
-@onready var guide_label: Label = $CenterContainer/ContentContainer/GuideLabel
+@onready var volume_slider: HSlider = $CenterContainer/SettingsPanel/ContentContainer/VolumePanel/VolumeContainer/VolumeSlider
+@onready var volume_value_label: Label = $CenterContainer/SettingsPanel/ContentContainer/VolumePanel/VolumeContainer/VolumeValueLabel
+@onready var screen_mode_button: Button = $CenterContainer/SettingsPanel/ContentContainer/ScreenModePanel/ScreenModeContainer/ScreenModeButton
+@onready var text_size_button: Button = $CenterContainer/SettingsPanel/ContentContainer/TextSizePanel/TextSizeContainer/TextSizeButton
+@onready var text_preview_label: Label = $CenterContainer/SettingsPanel/ContentContainer/TextPreviewLabel
+@onready var guide_label: Label = $CenterContainer/SettingsPanel/ContentContainer/GuideLabel
 
 var text_size_index: int = 0
 var is_loading_settings: bool = false

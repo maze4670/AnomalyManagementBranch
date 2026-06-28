@@ -1,6 +1,91 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=15 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/settings/settings_screen.gd" id="1_settings"]
+[ext_resource type="Texture2D" path="res://assets/ui/ui_work_terminal_background.png" id="2_background"]
+[ext_resource type="Texture2D" path="res://assets/ui/ui_report_body_panel.png" id="3_body_panel"]
+[ext_resource type="Texture2D" path="res://assets/ui/ui_report_header_panel.png" id="4_header_panel"]
+[ext_resource type="Texture2D" path="res://assets/ui/ui_action_button_normal.png" id="5_action_normal"]
+[ext_resource type="Texture2D" path="res://assets/ui/ui_action_button_selected.png" id="6_action_selected"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBox_settings_panel"]
+texture = ExtResource("3_body_panel")
+texture_margin_left = 28.0
+texture_margin_top = 28.0
+texture_margin_right = 28.0
+texture_margin_bottom = 28.0
+content_margin_left = 42.0
+content_margin_top = 34.0
+content_margin_right = 42.0
+content_margin_bottom = 34.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBox_header"]
+texture = ExtResource("4_header_panel")
+texture_margin_left = 28.0
+texture_margin_top = 20.0
+texture_margin_right = 28.0
+texture_margin_bottom = 20.0
+content_margin_left = 22.0
+content_margin_top = 10.0
+content_margin_right = 22.0
+content_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_setting_row"]
+content_margin_left = 18.0
+content_margin_top = 11.0
+content_margin_right = 18.0
+content_margin_bottom = 11.0
+bg_color = Color(0.03, 0.075, 0.08, 0.72)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.2, 0.39, 0.38, 0.55)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxTexture" id="StyleBox_action_normal"]
+texture = ExtResource("5_action_normal")
+texture_margin_left = 30.0
+texture_margin_top = 16.0
+texture_margin_right = 30.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBox_action_selected"]
+texture = ExtResource("6_action_selected")
+texture_margin_left = 30.0
+texture_margin_top = 16.0
+texture_margin_right = 30.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_slider"]
+content_margin_top = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.025, 0.06, 0.065, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.2, 0.4, 0.39, 0.8)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_grabber_area"]
+bg_color = Color(0.18, 0.47, 0.42, 0.9)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_grabber_highlight"]
+bg_color = Color(0.32, 0.68, 0.57, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
 
 [node name="SettingsScreen" type="Control"]
 layout_mode = 3
@@ -11,102 +96,212 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_settings")
 
-[node name="CenterContainer" type="CenterContainer" parent="."]
+[node name="Background" type="TextureRect" parent="."]
+modulate = Color(0.78, 0.82, 0.8, 1)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_background")
+expand_mode = 1
+stretch_mode = 6
 
-[node name="ContentContainer" type="VBoxContainer" parent="CenterContainer"]
-layout_mode = 2
-theme_override_constants/separation = 16
+[node name="ReadabilityOverlay" type="ColorRect" parent="."]
+modulate = Color(1, 1, 1, 0.36)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.015, 0.035, 0.04, 1)
 
-[node name="TitleLabel" type="Label" parent="CenterContainer/ContentContainer"]
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = 20.0
+offset_right = -24.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SettingsPanel" type="PanelContainer" parent="CenterContainer"]
+custom_minimum_size = Vector2(760, 720)
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBox_settings_panel")
+
+[node name="ContentContainer" type="VBoxContainer" parent="CenterContainer/SettingsPanel"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="HeaderPanel" type="PanelContainer" parent="CenterContainer/SettingsPanel/ContentContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBox_header")
+
+[node name="TitleLabel" type="Label" parent="CenterContainer/SettingsPanel/ContentContainer/HeaderPanel"]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.84, 0.93, 0.91, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.85)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 24
 text = "설정"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="VolumeContainer" type="HBoxContainer" parent="CenterContainer/ContentContainer"]
+[node name="HeaderDivider" type="HSeparator" parent="CenterContainer/SettingsPanel/ContentContainer"]
 layout_mode = 2
-theme_override_constants/separation = 12
 
-[node name="VolumeLabel" type="Label" parent="CenterContainer/ContentContainer/VolumeContainer"]
-custom_minimum_size = Vector2(100, 0)
+[node name="VolumePanel" type="PanelContainer" parent="CenterContainer/SettingsPanel/ContentContainer"]
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBox_setting_row")
+
+[node name="VolumeContainer" type="HBoxContainer" parent="CenterContainer/SettingsPanel/ContentContainer/VolumePanel"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="VolumeLabel" type="Label" parent="CenterContainer/SettingsPanel/ContentContainer/VolumePanel/VolumeContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.76, 0.86, 0.84, 1)
+theme_override_font_sizes/font_size = 16
 text = "전체 볼륨"
+vertical_alignment = 1
 
-[node name="VolumeSlider" type="HSlider" parent="CenterContainer/ContentContainer/VolumeContainer"]
-custom_minimum_size = Vector2(220, 0)
+[node name="VolumeSlider" type="HSlider" parent="CenterContainer/SettingsPanel/ContentContainer/VolumePanel/VolumeContainer"]
+custom_minimum_size = Vector2(340, 36)
 layout_mode = 2
+size_flags_horizontal = 3
 max_value = 100.0
 value = 100.0
+theme_override_styles/slider = SubResource("StyleBox_slider")
+theme_override_styles/grabber_area = SubResource("StyleBox_grabber_area")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBox_grabber_highlight")
 
-[node name="VolumeValueLabel" type="Label" parent="CenterContainer/ContentContainer/VolumeContainer"]
-custom_minimum_size = Vector2(56, 0)
+[node name="VolumeValueLabel" type="Label" parent="CenterContainer/SettingsPanel/ContentContainer/VolumePanel/VolumeContainer"]
+custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
+theme_override_colors/font_color = Color(0.72, 0.86, 0.81, 1)
+theme_override_font_sizes/font_size = 16
 text = "100%"
+horizontal_alignment = 2
+vertical_alignment = 1
 
-[node name="ScreenModeContainer" type="HBoxContainer" parent="CenterContainer/ContentContainer"]
+[node name="ScreenModePanel" type="PanelContainer" parent="CenterContainer/SettingsPanel/ContentContainer"]
 layout_mode = 2
-theme_override_constants/separation = 12
+theme_override_styles/panel = SubResource("StyleBox_setting_row")
 
-[node name="ScreenModeLabel" type="Label" parent="CenterContainer/ContentContainer/ScreenModeContainer"]
-custom_minimum_size = Vector2(100, 0)
+[node name="ScreenModeContainer" type="HBoxContainer" parent="CenterContainer/SettingsPanel/ContentContainer/ScreenModePanel"]
 layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="ScreenModeLabel" type="Label" parent="CenterContainer/SettingsPanel/ContentContainer/ScreenModePanel/ScreenModeContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.76, 0.86, 0.84, 1)
+theme_override_font_sizes/font_size = 16
 text = "화면 모드"
+vertical_alignment = 1
 
-[node name="ScreenModeButton" type="Button" parent="CenterContainer/ContentContainer/ScreenModeContainer"]
-custom_minimum_size = Vector2(220, 40)
+[node name="ScreenModeButton" type="Button" parent="CenterContainer/SettingsPanel/ContentContainer/ScreenModePanel/ScreenModeContainer"]
+custom_minimum_size = Vector2(250, 48)
 layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.82, 0.9, 0.89, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("StyleBox_action_normal")
+theme_override_styles/hover = SubResource("StyleBox_action_selected")
+theme_override_styles/pressed = SubResource("StyleBox_action_selected")
+theme_override_styles/focus = SubResource("StyleBox_action_selected")
 text = "창 모드"
 
-[node name="TextSizeContainer" type="HBoxContainer" parent="CenterContainer/ContentContainer"]
+[node name="TextSizePanel" type="PanelContainer" parent="CenterContainer/SettingsPanel/ContentContainer"]
 layout_mode = 2
-theme_override_constants/separation = 12
+theme_override_styles/panel = SubResource("StyleBox_setting_row")
 
-[node name="TextSizeLabel" type="Label" parent="CenterContainer/ContentContainer/TextSizeContainer"]
-custom_minimum_size = Vector2(100, 0)
+[node name="TextSizeContainer" type="HBoxContainer" parent="CenterContainer/SettingsPanel/ContentContainer/TextSizePanel"]
 layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="TextSizeLabel" type="Label" parent="CenterContainer/SettingsPanel/ContentContainer/TextSizePanel/TextSizeContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.76, 0.86, 0.84, 1)
+theme_override_font_sizes/font_size = 16
 text = "텍스트 크기"
+vertical_alignment = 1
 
-[node name="TextSizeButton" type="Button" parent="CenterContainer/ContentContainer/TextSizeContainer"]
-custom_minimum_size = Vector2(220, 40)
+[node name="TextSizeButton" type="Button" parent="CenterContainer/SettingsPanel/ContentContainer/TextSizePanel/TextSizeContainer"]
+custom_minimum_size = Vector2(250, 48)
 layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.82, 0.9, 0.89, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("StyleBox_action_normal")
+theme_override_styles/hover = SubResource("StyleBox_action_selected")
+theme_override_styles/pressed = SubResource("StyleBox_action_selected")
+theme_override_styles/focus = SubResource("StyleBox_action_selected")
 text = "보통"
 
-[node name="TextPreviewLabel" type="Label" parent="CenterContainer/ContentContainer"]
-custom_minimum_size = Vector2(420, 40)
+[node name="TextPreviewLabel" type="Label" parent="CenterContainer/SettingsPanel/ContentContainer"]
+custom_minimum_size = Vector2(620, 72)
 layout_mode = 2
+theme_override_colors/font_color = Color(0.76, 0.86, 0.84, 1)
 text = "텍스트 크기 미리보기입니다."
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
 
-[node name="CreditsLabel" type="Label" parent="CenterContainer/ContentContainer"]
-custom_minimum_size = Vector2(420, 40)
+[node name="CreditsLabel" type="Label" parent="CenterContainer/SettingsPanel/ContentContainer"]
+custom_minimum_size = Vector2(620, 36)
 layout_mode = 2
+theme_override_colors/font_color = Color(0.55, 0.66, 0.64, 1)
+theme_override_font_sizes/font_size = 13
 text = "제작: 이상현상관리지부 개발 프로젝트"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
 
-[node name="GuideLabel" type="Label" parent="CenterContainer/ContentContainer"]
-custom_minimum_size = Vector2(420, 40)
+[node name="GuideLabel" type="Label" parent="CenterContainer/SettingsPanel/ContentContainer"]
+custom_minimum_size = Vector2(620, 38)
 layout_mode = 2
-text = "설정 저장 기능은 이후 단계에서 구현됩니다."
+theme_override_colors/font_color = Color(0.68, 0.78, 0.75, 1)
+theme_override_font_sizes/font_size = 14
+text = "설정 저장 기능은 이후 단계에서 구현합니다."
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
 
-[node name="MainMenuButton" type="Button" parent="CenterContainer/ContentContainer"]
-custom_minimum_size = Vector2(200, 40)
+[node name="FooterDivider" type="HSeparator" parent="CenterContainer/SettingsPanel/ContentContainer"]
 layout_mode = 2
+
+[node name="MainMenuButton" type="Button" parent="CenterContainer/SettingsPanel/ContentContainer"]
+custom_minimum_size = Vector2(220, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.82, 0.9, 0.89, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("StyleBox_action_normal")
+theme_override_styles/hover = SubResource("StyleBox_action_selected")
+theme_override_styles/pressed = SubResource("StyleBox_action_selected")
+theme_override_styles/focus = SubResource("StyleBox_action_selected")
 text = "메인 메뉴로"
 
-[connection signal="value_changed" from="CenterContainer/ContentContainer/VolumeContainer/VolumeSlider" to="." method="_on_volume_slider_value_changed"]
-[connection signal="pressed" from="CenterContainer/ContentContainer/ScreenModeContainer/ScreenModeButton" to="." method="_on_screen_mode_button_pressed"]
-[connection signal="pressed" from="CenterContainer/ContentContainer/TextSizeContainer/TextSizeButton" to="." method="_on_text_size_button_pressed"]
-[connection signal="pressed" from="CenterContainer/ContentContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]
+[connection signal="value_changed" from="CenterContainer/SettingsPanel/ContentContainer/VolumePanel/VolumeContainer/VolumeSlider" to="." method="_on_volume_slider_value_changed"]
+[connection signal="pressed" from="CenterContainer/SettingsPanel/ContentContainer/ScreenModePanel/ScreenModeContainer/ScreenModeButton" to="." method="_on_screen_mode_button_pressed"]
+[connection signal="pressed" from="CenterContainer/SettingsPanel/ContentContainer/TextSizePanel/TextSizeContainer/TextSizeButton" to="." method="_on_text_size_button_pressed"]
+[connection signal="pressed" from="CenterContainer/SettingsPanel/ContentContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]
