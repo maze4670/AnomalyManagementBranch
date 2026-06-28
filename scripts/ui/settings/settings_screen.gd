@@ -2,6 +2,8 @@ extends Control
 
 const MAIN_MENU_SCENE_PATH := "res://scenes/main_menu/MainMenu.tscn"
 const SAVE_MANAGER_SCRIPT := preload("res://scripts/save/save_manager.gd")
+const SCREEN_TRANSITION := preload("res://scripts/ui/common/screen_transition.gd")
+const BUTTON_FEEDBACK := preload("res://scripts/ui/common/button_feedback.gd")
 const SCREEN_MODE_WINDOWED := "창 모드"
 const SCREEN_MODE_FULLSCREEN := "전체 화면"
 const TEXT_SIZE_OPTIONS := ["보통", "크게", "작게"]
@@ -24,6 +26,8 @@ var is_loading_settings: bool = false
 
 
 func _ready() -> void:
+	SCREEN_TRANSITION.fade_in(self)
+	BUTTON_FEEDBACK.install(self)
 	guide_label.text = "설정값은 자동으로 저장됩니다."
 	_load_settings_to_ui()
 
@@ -52,7 +56,7 @@ func _on_text_size_button_pressed() -> void:
 
 
 func _on_main_menu_button_pressed() -> void:
-	get_tree().change_scene_to_file(MAIN_MENU_SCENE_PATH)
+	SCREEN_TRANSITION.transition_to_scene(self, MAIN_MENU_SCENE_PATH)
 
 
 func _load_settings_to_ui() -> void:

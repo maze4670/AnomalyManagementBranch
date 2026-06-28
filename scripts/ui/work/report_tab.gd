@@ -3,6 +3,8 @@ extends Control
 const ENDING_SCENE_PATH := "res://scenes/ending/EndingScreen.tscn"
 const DATA_MANAGER_SCRIPT := preload("res://scripts/data/data_manager.gd")
 const SAVE_MANAGER_SCRIPT := preload("res://scripts/save/save_manager.gd")
+const SCREEN_TRANSITION := preload("res://scripts/ui/common/screen_transition.gd")
+const TEXT_REVEAL := preload("res://scripts/ui/common/text_reveal_label.gd")
 
 @onready var report_list_container: VBoxContainer = $RootContainer/ContentContainer/ReportListPanel/ReportListContainer
 @onready var report_list_label: Label = $RootContainer/ContentContainer/ReportListPanel/ReportListContainer/ReportListLabel
@@ -97,10 +99,12 @@ func _clear_report_list_buttons() -> void:
 
 func _get_report_list_label(case_id: String, node_id: String) -> String:
 	var case_document: Dictionary = _get_case_document(case_id)
-	var display_id: String = str(case_document.get("display_id", case_id))
+	var display_id: String = str(case_document.get("display_id", ""))
 	var alias: String = str(case_document.get("alias", ""))
 	var label_text: String = display_id
-	if not alias.is_empty():
+	if label_text.is_empty():
+		label_text = alias
+	elif not alias.is_empty():
 		label_text = "%s / %s" % [display_id, alias]
 
 	var delayed_label: String = _get_delayed_label(case_id, node_id)
@@ -161,7 +165,8 @@ func _show_current_report_detail() -> void:
 	])
 	pdf_meta_text.text = "\n".join(document_meta_lines)
 	pdf_description_text.text = str(case_document.get("basic_description", ""))
-	detail_text.text = _get_report_body(current_report_node)
+	var report_body: String = _get_report_body(current_report_node)
+	TEXT_REVEAL.reveal(self, detail_text, report_body, 55.0)
 	_update_anomaly_image(case_document)
 
 	if report_completed:
@@ -415,7 +420,7 @@ func _move_to_bad_ending() -> void:
 	save_manager.delete_current_run_save()
 	save_manager.free()
 	get_tree().set_meta("ending_type", "bad")
-	get_tree().change_scene_to_file(ENDING_SCENE_PATH)
+	SCREEN_TRANSITION.transition_to_scene(self, ENDING_SCENE_PATH)
 
 
 func _get_current_run_archive_data() -> Dictionary:

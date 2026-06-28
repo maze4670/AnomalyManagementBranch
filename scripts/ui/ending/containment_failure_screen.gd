@@ -3,6 +3,8 @@ extends Control
 const ENDING_SCENE_PATH := "res://scenes/ending/EndingScreen.tscn"
 const DATA_MANAGER_SCRIPT := preload("res://scripts/data/data_manager.gd")
 const SAVE_MANAGER_SCRIPT := preload("res://scripts/save/save_manager.gd")
+const SCREEN_TRANSITION := preload("res://scripts/ui/common/screen_transition.gd")
+const BUTTON_FEEDBACK := preload("res://scripts/ui/common/button_feedback.gd")
 
 @onready var screen_title_label: Label = $CenterContainer/FailurePanel/ContentContainer/HeaderPanel/ScreenTitleLabel
 @onready var notice_label: Label = $CenterContainer/FailurePanel/ContentContainer/NoticeLabel
@@ -18,6 +20,8 @@ var current_report_node: Dictionary = {}
 
 
 func _ready() -> void:
+	SCREEN_TRANSITION.fade_in(self)
+	BUTTON_FEEDBACK.install(self)
 	_load_failure_report()
 	_update_report_display()
 
@@ -64,7 +68,7 @@ func _move_to_bad_ending() -> void:
 	save_manager.free()
 	get_tree().set_meta("ending_type", "bad")
 	get_tree().set_meta("ending_reason", "containment_failure")
-	get_tree().change_scene_to_file(ENDING_SCENE_PATH)
+	SCREEN_TRANSITION.transition_to_scene(self, ENDING_SCENE_PATH)
 
 
 func _get_current_run_archive_data() -> Dictionary:

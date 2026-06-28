@@ -1,9 +1,26 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=10 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/work/work_screen.gd" id="1_work"]
 [ext_resource type="PackedScene" path="res://scenes/work/ReportTab.tscn" id="2_report_tab"]
 [ext_resource type="PackedScene" path="res://scenes/work/CurrentAnomaliesTab.tscn" id="3_current_tab"]
 [ext_resource type="PackedScene" path="res://scenes/work/EndDayTab.tscn" id="4_end_day_tab"]
+[ext_resource type="Texture2D" path="res://assets/ui/ui_work_terminal_background.png" id="5_background"]
+[ext_resource type="Texture2D" path="res://assets/ui/ui_tab_inactive.png" id="6_tab_inactive"]
+[ext_resource type="Texture2D" path="res://assets/ui/ui_tab_active.png" id="7_tab_active"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBox_tab_inactive"]
+texture = ExtResource("6_tab_inactive")
+texture_margin_left = 24.0
+texture_margin_top = 14.0
+texture_margin_right = 24.0
+texture_margin_bottom = 14.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBox_tab_active"]
+texture = ExtResource("7_tab_active")
+texture_margin_left = 24.0
+texture_margin_top = 14.0
+texture_margin_right = 24.0
+texture_margin_bottom = 14.0
 
 [node name="WorkScreen" type="Control"]
 layout_mode = 3
@@ -13,6 +30,28 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_work")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("5_background")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="DarkOverlay" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.28)
 
 [node name="RootContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -33,6 +72,11 @@ theme_override_constants/separation = 8
 
 [node name="TitleLabel" type="Label" parent="RootContainer/HeaderContainer"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.86, 0.94, 0.93, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.8)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 24
 text = "근무 화면"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -44,10 +88,20 @@ alignment = 1
 
 [node name="CurrentDayLabel" type="Label" parent="RootContainer/HeaderContainer/StatusContainer"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.82, 0.92, 0.9, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.8)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/font_size = 17
 text = "1일차"
 
 [node name="ActionLabel" type="Label" parent="RootContainer/HeaderContainer/StatusContainer"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.82, 0.92, 0.9, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.8)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/font_size = 17
 text = "[잔여 대응 절차 3/3]"
 
 [node name="TabButtonContainer" type="HBoxContainer" parent="RootContainer"]
@@ -57,16 +111,46 @@ theme_override_constants/separation = 8
 [node name="ReportTabButton" type="Button" parent="RootContainer/TabButtonContainer"]
 custom_minimum_size = Vector2(160, 40)
 layout_mode = 2
+toggle_mode = true
+theme_override_colors/font_color = Color(0.68, 0.75, 0.74, 1)
+theme_override_colors/font_hover_color = Color(0.94, 1, 0.98, 1)
+theme_override_colors/font_pressed_color = Color(0.94, 1, 0.98, 1)
+theme_override_colors/font_focus_color = Color(0.94, 1, 0.98, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBox_tab_inactive")
+theme_override_styles/hover = SubResource("StyleBox_tab_active")
+theme_override_styles/pressed = SubResource("StyleBox_tab_active")
+theme_override_styles/focus = SubResource("StyleBox_tab_active")
 text = "보고서 확인"
 
 [node name="CurrentAnomaliesTabButton" type="Button" parent="RootContainer/TabButtonContainer"]
 custom_minimum_size = Vector2(220, 40)
 layout_mode = 2
+toggle_mode = true
+theme_override_colors/font_color = Color(0.68, 0.75, 0.74, 1)
+theme_override_colors/font_hover_color = Color(0.94, 1, 0.98, 1)
+theme_override_colors/font_pressed_color = Color(0.94, 1, 0.98, 1)
+theme_override_colors/font_focus_color = Color(0.94, 1, 0.98, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBox_tab_inactive")
+theme_override_styles/hover = SubResource("StyleBox_tab_active")
+theme_override_styles/pressed = SubResource("StyleBox_tab_active")
+theme_override_styles/focus = SubResource("StyleBox_tab_active")
 text = "현재 관리 중인 이상현상"
 
 [node name="EndDayTabButton" type="Button" parent="RootContainer/TabButtonContainer"]
 custom_minimum_size = Vector2(160, 40)
 layout_mode = 2
+toggle_mode = true
+theme_override_colors/font_color = Color(0.68, 0.75, 0.74, 1)
+theme_override_colors/font_hover_color = Color(0.94, 1, 0.98, 1)
+theme_override_colors/font_pressed_color = Color(0.94, 1, 0.98, 1)
+theme_override_colors/font_focus_color = Color(0.94, 1, 0.98, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBox_tab_inactive")
+theme_override_styles/hover = SubResource("StyleBox_tab_active")
+theme_override_styles/pressed = SubResource("StyleBox_tab_active")
+theme_override_styles/focus = SubResource("StyleBox_tab_active")
 text = "하루 종료"
 
 [node name="TabContent" type="Control" parent="RootContainer"]

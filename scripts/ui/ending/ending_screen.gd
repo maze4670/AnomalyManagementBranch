@@ -1,6 +1,9 @@
 extends Control
 
 const MAIN_MENU_SCENE_PATH := "res://scenes/main_menu/MainMenu.tscn"
+const SCREEN_TRANSITION := preload("res://scripts/ui/common/screen_transition.gd")
+const BUTTON_FEEDBACK := preload("res://scripts/ui/common/button_feedback.gd")
+const TEXT_REVEAL := preload("res://scripts/ui/common/text_reveal_label.gd")
 
 @onready var title_label: Label = $CenterContainer/ResultPanel/ContentContainer/HeaderPanel/TitleLabel
 @onready var body_label: Label = $CenterContainer/ResultPanel/ContentContainer/BodyLabel
@@ -17,6 +20,8 @@ const MAIN_MENU_SCENE_PATH := "res://scenes/main_menu/MainMenu.tscn"
 
 
 func _ready() -> void:
+	SCREEN_TRANSITION.fade_in(self)
+	BUTTON_FEEDBACK.install(self)
 	var ending_type: String = str(get_tree().get_meta("ending_type", "bad"))
 	if ending_type == "good":
 		title_label.add_theme_color_override("font_color", Color(0.55, 0.82, 0.72, 1.0))
@@ -26,6 +31,7 @@ func _ready() -> void:
 		_apply_bad_ending_style()
 		title_label.text = "직위 해제 통지"
 		body_label.text = "기관 신뢰도 붕괴로 인해 지부장 직위가 해제되었습니다."
+	TEXT_REVEAL.reveal(self, body_label, body_label.text, 55.0)
 
 
 func _apply_bad_ending_style() -> void:
@@ -44,4 +50,4 @@ func _apply_bad_ending_style() -> void:
 
 
 func _on_main_menu_button_pressed() -> void:
-	get_tree().change_scene_to_file(MAIN_MENU_SCENE_PATH)
+	SCREEN_TRANSITION.transition_to_scene(self, MAIN_MENU_SCENE_PATH)

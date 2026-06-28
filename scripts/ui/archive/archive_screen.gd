@@ -3,6 +3,8 @@ extends Control
 const MAIN_MENU_SCENE_PATH := "res://scenes/main_menu/MainMenu.tscn"
 const SAVE_MANAGER_SCRIPT := preload("res://scripts/save/save_manager.gd")
 const DATA_MANAGER_SCRIPT := preload("res://scripts/data/data_manager.gd")
+const SCREEN_TRANSITION := preload("res://scripts/ui/common/screen_transition.gd")
+const BUTTON_FEEDBACK := preload("res://scripts/ui/common/button_feedback.gd")
 
 @onready var empty_label: Label = $RootMargin/RootContainer/ContentContainer/ArchiveListPanel/ArchiveListContent/EmptyLabel
 @onready var archive_list_title_label: Label = $RootMargin/RootContainer/ContentContainer/ArchiveListPanel/ArchiveListContent/ArchiveListTitleLabel
@@ -15,13 +17,15 @@ const DATA_MANAGER_SCRIPT := preload("res://scripts/data/data_manager.gd")
 
 
 func _ready() -> void:
+	SCREEN_TRANSITION.fade_in(self)
+	BUTTON_FEEDBACK.install(self)
 	archive_button_template.visible = false
 	_clear_anomaly_image()
 	_load_archive_list()
 
 
 func _on_main_menu_button_pressed() -> void:
-	get_tree().change_scene_to_file(MAIN_MENU_SCENE_PATH)
+	SCREEN_TRANSITION.transition_to_scene(self, MAIN_MENU_SCENE_PATH)
 
 
 func _load_archive_list() -> void:

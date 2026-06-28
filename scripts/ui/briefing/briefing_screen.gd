@@ -2,16 +2,22 @@ extends Control
 
 const WORK_SCENE_PATH := "res://scenes/work/WorkScreen.tscn"
 const DATA_MANAGER_SCRIPT := preload("res://scripts/data/data_manager.gd")
+const SCREEN_TRANSITION := preload("res://scripts/ui/common/screen_transition.gd")
+const BUTTON_FEEDBACK := preload("res://scripts/ui/common/button_feedback.gd")
+const TEXT_REVEAL := preload("res://scripts/ui/common/text_reveal_label.gd")
 
 @onready var body_label: Label = $CenterContainer/BriefingPanel/BriefingContainer/BodyScrollContainer/BodyLabel
 
 
 func _ready() -> void:
-	body_label.text = _build_briefing_text()
+	SCREEN_TRANSITION.fade_in(self)
+	BUTTON_FEEDBACK.install(self)
+	var briefing_text: String = _build_briefing_text()
+	TEXT_REVEAL.reveal(self, body_label, briefing_text, 55.0)
 
 
 func _on_start_work_button_pressed() -> void:
-	get_tree().change_scene_to_file(WORK_SCENE_PATH)
+	SCREEN_TRANSITION.transition_to_scene(self, WORK_SCENE_PATH)
 
 
 func _build_briefing_text() -> String:

@@ -2,12 +2,13 @@ extends Control
 
 const DATA_MANAGER_SCRIPT := preload("res://scripts/data/data_manager.gd")
 
-@onready var anomaly_list_container: VBoxContainer = $RootContainer/ContentContainer/AnomalyListContainer
-@onready var anomaly_list_label: Label = $RootContainer/ContentContainer/AnomalyListContainer/AnomalyListLabel
-@onready var anomaly_button_template: Button = $RootContainer/ContentContainer/AnomalyListContainer/AnomalyButtonTemplate
-@onready var detail_text: RichTextLabel = $RootContainer/ContentContainer/DetailContainer/DetailScrollContainer/DetailBodyContainer/DetailText
-@onready var anomaly_image_slot: Control = $RootContainer/ContentContainer/DetailContainer/DetailScrollContainer/DetailBodyContainer/AnomalyImageSlot
-@onready var anomaly_image_rect: TextureRect = $RootContainer/ContentContainer/DetailContainer/DetailScrollContainer/DetailBodyContainer/AnomalyImageSlot/AnomalyImageRect
+@onready var anomaly_list_container: VBoxContainer = $RootContainer/ContentContainer/AnomalyListPanel/AnomalyListContainer
+@onready var anomaly_list_label: Label = $RootContainer/ContentContainer/AnomalyListPanel/AnomalyListContainer/AnomalyListLabel
+@onready var anomaly_button_template: Button = $RootContainer/ContentContainer/AnomalyListPanel/AnomalyListContainer/AnomalyButtonTemplate
+@onready var pdf_meta_text: RichTextLabel = $RootContainer/ContentContainer/DocumentStage/PDFDocumentPanel/PDFContentMargin/PDFContentContainer/PDFTopRow/PDFMetaText
+@onready var detail_text: RichTextLabel = $RootContainer/ContentContainer/DocumentStage/PDFDocumentPanel/PDFContentMargin/PDFContentContainer/DetailScrollContainer/DetailText
+@onready var anomaly_image_slot: Control = $RootContainer/ContentContainer/DocumentStage/PDFDocumentPanel/PDFContentMargin/PDFContentContainer/PDFTopRow/AnomalyImageSlot
+@onready var anomaly_image_rect: TextureRect = $RootContainer/ContentContainer/DocumentStage/PDFDocumentPanel/PDFContentMargin/PDFContentContainer/PDFTopRow/AnomalyImageSlot/AnomalyImageRect
 
 var case_documents: Dictionary = {}
 var current_case_id: String = ""
@@ -38,6 +39,14 @@ func _update_anomaly_list() -> void:
 
 		var anomaly_button: Button = Button.new()
 		anomaly_button.custom_minimum_size = anomaly_button_template.custom_minimum_size
+		anomaly_button.add_theme_stylebox_override("normal", anomaly_button_template.get_theme_stylebox("normal"))
+		anomaly_button.add_theme_stylebox_override("hover", anomaly_button_template.get_theme_stylebox("hover"))
+		anomaly_button.add_theme_stylebox_override("pressed", anomaly_button_template.get_theme_stylebox("pressed"))
+		anomaly_button.add_theme_stylebox_override("focus", anomaly_button_template.get_theme_stylebox("focus"))
+		anomaly_button.add_theme_color_override("font_color", anomaly_button_template.get_theme_color("font_color"))
+		anomaly_button.add_theme_color_override("font_hover_color", anomaly_button_template.get_theme_color("font_hover_color"))
+		anomaly_button.add_theme_color_override("font_pressed_color", anomaly_button_template.get_theme_color("font_pressed_color"))
+		anomaly_button.add_theme_font_size_override("font_size", anomaly_button_template.get_theme_font_size("font_size"))
 		anomaly_button.text = _get_case_list_label(case_document, case_id)
 		anomaly_button.pressed.connect(_on_anomaly_button_pressed.bind(case_id))
 		anomaly_list_container.add_child(anomaly_button)
@@ -45,6 +54,7 @@ func _update_anomaly_list() -> void:
 
 	if visible_case_count == 0:
 		detail_text.text = "현재 회차에서 확인된 이상현상이 없습니다."
+		pdf_meta_text.text = ""
 		_clear_anomaly_image()
 		return
 
@@ -71,25 +81,28 @@ func _show_case_detail(case_id: String) -> void:
 	var case_document: Dictionary = _get_case_document(case_id)
 	if case_document.is_empty():
 		detail_text.text = "이상현상 문서를 표시할 수 없습니다."
+		pdf_meta_text.text = ""
 		_clear_anomaly_image()
 		return
 
-	var lines: Array[String] = []
-	lines.append("식별명: %s" % str(case_document.get("display_id", case_id)))
-	lines.append("별칭: %s" % str(case_document.get("alias", "")))
-	lines.append("분류: %s" % str(case_document.get("category", "")))
-	lines.append("")
-	lines.append("기본 설명")
-	lines.append(str(case_document.get("basic_description", "")))
+	var meta_lines: Array[String] = []
+	meta_lines.append("식별명: %s" % str(case_document.get("display_id", "")))
+	meta_lines.append("별칭: %s" % str(case_document.get("alias", "")))
+	meta_lines.append("분류: %s" % str(case_document.get("category", "")))
+	pdf_meta_text.text = "\n".join(PackedStringArray(meta_lines))
+
+	var detail_lines: Array[String] = []
+	detail_lines.append("기본 설명")
+	detail_lines.append(str(case_document.get("basic_description", "")))
 
 	var unlocked_descriptions: Array[String] = _get_unlocked_additional_descriptions(case_id, case_document)
 	if not unlocked_descriptions.is_empty():
-		lines.append("")
-		lines.append("해금된 추가 설명")
+		detail_lines.append("")
+		detail_lines.append("해금된 추가 설명")
 		for description in unlocked_descriptions:
-			lines.append("- %s" % description)
+			detail_lines.append("- %s" % description)
 
-	detail_text.text = "\n".join(PackedStringArray(lines))
+	detail_text.text = "\n".join(PackedStringArray(detail_lines))
 	_update_anomaly_image(case_document)
 
 
@@ -128,9 +141,11 @@ func _add_case_id(case_ids: Array[String], case_id: String) -> void:
 	case_ids.append(case_id)
 
 
-func _get_case_list_label(case_document: Dictionary, fallback_case_id: String) -> String:
-	var display_id: String = str(case_document.get("display_id", fallback_case_id))
+func _get_case_list_label(case_document: Dictionary, _fallback_case_id: String) -> String:
+	var display_id: String = str(case_document.get("display_id", ""))
 	var alias: String = str(case_document.get("alias", ""))
+	if display_id.is_empty():
+		return alias
 	if alias.is_empty():
 		return display_id
 

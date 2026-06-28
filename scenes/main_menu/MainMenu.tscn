@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://ctuonvcmteryy"]
+[gd_scene load_steps=13 format=3 uid="uid://ctuonvcmteryy"]
 
 [ext_resource type="Script" uid="uid://bwo8vexylnnev" path="res://scripts/ui/main_menu/main_menu.gd" id="1_main_menu"]
 [ext_resource type="Texture2D" path="res://assets/ui/bg_main_menu_terminal.png" id="2_background"]
@@ -27,6 +27,30 @@ texture_margin_left = 32.0
 texture_margin_top = 18.0
 texture_margin_right = 32.0
 texture_margin_bottom = 18.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBox_button_danger_hover"]
+texture = ExtResource("6_button_danger")
+texture_margin_left = 32.0
+texture_margin_top = 18.0
+texture_margin_right = 32.0
+texture_margin_bottom = 18.0
+modulate_color = Color(1.08, 0.86, 0.68, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBox_button_danger_pressed"]
+texture = ExtResource("6_button_danger")
+texture_margin_left = 32.0
+texture_margin_top = 18.0
+texture_margin_right = 32.0
+texture_margin_bottom = 18.0
+modulate_color = Color(0.62, 0.46, 0.4, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBox_button_danger_focus"]
+texture = ExtResource("6_button_danger")
+texture_margin_left = 32.0
+texture_margin_top = 18.0
+texture_margin_right = 32.0
+texture_margin_bottom = 18.0
+modulate_color = Color(0.92, 0.7, 0.57, 1)
 
 [node name="MainMenu" type="Control" unique_id=200042100]
 layout_mode = 3
@@ -167,9 +191,9 @@ theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
 theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 22
 theme_override_styles/normal = SubResource("StyleBox_button_danger")
-theme_override_styles/hover = SubResource("StyleBox_button_selected")
-theme_override_styles/pressed = SubResource("StyleBox_button_selected")
-theme_override_styles/focus = SubResource("StyleBox_button_selected")
+theme_override_styles/hover = SubResource("StyleBox_button_danger_hover")
+theme_override_styles/pressed = SubResource("StyleBox_button_danger_pressed")
+theme_override_styles/focus = SubResource("StyleBox_button_danger_focus")
 text = "근무 종료"
 
 [connection signal="pressed" from="MenuArea/MenuContainer/StartWorkButton" to="." method="_on_start_work_button_pressed"]

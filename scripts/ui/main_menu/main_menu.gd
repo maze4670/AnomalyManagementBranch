@@ -4,6 +4,13 @@ const BRIEFING_SCENE_PATH := "res://scenes/briefing/BriefingScreen.tscn"
 const ARCHIVE_SCENE_PATH := "res://scenes/archive/ArchiveScreen.tscn"
 const SETTINGS_SCENE_PATH := "res://scenes/settings/SettingsScreen.tscn"
 const SAVE_MANAGER_SCRIPT := preload("res://scripts/save/save_manager.gd")
+const SCREEN_TRANSITION := preload("res://scripts/ui/common/screen_transition.gd")
+const BUTTON_FEEDBACK := preload("res://scripts/ui/common/button_feedback.gd")
+
+
+func _ready() -> void:
+	SCREEN_TRANSITION.fade_in(self)
+	BUTTON_FEEDBACK.install(self)
 
 
 func _on_start_work_button_pressed() -> void:
@@ -16,15 +23,15 @@ func _on_start_work_button_pressed() -> void:
 	if not loaded_save:
 		GameState.reset_for_new_run()
 
-	get_tree().change_scene_to_file(BRIEFING_SCENE_PATH)
+	SCREEN_TRANSITION.transition_to_scene(self, BRIEFING_SCENE_PATH)
 
 
 func _on_archive_button_pressed() -> void:
-	get_tree().change_scene_to_file(ARCHIVE_SCENE_PATH)
+	SCREEN_TRANSITION.transition_to_scene(self, ARCHIVE_SCENE_PATH)
 
 
 func _on_settings_button_pressed() -> void:
-	get_tree().change_scene_to_file(SETTINGS_SCENE_PATH)
+	SCREEN_TRANSITION.transition_to_scene(self, SETTINGS_SCENE_PATH)
 
 
 func _on_quit_button_pressed() -> void:

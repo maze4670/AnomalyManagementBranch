@@ -1,6 +1,43 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=8 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/work/end_day_tab.gd" id="1_end_day"]
+[ext_resource type="Texture2D" path="res://assets/ui/ui_report_body_panel.png" id="2_body_panel"]
+[ext_resource type="Texture2D" path="res://assets/ui/ui_danger_button.png" id="3_danger_button"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBox_end_panel"]
+texture = ExtResource("2_body_panel")
+texture_margin_left = 28.0
+texture_margin_top = 28.0
+texture_margin_right = 28.0
+texture_margin_bottom = 28.0
+content_margin_left = 52.0
+content_margin_top = 42.0
+content_margin_right = 52.0
+content_margin_bottom = 42.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBox_end_normal"]
+texture = ExtResource("3_danger_button")
+texture_margin_left = 30.0
+texture_margin_top = 16.0
+texture_margin_right = 30.0
+texture_margin_bottom = 16.0
+modulate_color = Color(0.82, 0.74, 0.66, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBox_end_hover"]
+texture = ExtResource("3_danger_button")
+texture_margin_left = 30.0
+texture_margin_top = 16.0
+texture_margin_right = 30.0
+texture_margin_bottom = 16.0
+modulate_color = Color(1.08, 0.9, 0.72, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBox_end_pressed"]
+texture = ExtResource("3_danger_button")
+texture_margin_left = 30.0
+texture_margin_top = 16.0
+texture_margin_right = 30.0
+texture_margin_bottom = 16.0
+modulate_color = Color(0.65, 0.52, 0.44, 1)
 
 [node name="EndDayTab" type="Control"]
 layout_mode = 3
@@ -16,28 +53,59 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = 20.0
+offset_right = -24.0
+offset_bottom = -28.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ContentContainer" type="VBoxContainer" parent="CenterContainer"]
+[node name="EndDayPanel" type="PanelContainer" parent="CenterContainer"]
+custom_minimum_size = Vector2(680, 340)
 layout_mode = 2
-theme_override_constants/separation = 12
+theme_override_styles/panel = SubResource("StyleBox_end_panel")
 
-[node name="TitleLabel" type="Label" parent="CenterContainer/ContentContainer"]
+[node name="ContentContainer" type="VBoxContainer" parent="CenterContainer/EndDayPanel"]
 layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="TitleLabel" type="Label" parent="CenterContainer/EndDayPanel/ContentContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.84, 0.93, 0.91, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.85)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 24
 text = "하루 종료"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="GuideLabel" type="Label" parent="CenterContainer/ContentContainer"]
+[node name="HeaderDivider" type="HSeparator" parent="CenterContainer/EndDayPanel/ContentContainer"]
 layout_mode = 2
+
+[node name="GuideLabel" type="Label" parent="CenterContainer/EndDayPanel/ContentContainer"]
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.75, 0.84, 0.82, 1)
+theme_override_font_sizes/font_size = 17
 text = "금일 근무를 종료하시겠습니까?"
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 2
 
-[node name="EndDayButton" type="Button" parent="CenterContainer/ContentContainer"]
-custom_minimum_size = Vector2(160, 40)
+[node name="EndDayButton" type="Button" parent="CenterContainer/EndDayPanel/ContentContainer"]
+custom_minimum_size = Vector2(240, 58)
 layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.94, 0.91, 0.86, 1)
+theme_override_colors/font_hover_color = Color(1, 0.96, 0.88, 1)
+theme_override_colors/font_pressed_color = Color(0.9, 0.82, 0.76, 1)
+theme_override_font_sizes/font_size = 17
+theme_override_styles/normal = SubResource("StyleBox_end_normal")
+theme_override_styles/hover = SubResource("StyleBox_end_hover")
+theme_override_styles/pressed = SubResource("StyleBox_end_pressed")
+theme_override_styles/focus = SubResource("StyleBox_end_hover")
 text = "하루 종료"
 
-[connection signal="pressed" from="CenterContainer/ContentContainer/EndDayButton" to="." method="_on_end_day_button_pressed"]
+[connection signal="pressed" from="CenterContainer/EndDayPanel/ContentContainer/EndDayButton" to="." method="_on_end_day_button_pressed"]
