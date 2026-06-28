@@ -4,15 +4,18 @@ const MAIN_MENU_SCENE_PATH := "res://scenes/main_menu/MainMenu.tscn"
 const SAVE_MANAGER_SCRIPT := preload("res://scripts/save/save_manager.gd")
 const DATA_MANAGER_SCRIPT := preload("res://scripts/data/data_manager.gd")
 
-@onready var empty_label: Label = $CenterContainer/ContentContainer/EmptyLabel
-@onready var archive_list_title_label: Label = $CenterContainer/ContentContainer/ArchiveListTitleLabel
-@onready var archive_list_container: VBoxContainer = $CenterContainer/ContentContainer/ArchiveListContainer
-@onready var anomaly_image_slot: Control = $CenterContainer/ContentContainer/AnomalyImageSlot
-@onready var anomaly_image_rect: TextureRect = $CenterContainer/ContentContainer/AnomalyImageSlot/ArchiveAnomalyImageRect
-@onready var detail_label: Label = $CenterContainer/ContentContainer/DetailLabel
+@onready var empty_label: Label = $RootMargin/RootContainer/ContentContainer/ArchiveListPanel/ArchiveListContent/EmptyLabel
+@onready var archive_list_title_label: Label = $RootMargin/RootContainer/ContentContainer/ArchiveListPanel/ArchiveListContent/ArchiveListTitleLabel
+@onready var archive_list_container: VBoxContainer = $RootMargin/RootContainer/ContentContainer/ArchiveListPanel/ArchiveListContent/ArchiveListScroll/ArchiveListContainer
+@onready var archive_button_template: Button = $RootMargin/RootContainer/ContentContainer/ArchiveListPanel/ArchiveListContent/ArchiveListScroll/ArchiveListContainer/ArchiveButtonTemplate
+@onready var pdf_meta_text: RichTextLabel = $RootMargin/RootContainer/ContentContainer/DocumentStage/PDFDocumentPanel/PDFContentMargin/PDFContentContainer/PDFTopRow/PDFMetaText
+@onready var anomaly_image_slot: Control = $RootMargin/RootContainer/ContentContainer/DocumentStage/PDFDocumentPanel/PDFContentMargin/PDFContentContainer/PDFTopRow/AnomalyImageSlot
+@onready var anomaly_image_rect: TextureRect = $RootMargin/RootContainer/ContentContainer/DocumentStage/PDFDocumentPanel/PDFContentMargin/PDFContentContainer/PDFTopRow/AnomalyImageSlot/ArchiveAnomalyImageRect
+@onready var detail_label: RichTextLabel = $RootMargin/RootContainer/ContentContainer/DocumentStage/PDFDocumentPanel/PDFContentMargin/PDFContentContainer/DetailScrollContainer/DetailLabel
 
 
 func _ready() -> void:
+	archive_button_template.visible = false
 	_clear_anomaly_image()
 	_load_archive_list()
 
@@ -24,6 +27,7 @@ func _on_main_menu_button_pressed() -> void:
 func _load_archive_list() -> void:
 	_clear_archive_list()
 	_clear_anomaly_image()
+	pdf_meta_text.text = ""
 	detail_label.text = "기록을 선택해 주세요."
 	detail_label.visible = true
 
@@ -40,6 +44,7 @@ func _load_archive_list() -> void:
 	archive_list_title_label.visible = true
 	archive_list_container.visible = true
 
+	var visible_archive_count: int = 0
 	for case_id in (unlocked_cases as Dictionary).keys():
 		var case_archive_data: Variant = (unlocked_cases as Dictionary).get(case_id, {})
 		if typeof(case_archive_data) != TYPE_DICTIONARY:
@@ -51,16 +56,28 @@ func _load_archive_list() -> void:
 			continue
 
 		var item_button: Button = Button.new()
+		item_button.custom_minimum_size = archive_button_template.custom_minimum_size
+		item_button.add_theme_stylebox_override("normal", archive_button_template.get_theme_stylebox("normal"))
+		item_button.add_theme_stylebox_override("hover", archive_button_template.get_theme_stylebox("hover"))
+		item_button.add_theme_stylebox_override("pressed", archive_button_template.get_theme_stylebox("pressed"))
+		item_button.add_theme_stylebox_override("focus", archive_button_template.get_theme_stylebox("focus"))
+		item_button.add_theme_color_override("font_color", archive_button_template.get_theme_color("font_color"))
+		item_button.add_theme_color_override("font_hover_color", archive_button_template.get_theme_color("font_hover_color"))
+		item_button.add_theme_color_override("font_pressed_color", archive_button_template.get_theme_color("font_pressed_color"))
+		item_button.add_theme_font_size_override("font_size", archive_button_template.get_theme_font_size("font_size"))
 		item_button.text = _get_archive_case_label(case_document)
 		item_button.pressed.connect(_on_archive_case_pressed.bind(str(case_id), case_archive_dictionary))
 		archive_list_container.add_child(item_button)
+		visible_archive_count += 1
 
-	if archive_list_container.get_child_count() == 0:
+	if visible_archive_count == 0:
 		_show_empty_archive()
 
 
 func _clear_archive_list() -> void:
 	for child in archive_list_container.get_children():
+		if child == archive_button_template:
+			continue
 		child.queue_free()
 
 
@@ -69,6 +86,7 @@ func _show_empty_archive() -> void:
 	empty_label.visible = true
 	archive_list_title_label.visible = false
 	archive_list_container.visible = false
+	pdf_meta_text.text = ""
 	detail_label.text = ""
 	detail_label.visible = false
 	_clear_anomaly_image()
@@ -92,8 +110,21 @@ func _get_case_document(case_id: String) -> Dictionary:
 
 func _on_archive_case_pressed(case_id: String, case_archive_data: Dictionary) -> void:
 	detail_label.visible = true
-	_update_anomaly_image(_get_case_document(case_id))
+	var case_document: Dictionary = _get_case_document(case_id)
+	pdf_meta_text.text = _build_archive_meta_text(case_document)
+	_update_anomaly_image(case_document)
 	detail_label.text = _build_archive_detail_text(case_id, case_archive_data)
+
+
+func _build_archive_meta_text(case_document: Dictionary) -> String:
+	if case_document.is_empty():
+		return ""
+
+	var lines: Array[String] = []
+	lines.append("식별명: %s" % str(case_document.get("display_id", "")))
+	lines.append("별칭: %s" % str(case_document.get("alias", "")))
+	lines.append("분류: %s" % str(case_document.get("category", "")))
+	return "\n".join(PackedStringArray(lines))
 
 
 func _build_archive_detail_text(case_id: String, case_archive_data: Dictionary) -> String:
@@ -105,16 +136,15 @@ func _build_archive_detail_text(case_id: String, case_archive_data: Dictionary) 
 		return ""
 
 	var lines: Array[String] = []
-	lines.append("식별명: %s" % str(case_document.get("display_id", "")))
-	lines.append("별칭: %s" % str(case_document.get("alias", "")))
-	lines.append("분류: %s" % str(case_document.get("category", "")))
 	lines.append("기본 설명: %s" % str(case_document.get("basic_description", "")))
 	lines.append("추가 설명:")
 
 	var additional_descriptions: Variant = case_document.get("additional_descriptions", [])
 	if typeof(additional_descriptions) == TYPE_ARRAY:
 		for description in (additional_descriptions as Array):
-			lines.append("- %s" % str(description))
+			var description_text: String = _get_additional_description_text(description)
+			if not description_text.is_empty():
+				lines.append("- %s" % description_text)
 
 	var report_texts: Array[String] = _get_visible_report_texts(case_id, case_archive_data, case_reports)
 	if not report_texts.is_empty():
@@ -123,6 +153,21 @@ func _build_archive_detail_text(case_id: String, case_archive_data: Dictionary) 
 		lines.append_array(report_texts)
 
 	return "\n".join(PackedStringArray(lines))
+
+
+func _get_additional_description_text(description: Variant) -> String:
+	if typeof(description) == TYPE_STRING:
+		return str(description)
+	if typeof(description) != TYPE_DICTIONARY:
+		return ""
+
+	var description_data: Dictionary = description as Dictionary
+	for text_key in ["text", "description", "body"]:
+		var text: String = str(description_data.get(text_key, ""))
+		if not text.is_empty():
+			return text
+
+	return ""
 
 
 func _get_visible_report_texts(case_id: String, case_archive_data: Dictionary, case_reports: Dictionary) -> Array[String]:
