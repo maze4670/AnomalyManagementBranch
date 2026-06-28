@@ -3,7 +3,7 @@ extends Control
 const WORK_SCENE_PATH := "res://scenes/work/WorkScreen.tscn"
 const DATA_MANAGER_SCRIPT := preload("res://scripts/data/data_manager.gd")
 
-@onready var body_label: Label = $CenterContainer/BriefingContainer/BodyLabel
+@onready var body_label: Label = $CenterContainer/BriefingPanel/BriefingContainer/BodyScrollContainer/BodyLabel
 
 
 func _ready() -> void:

@@ -1,6 +1,55 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=11 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/briefing/briefing_screen.gd" id="1_briefing"]
+[ext_resource type="Texture2D" path="res://assets/ui/ui_work_terminal_background.png" id="2_background"]
+[ext_resource type="Texture2D" path="res://assets/ui/ui_report_body_panel.png" id="3_body_panel"]
+[ext_resource type="Texture2D" path="res://assets/ui/ui_report_header_panel.png" id="4_header_panel"]
+[ext_resource type="Texture2D" path="res://assets/ui/ui_confirm_button.png" id="5_confirm_button"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBox_briefing_panel"]
+texture = ExtResource("3_body_panel")
+texture_margin_left = 28.0
+texture_margin_top = 28.0
+texture_margin_right = 28.0
+texture_margin_bottom = 28.0
+content_margin_left = 38.0
+content_margin_top = 32.0
+content_margin_right = 38.0
+content_margin_bottom = 32.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBox_header"]
+texture = ExtResource("4_header_panel")
+texture_margin_left = 28.0
+texture_margin_top = 20.0
+texture_margin_right = 28.0
+texture_margin_bottom = 20.0
+content_margin_left = 22.0
+content_margin_top = 12.0
+content_margin_right = 22.0
+content_margin_bottom = 12.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBox_confirm_normal"]
+texture = ExtResource("5_confirm_button")
+texture_margin_left = 28.0
+texture_margin_top = 16.0
+texture_margin_right = 28.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBox_confirm_hover"]
+texture = ExtResource("5_confirm_button")
+texture_margin_left = 28.0
+texture_margin_top = 16.0
+texture_margin_right = 28.0
+texture_margin_bottom = 16.0
+modulate_color = Color(1.14, 0.92, 0.7, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBox_confirm_pressed"]
+texture = ExtResource("5_confirm_button")
+texture_margin_left = 28.0
+texture_margin_top = 16.0
+texture_margin_right = 28.0
+texture_margin_bottom = 16.0
+modulate_color = Color(0.76, 0.6, 0.46, 1)
 
 [node name="BriefingScreen" type="Control"]
 layout_mode = 3
@@ -11,34 +60,102 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_briefing")
 
-[node name="CenterContainer" type="CenterContainer" parent="."]
+[node name="Background" type="TextureRect" parent="."]
+modulate = Color(0.78, 0.82, 0.8, 1)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_background")
+expand_mode = 1
+stretch_mode = 6
 
-[node name="BriefingContainer" type="VBoxContainer" parent="CenterContainer"]
-layout_mode = 2
-theme_override_constants/separation = 16
+[node name="ReadabilityOverlay" type="ColorRect" parent="."]
+modulate = Color(1, 1, 1, 0.36)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.015, 0.035, 0.04, 1)
 
-[node name="TitleLabel" type="Label" parent="CenterContainer/BriefingContainer"]
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = 20.0
+offset_right = -24.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BriefingPanel" type="PanelContainer" parent="CenterContainer"]
+custom_minimum_size = Vector2(920, 680)
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBox_briefing_panel")
+
+[node name="BriefingContainer" type="VBoxContainer" parent="CenterContainer/BriefingPanel"]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="HeaderPanel" type="PanelContainer" parent="CenterContainer/BriefingPanel/BriefingContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBox_header")
+
+[node name="TitleLabel" type="Label" parent="CenterContainer/BriefingPanel/BriefingContainer/HeaderPanel"]
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.84, 0.93, 0.91, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.85)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 24
 text = "브리핑"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="BodyLabel" type="Label" parent="CenterContainer/BriefingContainer"]
-custom_minimum_size = Vector2(420, 80)
+[node name="HeaderDivider" type="HSeparator" parent="CenterContainer/BriefingPanel/BriefingContainer"]
 layout_mode = 2
+
+[node name="BodyScrollContainer" type="ScrollContainer" parent="CenterContainer/BriefingPanel/BriefingContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="BodyLabel" type="Label" parent="CenterContainer/BriefingPanel/BriefingContainer/BodyScrollContainer"]
+custom_minimum_size = Vector2(800, 360)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.78, 0.88, 0.85, 1)
+theme_override_constants/line_spacing = 8
+theme_override_font_sizes/font_size = 18
 text = "금일 신규 보고는 없습니다."
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 2
 
-[node name="StartWorkButton" type="Button" parent="CenterContainer/BriefingContainer"]
-custom_minimum_size = Vector2(240, 40)
+[node name="FooterDivider" type="HSeparator" parent="CenterContainer/BriefingPanel/BriefingContainer"]
 layout_mode = 2
+
+[node name="StartWorkButton" type="Button" parent="CenterContainer/BriefingPanel/BriefingContainer"]
+custom_minimum_size = Vector2(260, 58)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.9, 0.96, 0.9, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.9, 0.86, 0.78, 1)
+theme_override_font_sizes/font_size = 17
+theme_override_styles/normal = SubResource("StyleBox_confirm_normal")
+theme_override_styles/hover = SubResource("StyleBox_confirm_hover")
+theme_override_styles/pressed = SubResource("StyleBox_confirm_pressed")
+theme_override_styles/focus = SubResource("StyleBox_confirm_hover")
 text = "근무 시작"
 
-[connection signal="pressed" from="CenterContainer/BriefingContainer/StartWorkButton" to="." method="_on_start_work_button_pressed"]
+[connection signal="pressed" from="CenterContainer/BriefingPanel/BriefingContainer/StartWorkButton" to="." method="_on_start_work_button_pressed"]
