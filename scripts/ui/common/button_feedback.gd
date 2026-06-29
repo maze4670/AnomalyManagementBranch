@@ -44,11 +44,13 @@ func _prepare_button(button: Button) -> void:
 		return
 
 	button.set_meta("ui_feedback_ready", true)
+	button.set_meta("ui_pointer_hovered", false)
+	button.set_meta("ui_focus_hovered", false)
 	button.resized.connect(_update_pivot.bind(button))
-	button.mouse_entered.connect(_set_hovered.bind(button, true))
-	button.mouse_exited.connect(_set_hovered.bind(button, false))
-	button.focus_entered.connect(_set_hovered.bind(button, true))
-	button.focus_exited.connect(_set_hovered.bind(button, false))
+	button.mouse_entered.connect(_set_pointer_hovered.bind(button, true))
+	button.mouse_exited.connect(_set_pointer_hovered.bind(button, false))
+	button.focus_entered.connect(_set_focus_hovered.bind(button, true))
+	button.focus_exited.connect(_set_focus_hovered.bind(button, false))
 	button.button_down.connect(_set_pressed.bind(button, true))
 	button.button_up.connect(_set_pressed.bind(button, false))
 	_update_pivot(button)
@@ -58,12 +60,31 @@ func _update_pivot(button: Button) -> void:
 	button.pivot_offset = button.size * 0.5
 
 
-func _set_hovered(button: Button, is_hovered: bool) -> void:
+func _set_pointer_hovered(button: Button, is_hovered: bool) -> void:
 	if not is_instance_valid(button):
 		return
+	var was_hovered: bool = _is_button_hovered(button)
+	button.set_meta("ui_pointer_hovered", is_hovered)
+	_update_hover_state(button, was_hovered)
+
+
+func _set_focus_hovered(button: Button, is_hovered: bool) -> void:
+	if not is_instance_valid(button):
+		return
+	var was_hovered: bool = _is_button_hovered(button)
+	button.set_meta("ui_focus_hovered", is_hovered)
+	_update_hover_state(button, was_hovered)
+
+
+func _update_hover_state(button: Button, was_hovered: bool) -> void:
+	var is_hovered: bool = _is_button_hovered(button)
 	button.self_modulate = HOVER_MODULATE if is_hovered else Color.WHITE
-	if is_hovered and not button.disabled:
+	if is_hovered and not was_hovered and not button.disabled:
 		AUDIO_FEEDBACK.play_button_hover()
+
+
+func _is_button_hovered(button: Button) -> bool:
+	return bool(button.get_meta("ui_pointer_hovered", false)) or bool(button.get_meta("ui_focus_hovered", false))
 
 
 func _set_pressed(button: Button, is_pressed: bool) -> void:
@@ -93,7 +114,7 @@ func _play_button_sound(button: Button) -> void:
 		AUDIO_FEEDBACK.play_button_click()
 
 
-func _has_ancestor_named(node: Node, names: Array[String]) -> bool:
+func _has_ancestor_named(node: Node, names: Array) -> bool:
 	var current: Node = node.get_parent()
 	while current != null:
 		if current.name in names:

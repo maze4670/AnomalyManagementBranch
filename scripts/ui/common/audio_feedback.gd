@@ -86,7 +86,7 @@ static func _call_manager(method: StringName, arguments: Array = []) -> void:
 
 static func _get_or_create_manager() -> Node:
 	var main_loop: MainLoop = Engine.get_main_loop()
-	if not main_loop is SceneTree:
+	if not (main_loop is SceneTree):
 		return null
 
 	var tree := main_loop as SceneTree
