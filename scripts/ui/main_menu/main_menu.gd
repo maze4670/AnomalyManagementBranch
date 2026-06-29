@@ -6,9 +6,11 @@ const SETTINGS_SCENE_PATH := "res://scenes/settings/SettingsScreen.tscn"
 const SAVE_MANAGER_SCRIPT := preload("res://scripts/save/save_manager.gd")
 const SCREEN_TRANSITION := preload("res://scripts/ui/common/screen_transition.gd")
 const BUTTON_FEEDBACK := preload("res://scripts/ui/common/button_feedback.gd")
+const AUDIO_FEEDBACK := preload("res://scripts/ui/common/audio_feedback.gd")
 
 
 func _ready() -> void:
+	AUDIO_FEEDBACK.play_bgm("main_menu")
 	SCREEN_TRANSITION.fade_in(self)
 	BUTTON_FEEDBACK.install(self)
 

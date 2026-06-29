@@ -1,12 +1,14 @@
 extends Node
 
 const REVEALER_NAME := "UITextRevealer"
+const AUDIO_FEEDBACK := preload("res://scripts/ui/common/audio_feedback.gd")
 
 var target_label: Control
 var full_text: String = ""
 var characters_per_second: float = 55.0
 var revealed_characters: float = 0.0
 var is_revealing: bool = false
+var last_tick_character: int = 0
 
 
 static func reveal(owner: Node, label: Control, text: String, speed: float = 55.0) -> void:
@@ -27,6 +29,7 @@ func start(label: Control, text: String, speed: float) -> void:
 	full_text = text
 	characters_per_second = maxf(speed, 1.0)
 	revealed_characters = 0.0
+	last_tick_character = 0
 	is_revealing = not full_text.is_empty()
 	_set_label_text("")
 	_reset_parent_scroll()
@@ -43,6 +46,9 @@ func _process(delta: float) -> void:
 	revealed_characters += characters_per_second * delta
 	var visible_count: int = mini(int(revealed_characters), full_text.length())
 	_set_label_text(full_text.substr(0, visible_count))
+	if int(visible_count / 3.0) > int(last_tick_character / 3.0):
+		AUDIO_FEEDBACK.play_text_tick()
+	last_tick_character = visible_count
 	if visible_count >= full_text.length():
 		_finish()
 

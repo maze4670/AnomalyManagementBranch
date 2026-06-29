@@ -3,6 +3,7 @@ extends Node
 const CONTROLLER_NAME := "UIButtonFeedback"
 const HOVER_MODULATE := Color(1.04, 1.04, 1.04, 1.0)
 const PRESSED_SCALE := Vector2(0.985, 0.985)
+const AUDIO_FEEDBACK := preload("res://scripts/ui/common/audio_feedback.gd")
 
 var target_root: Node
 
@@ -61,9 +62,41 @@ func _set_hovered(button: Button, is_hovered: bool) -> void:
 	if not is_instance_valid(button):
 		return
 	button.self_modulate = HOVER_MODULATE if is_hovered else Color.WHITE
+	if is_hovered and not button.disabled:
+		AUDIO_FEEDBACK.play_button_hover()
 
 
 func _set_pressed(button: Button, is_pressed: bool) -> void:
 	if not is_instance_valid(button):
 		return
 	button.scale = PRESSED_SCALE if is_pressed else Vector2.ONE
+	if is_pressed and not button.disabled:
+		_play_button_sound(button)
+
+
+func _play_button_sound(button: Button) -> void:
+	if _has_ancestor_named(button, ["ReportListContainer", "AnomalyListContainer", "ArchiveListContainer"]):
+		AUDIO_FEEDBACK.play_report_open()
+		return
+
+	var scene: Node = get_tree().current_scene
+	var scene_name: String = scene.name if scene != null else ""
+	if button.name in ["EndDayButton", "QuitButton"]:
+		AUDIO_FEEDBACK.play_danger()
+	elif scene_name == "ContainmentFailureScreen":
+		AUDIO_FEEDBACK.play_danger()
+	elif scene_name == "EndingScreen" and str(get_tree().get_meta("ending_type", "bad")) != "good":
+		AUDIO_FEEDBACK.play_danger()
+	elif button.name in ["StartWorkButton", "ConfirmButton"]:
+		AUDIO_FEEDBACK.play_confirm()
+	else:
+		AUDIO_FEEDBACK.play_button_click()
+
+
+func _has_ancestor_named(node: Node, names: Array[String]) -> bool:
+	var current: Node = node.get_parent()
+	while current != null:
+		if current.name in names:
+			return true
+		current = current.get_parent()
+	return false

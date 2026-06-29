@@ -5,11 +5,13 @@ const DATA_MANAGER_SCRIPT := preload("res://scripts/data/data_manager.gd")
 const SCREEN_TRANSITION := preload("res://scripts/ui/common/screen_transition.gd")
 const BUTTON_FEEDBACK := preload("res://scripts/ui/common/button_feedback.gd")
 const TEXT_REVEAL := preload("res://scripts/ui/common/text_reveal_label.gd")
+const AUDIO_FEEDBACK := preload("res://scripts/ui/common/audio_feedback.gd")
 
 @onready var body_label: Label = $CenterContainer/BriefingPanel/BriefingContainer/BodyScrollContainer/BodyLabel
 
 
 func _ready() -> void:
+	AUDIO_FEEDBACK.play_bgm("work")
 	SCREEN_TRANSITION.fade_in(self)
 	BUTTON_FEEDBACK.install(self)
 	var briefing_text: String = _build_briefing_text()

@@ -3,6 +3,7 @@ extends Control
 const CONTAINMENT_FAILURE_SCENE_PATH := "res://scenes/ending/ContainmentFailureScreen.tscn"
 const SCREEN_TRANSITION := preload("res://scripts/ui/common/screen_transition.gd")
 const BUTTON_FEEDBACK := preload("res://scripts/ui/common/button_feedback.gd")
+const AUDIO_FEEDBACK := preload("res://scripts/ui/common/audio_feedback.gd")
 
 @onready var current_day_label: Label = $RootContainer/HeaderContainer/StatusContainer/CurrentDayLabel
 @onready var action_label: Label = $RootContainer/HeaderContainer/StatusContainer/ActionLabel
@@ -19,6 +20,7 @@ func _ready() -> void:
 		call_deferred("_open_containment_failure_screen")
 		return
 
+	AUDIO_FEEDBACK.play_bgm("work")
 	SCREEN_TRANSITION.fade_in(self)
 	BUTTON_FEEDBACK.install(self)
 	current_day_label.text = "%d일차" % GameState.current_day

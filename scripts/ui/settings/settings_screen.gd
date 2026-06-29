@@ -4,6 +4,7 @@ const MAIN_MENU_SCENE_PATH := "res://scenes/main_menu/MainMenu.tscn"
 const SAVE_MANAGER_SCRIPT := preload("res://scripts/save/save_manager.gd")
 const SCREEN_TRANSITION := preload("res://scripts/ui/common/screen_transition.gd")
 const BUTTON_FEEDBACK := preload("res://scripts/ui/common/button_feedback.gd")
+const AUDIO_FEEDBACK := preload("res://scripts/ui/common/audio_feedback.gd")
 const SCREEN_MODE_WINDOWED := "창 모드"
 const SCREEN_MODE_FULLSCREEN := "전체 화면"
 const TEXT_SIZE_OPTIONS := ["보통", "크게", "작게"]
@@ -26,6 +27,7 @@ var is_loading_settings: bool = false
 
 
 func _ready() -> void:
+	AUDIO_FEEDBACK.play_bgm("main_menu")
 	SCREEN_TRANSITION.fade_in(self)
 	BUTTON_FEEDBACK.install(self)
 	guide_label.text = "설정값은 자동으로 저장됩니다."

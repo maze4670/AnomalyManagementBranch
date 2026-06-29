@@ -2,6 +2,7 @@ extends RefCounted
 
 const LAYER_NAME := "UITransitionLayer"
 const FADE_DURATION := 0.22
+const AUDIO_FEEDBACK := preload("res://scripts/ui/common/audio_feedback.gd")
 
 
 static func fade_in(owner: Node) -> void:
@@ -47,6 +48,7 @@ static func _fade_out(tree: SceneTree, action: Callable) -> void:
 		return
 
 	tree.set_meta("ui_transition_busy", true)
+	AUDIO_FEEDBACK.play_scene_transition()
 	var layer: CanvasLayer = _get_or_create_layer(tree)
 	var overlay: ColorRect = layer.get_node("Overlay") as ColorRect
 	overlay.mouse_filter = Control.MOUSE_FILTER_STOP

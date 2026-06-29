@@ -5,6 +5,7 @@ const SAVE_MANAGER_SCRIPT := preload("res://scripts/save/save_manager.gd")
 const DATA_MANAGER_SCRIPT := preload("res://scripts/data/data_manager.gd")
 const SCREEN_TRANSITION := preload("res://scripts/ui/common/screen_transition.gd")
 const BUTTON_FEEDBACK := preload("res://scripts/ui/common/button_feedback.gd")
+const AUDIO_FEEDBACK := preload("res://scripts/ui/common/audio_feedback.gd")
 
 @onready var empty_label: Label = $RootMargin/RootContainer/ContentContainer/ArchiveListPanel/ArchiveListContent/EmptyLabel
 @onready var archive_list_title_label: Label = $RootMargin/RootContainer/ContentContainer/ArchiveListPanel/ArchiveListContent/ArchiveListTitleLabel
@@ -17,6 +18,7 @@ const BUTTON_FEEDBACK := preload("res://scripts/ui/common/button_feedback.gd")
 
 
 func _ready() -> void:
+	AUDIO_FEEDBACK.play_bgm("work")
 	SCREEN_TRANSITION.fade_in(self)
 	BUTTON_FEEDBACK.install(self)
 	archive_button_template.visible = false
