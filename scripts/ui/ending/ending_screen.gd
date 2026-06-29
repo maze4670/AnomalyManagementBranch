@@ -5,6 +5,7 @@ const SCREEN_TRANSITION := preload("res://scripts/ui/common/screen_transition.gd
 const BUTTON_FEEDBACK := preload("res://scripts/ui/common/button_feedback.gd")
 const TEXT_REVEAL := preload("res://scripts/ui/common/text_reveal_label.gd")
 const AUDIO_FEEDBACK := preload("res://scripts/ui/common/audio_feedback.gd")
+const UI_EFFECTS := preload("res://scripts/ui/common/ui_effects.gd")
 
 @onready var title_label: Label = $CenterContainer/ResultPanel/ContentContainer/HeaderPanel/TitleLabel
 @onready var body_label: Label = $CenterContainer/ResultPanel/ContentContainer/BodyLabel
@@ -34,6 +35,7 @@ func _ready() -> void:
 		title_label.text = "직위 해제 통지"
 		body_label.text = "기관 신뢰도 붕괴로 인해 지부장 직위가 해제되었습니다."
 	TEXT_REVEAL.reveal(self, body_label, body_label.text, 55.0)
+	UI_EFFECTS.play_result_panel_reveal(result_panel)
 
 
 func _apply_bad_ending_style() -> void:

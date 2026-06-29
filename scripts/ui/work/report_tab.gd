@@ -5,6 +5,7 @@ const DATA_MANAGER_SCRIPT := preload("res://scripts/data/data_manager.gd")
 const SAVE_MANAGER_SCRIPT := preload("res://scripts/save/save_manager.gd")
 const SCREEN_TRANSITION := preload("res://scripts/ui/common/screen_transition.gd")
 const TEXT_REVEAL := preload("res://scripts/ui/common/text_reveal_label.gd")
+const UI_EFFECTS := preload("res://scripts/ui/common/ui_effects.gd")
 
 @onready var report_list_container: VBoxContainer = $RootContainer/ContentContainer/ReportListPanel/ReportListContainer
 @onready var report_list_label: Label = $RootContainer/ContentContainer/ReportListPanel/ReportListContainer/ReportListLabel
@@ -223,6 +224,8 @@ func _select_choice(choice_index: int) -> void:
 	selected_choice_index = choice_index
 	status_label.text = ""
 	_update_choice_buttons()
+	if choice_index >= 0 and choice_index < choice_buttons.size():
+		UI_EFFECTS.play_choice_selected(choice_buttons[choice_index])
 
 
 func _update_choice_buttons() -> void:
@@ -312,6 +315,9 @@ func _on_confirm_button_pressed() -> void:
 	selected_choice_index = _find_choice_index(selected_choice_id)
 	_show_current_report_detail()
 	_update_choice_buttons()
+	UI_EFFECTS.play_status_reveal(completed_stamp_label)
+	if confirmed_choice_label.visible:
+		UI_EFFECTS.play_status_reveal(confirmed_choice_label)
 	_update_report_list()
 	_update_work_screen_action_label()
 
@@ -401,6 +407,7 @@ func _confirm_terminal_report() -> void:
 		_show_current_report_detail()
 		_set_report_controls_visible(true)
 		_update_choice_buttons()
+		UI_EFFECTS.play_status_reveal(completed_stamp_label)
 		return
 
 	if result == "containment_failed":
