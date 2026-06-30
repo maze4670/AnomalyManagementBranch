@@ -104,8 +104,6 @@ func _apply_volume(volume_percent: int) -> void:
 
 func _apply_text_preview_size(text_size_key: String) -> void:
 	SettingsManager.apply_text_size_settings({"text_size": text_size_key})
-	var font_size: int = SettingsManager.get_text_size_font_size(text_size_key)
-	text_preview_label.add_theme_font_size_override("font_size", font_size)
 
 
 func _set_text_size_from_key(text_size_key: String) -> void:

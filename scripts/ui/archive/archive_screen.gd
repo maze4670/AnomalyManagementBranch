@@ -6,6 +6,7 @@ const DATA_MANAGER_SCRIPT := preload("res://scripts/data/data_manager.gd")
 const SCREEN_TRANSITION := preload("res://scripts/ui/common/screen_transition.gd")
 const BUTTON_FEEDBACK := preload("res://scripts/ui/common/button_feedback.gd")
 const AUDIO_FEEDBACK := preload("res://scripts/ui/common/audio_feedback.gd")
+const DOCUMENT_RECORDS := preload("res://scripts/ui/common/document_records.gd")
 
 @onready var empty_label: Label = $RootMargin/RootContainer/ContentContainer/ArchiveListPanel/ArchiveListContent/EmptyLabel
 @onready var archive_list_title_label: Label = $RootMargin/RootContainer/ContentContainer/ArchiveListPanel/ArchiveListContent/ArchiveListTitleLabel
@@ -16,8 +17,11 @@ const AUDIO_FEEDBACK := preload("res://scripts/ui/common/audio_feedback.gd")
 @onready var anomaly_image_rect: TextureRect = $RootMargin/RootContainer/ContentContainer/DocumentStage/PDFDocumentPanel/PDFContentMargin/PDFContentContainer/PDFTopRow/AnomalyImageSlot/ArchiveAnomalyImageRect
 @onready var detail_label: RichTextLabel = $RootMargin/RootContainer/ContentContainer/DocumentStage/PDFDocumentPanel/PDFContentMargin/PDFContentContainer/DetailScrollContainer/DetailLabel
 
+var document_records_container: VBoxContainer
+
 
 func _ready() -> void:
+	document_records_container = DOCUMENT_RECORDS.ensure_records_container(detail_label)
 	AUDIO_FEEDBACK.play_bgm("work")
 	SCREEN_TRANSITION.fade_in(self)
 	BUTTON_FEEDBACK.install(self)
@@ -35,6 +39,7 @@ func _load_archive_list() -> void:
 	_clear_anomaly_image()
 	pdf_meta_text.text = ""
 	detail_label.text = "기록을 선택해 주세요."
+	DOCUMENT_RECORDS.populate_records(document_records_container, [])
 	detail_label.visible = true
 
 	var save_manager: Variant = SAVE_MANAGER_SCRIPT.new()
@@ -42,6 +47,7 @@ func _load_archive_list() -> void:
 	save_manager.free()
 
 	var unlocked_cases: Variant = archive_data.get("unlocked_cases", {})
+	var collected_records: Array = archive_data.get("collected_records", []) as Array
 	if typeof(unlocked_cases) != TYPE_DICTIONARY or (unlocked_cases as Dictionary).is_empty():
 		_show_empty_archive()
 		return
@@ -56,7 +62,8 @@ func _load_archive_list() -> void:
 		if typeof(case_archive_data) != TYPE_DICTIONARY:
 			continue
 
-		var case_archive_dictionary: Dictionary = case_archive_data as Dictionary
+		var case_archive_dictionary: Dictionary = (case_archive_data as Dictionary).duplicate(true)
+		case_archive_dictionary["collected_records"] = _get_case_collected_records(str(case_id), collected_records)
 		var case_document: Dictionary = _get_case_document(str(case_id))
 		if case_document.is_empty():
 			continue
@@ -71,6 +78,7 @@ func _load_archive_list() -> void:
 		item_button.add_theme_color_override("font_hover_color", archive_button_template.get_theme_color("font_hover_color"))
 		item_button.add_theme_color_override("font_pressed_color", archive_button_template.get_theme_color("font_pressed_color"))
 		item_button.add_theme_font_size_override("font_size", archive_button_template.get_theme_font_size("font_size"))
+		SettingsManager.copy_text_size_baseline(archive_button_template, item_button)
 		item_button.text = _get_archive_case_label(case_document)
 		item_button.pressed.connect(_on_archive_case_pressed.bind(str(case_id), case_archive_dictionary))
 		archive_list_container.add_child(item_button)
@@ -95,6 +103,7 @@ func _show_empty_archive() -> void:
 	pdf_meta_text.text = ""
 	detail_label.text = ""
 	detail_label.visible = false
+	DOCUMENT_RECORDS.populate_records(document_records_container, [])
 	_clear_anomaly_image()
 
 
@@ -119,7 +128,19 @@ func _on_archive_case_pressed(case_id: String, case_archive_data: Dictionary) ->
 	var case_document: Dictionary = _get_case_document(case_id)
 	pdf_meta_text.text = _build_archive_meta_text(case_document)
 	_update_anomaly_image(case_document)
-	detail_label.text = _build_archive_detail_text(case_id, case_archive_data)
+	detail_label.text = "기본 설명\n%s" % str(case_document.get("basic_description", ""))
+	var records: Array[Dictionary] = DOCUMENT_RECORDS.build_archive_collected_records(case_id, case_archive_data.get("collected_records", []))
+	if records.is_empty():
+		records = DOCUMENT_RECORDS.build_archive_records(case_id, case_archive_data.get("unlocked_report_keys", []))
+	DOCUMENT_RECORDS.populate_records(document_records_container, records)
+
+
+func _get_case_collected_records(case_id: String, collected_records: Array) -> Array:
+	var case_records: Array = []
+	for record in collected_records:
+		if typeof(record) == TYPE_DICTIONARY and str((record as Dictionary).get("case_id", "")) == case_id:
+			case_records.append(record)
+	return case_records
 
 
 func _build_archive_meta_text(case_document: Dictionary) -> String:
@@ -131,93 +152,6 @@ func _build_archive_meta_text(case_document: Dictionary) -> String:
 	lines.append("별칭: %s" % str(case_document.get("alias", "")))
 	lines.append("분류: %s" % str(case_document.get("category", "")))
 	return "\n".join(PackedStringArray(lines))
-
-
-func _build_archive_detail_text(case_id: String, case_archive_data: Dictionary) -> String:
-	var data_manager: Variant = DATA_MANAGER_SCRIPT.new()
-	var case_document: Dictionary = data_manager.load_case_document(case_id)
-	var case_reports: Dictionary = data_manager.load_case_reports(case_id)
-	data_manager.free()
-	if case_document.is_empty():
-		return ""
-
-	var lines: Array[String] = []
-	lines.append("기본 설명: %s" % str(case_document.get("basic_description", "")))
-	lines.append("추가 설명:")
-
-	var additional_descriptions: Variant = case_document.get("additional_descriptions", [])
-	if typeof(additional_descriptions) == TYPE_ARRAY:
-		for description in (additional_descriptions as Array):
-			var description_text: String = _get_additional_description_text(description)
-			if not description_text.is_empty():
-				lines.append("- %s" % description_text)
-
-	var report_texts: Array[String] = _get_visible_report_texts(case_id, case_archive_data, case_reports)
-	if not report_texts.is_empty():
-		lines.append("")
-		lines.append("[보고 기록]")
-		lines.append_array(report_texts)
-
-	return "\n".join(PackedStringArray(lines))
-
-
-func _get_additional_description_text(description: Variant) -> String:
-	if typeof(description) == TYPE_STRING:
-		return str(description)
-	if typeof(description) != TYPE_DICTIONARY:
-		return ""
-
-	var description_data: Dictionary = description as Dictionary
-	for text_key in ["text", "description", "body"]:
-		var text: String = str(description_data.get(text_key, ""))
-		if not text.is_empty():
-			return text
-
-	return ""
-
-
-func _get_visible_report_texts(case_id: String, case_archive_data: Dictionary, case_reports: Dictionary) -> Array[String]:
-	var archive_level: String = str(case_archive_data.get("unlock_level", "partial"))
-	var visible_node_ids: Array[String] = _get_visible_node_ids(case_id, case_archive_data)
-	var report_texts: Array[String] = []
-	var nodes: Variant = case_reports.get("nodes", [])
-	if typeof(nodes) != TYPE_ARRAY:
-		return report_texts
-
-	for node in (nodes as Array):
-		if typeof(node) != TYPE_DICTIONARY:
-			continue
-
-		var node_data: Dictionary = node as Dictionary
-		var node_id: String = str(node_data.get("node_id", ""))
-		if archive_level != "full" or not visible_node_ids.is_empty():
-			if not visible_node_ids.has(node_id):
-				continue
-
-		report_texts.append("%s\n%s" % [
-			str(node_data.get("report_day_label", "")),
-			str(node_data.get("report_text", ""))
-		])
-
-	return report_texts
-
-
-func _get_visible_node_ids(case_id: String, case_archive_data: Dictionary) -> Array[String]:
-	var report_keys: Variant = case_archive_data.get("unlocked_report_keys", [])
-	var node_ids: Array[String] = []
-	if typeof(report_keys) != TYPE_ARRAY:
-		return node_ids
-
-	for report_key in (report_keys as Array):
-		var key_parts: PackedStringArray = str(report_key).split(":")
-		if key_parts.size() != 2:
-			continue
-		if key_parts[0] != case_id:
-			continue
-
-		node_ids.append(key_parts[1])
-
-	return node_ids
 
 
 func _update_anomaly_image(case_document: Dictionary) -> void:

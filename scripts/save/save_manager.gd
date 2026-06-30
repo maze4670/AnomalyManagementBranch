@@ -1,5 +1,6 @@
 extends Node
 
+const DATA_MANAGER_SCRIPT := preload("res://scripts/data/data_manager.gd")
 const CURRENT_RUN_SAVE_PATH := "user://current_run_save.json"
 const SETTINGS_SAVE_PATH := "user://settings_save.json"
 const ARCHIVE_SAVE_PATH := "user://archive_save.json"
@@ -8,10 +9,12 @@ const ARCHIVE_SAVE_PATH := "user://archive_save.json"
 func save_current_run() -> bool:
 	var save_data: Dictionary = {
 		"save_version": 1,
+		"run_id": GameState.run_id,
 		"current_day": GameState.current_day,
 		"remaining_actions": GameState.remaining_actions,
 		"max_actions_per_day": GameState.max_actions_per_day,
 		"completed_reports": GameState.completed_reports,
+		"completed_report_days": GameState.completed_report_days,
 		"active_reports": GameState.active_reports,
 		"scheduled_reports": GameState.scheduled_reports,
 		"pending_completed_choices": GameState.pending_completed_choices,
@@ -73,16 +76,24 @@ func load_archive_save() -> Dictionary:
 	var archive_data: Dictionary = parsed as Dictionary
 	var unlocked_cases: Variant = archive_data.get("unlocked_cases", default_archive["unlocked_cases"])
 	var endings_seen: Variant = archive_data.get("endings_seen", default_archive["endings_seen"])
+	var collected_records: Variant = archive_data.get("collected_records", [])
+	var applied_run_ids: Variant = archive_data.get("applied_run_ids", [])
 
 	if typeof(unlocked_cases) != TYPE_DICTIONARY:
 		unlocked_cases = {}
 	if typeof(endings_seen) != TYPE_DICTIONARY:
 		endings_seen = {}
+	if typeof(collected_records) != TYPE_ARRAY:
+		collected_records = []
+	if typeof(applied_run_ids) != TYPE_ARRAY:
+		applied_run_ids = []
 
 	var normalized_endings_seen: Dictionary = endings_seen as Dictionary
 	return {
 		"save_version": int(archive_data.get("save_version", default_archive["save_version"])),
 		"unlocked_cases": unlocked_cases as Dictionary,
+		"collected_records": collected_records as Array,
+		"applied_run_ids": applied_run_ids as Array,
 		"endings_seen": {
 			"good": bool(normalized_endings_seen.get("good", false)),
 			"bad": bool(normalized_endings_seen.get("bad", false))
@@ -105,42 +116,186 @@ func apply_ending_to_archive(ending_type: String, run_data: Dictionary) -> bool:
 		return false
 
 	var archive_data: Dictionary = load_archive_save()
+	var run_id: String = str(run_data.get("run_id", ""))
+	if run_id.is_empty():
+		run_id = _make_legacy_run_id(run_data)
+	var applied_run_ids: Array = archive_data.get("applied_run_ids", []) as Array
+	if applied_run_ids.has(run_id):
+		return true
+
 	var endings_seen: Dictionary = archive_data.get("endings_seen", {}) as Dictionary
 	endings_seen[ending_type] = true
 	archive_data["endings_seen"] = endings_seen
 
-	var unlocked_cases: Dictionary = archive_data.get("unlocked_cases", {}) as Dictionary
-	var report_keys_by_case_id: Dictionary = _get_completed_report_keys_by_case_id(run_data)
-	for case_id in report_keys_by_case_id.keys():
-		var case_report_keys: Array = report_keys_by_case_id[case_id] as Array
-		var existing_case_data: Dictionary = {}
-		if typeof(unlocked_cases.get(case_id, {})) == TYPE_DICTIONARY:
-			existing_case_data = unlocked_cases.get(case_id, {}) as Dictionary
+	var collected_records: Array = archive_data.get("collected_records", []) as Array
+	var run_records: Array = _build_current_run_collected_records(run_data, ending_type)
+	var new_records: Array = run_records.duplicate(true)
+	new_records = _exclude_existing_records(new_records, collected_records)
+	if ending_type == "bad":
+		new_records = _exclude_legacy_unlocked_records(new_records, archive_data.get("unlocked_cases", {}) as Dictionary, collected_records)
+		new_records.shuffle()
+		var keep_count: int = ceili(float(new_records.size()) * 0.5)
+		var selected_records: Array = []
+		for index in range(mini(keep_count, new_records.size())):
+			selected_records.append(new_records[index])
+		new_records = selected_records
 
-		if str(existing_case_data.get("unlock_level", "")) == "full" and ending_type == "bad":
+	for record in new_records:
+		collected_records.append(record)
+	archive_data["collected_records"] = collected_records
+	archive_data["unlocked_cases"] = _merge_record_keys_into_unlocked_cases(
+		archive_data.get("unlocked_cases", {}) as Dictionary,
+		run_records if ending_type == "good" else new_records,
+		ending_type
+	)
+	applied_run_ids.append(run_id)
+	archive_data["applied_run_ids"] = applied_run_ids
+	return save_archive_save(archive_data)
+
+
+func _build_current_run_collected_records(run_data: Dictionary, ending_type: String) -> Array:
+	var completed_reports: Variant = run_data.get("completed_reports", {})
+	if typeof(completed_reports) != TYPE_DICTIONARY:
+		return []
+	var completed_report_days: Dictionary = run_data.get("completed_report_days", {}) as Dictionary
+	var records: Array = []
+	var data_manager: Variant = DATA_MANAGER_SCRIPT.new()
+
+	for report_key_value in (completed_reports as Dictionary).keys():
+		var report_key: String = str(report_key_value)
+		var key_parts: PackedStringArray = report_key.split(":")
+		if key_parts.size() != 2:
+			continue
+		var case_id: String = key_parts[0]
+		var node_id: String = key_parts[1]
+		var case_reports: Dictionary = data_manager.load_case_reports(case_id)
+		var report_node: Dictionary = data_manager.find_report_node(case_reports, node_id)
+		if report_node.is_empty():
 			continue
 
-		var merged_report_keys: Array = _get_existing_unlocked_report_keys(existing_case_data)
-		if ending_type == "good":
-			for report_key in case_report_keys:
-				if not merged_report_keys.has(report_key):
-					merged_report_keys.append(report_key)
-			unlocked_cases[case_id] = {
-				"unlock_level": "full",
-				"unlocked_report_keys": merged_report_keys
-			}
-		else:
-			if case_report_keys.size() > 0:
-				var first_report_key: String = str(case_report_keys[0])
-				if not merged_report_keys.has(first_report_key):
-					merged_report_keys.append(first_report_key)
-			unlocked_cases[case_id] = {
-				"unlock_level": "partial",
-				"unlocked_report_keys": merged_report_keys
-			}
+		var choice_id: String = str((completed_reports as Dictionary).get(report_key_value, ""))
+		var choice: Dictionary = _find_report_choice(report_node, choice_id)
+		var result_report_key: String = ""
+		if not choice.is_empty():
+			var next_node_id: String = str(choice.get("next_node_id", ""))
+			if _run_report_has_arrived(run_data, case_id, next_node_id):
+				result_report_key = GameState.make_report_key(case_id, next_node_id)
 
-	archive_data["unlocked_cases"] = unlocked_cases
-	return save_archive_save(archive_data)
+		records.append({
+			"case_id": case_id,
+			"record_key": "%s|%s" % [report_key, choice_id],
+			"report_key": report_key,
+			"report_title": data_manager.get_report_label(report_node, ""),
+			"selected_choice_text": str(choice.get("choice_text", "")),
+			"result_report_key": result_report_key,
+			"collected_day": int(completed_report_days.get(report_key, run_data.get("current_day", 0))),
+			"ending_source": ending_type
+		})
+
+	data_manager.free()
+	return records
+
+
+func _find_report_choice(report_node: Dictionary, choice_id: String) -> Dictionary:
+	if choice_id.is_empty():
+		return {}
+	var choices: Variant = report_node.get("choices", [])
+	if typeof(choices) != TYPE_ARRAY:
+		return {}
+	for choice in (choices as Array):
+		if typeof(choice) == TYPE_DICTIONARY and str((choice as Dictionary).get("choice_id", "")) == choice_id:
+			return choice as Dictionary
+	return {}
+
+
+func _run_report_has_arrived(run_data: Dictionary, case_id: String, node_id: String) -> bool:
+	if node_id.is_empty():
+		return false
+	var report_key: String = GameState.make_report_key(case_id, node_id)
+	var completed_reports: Variant = run_data.get("completed_reports", {})
+	if typeof(completed_reports) == TYPE_DICTIONARY and (completed_reports as Dictionary).has(report_key):
+		return true
+	var active_reports: Variant = run_data.get("active_reports", [])
+	if typeof(active_reports) == TYPE_ARRAY:
+		for active_report in (active_reports as Array):
+			if typeof(active_report) != TYPE_DICTIONARY:
+				continue
+			var report_data: Dictionary = active_report as Dictionary
+			if str(report_data.get("case_id", "")) == case_id and str(report_data.get("node_id", "")) == node_id:
+				return true
+	return false
+
+
+func _exclude_existing_records(records: Array, existing_records: Array) -> Array:
+	var existing_keys: Dictionary = {}
+	for record in existing_records:
+		if typeof(record) == TYPE_DICTIONARY:
+			existing_keys[str((record as Dictionary).get("record_key", ""))] = true
+	var new_records: Array = []
+	for record in records:
+		if typeof(record) != TYPE_DICTIONARY:
+			continue
+		var record_key: String = str((record as Dictionary).get("record_key", ""))
+		if record_key.is_empty() or existing_keys.has(record_key):
+			continue
+		new_records.append(record)
+	return new_records
+
+
+func _exclude_legacy_unlocked_records(records: Array, unlocked_cases: Dictionary, existing_records: Array) -> Array:
+	var collected_report_keys: Dictionary = {}
+	for record in existing_records:
+		if typeof(record) == TYPE_DICTIONARY:
+			collected_report_keys[str((record as Dictionary).get("report_key", ""))] = true
+	var legacy_report_keys: Dictionary = {}
+	for case_id in unlocked_cases.keys():
+		if typeof(unlocked_cases.get(case_id, {})) != TYPE_DICTIONARY:
+			continue
+		for report_key in _get_existing_unlocked_report_keys(unlocked_cases.get(case_id, {}) as Dictionary):
+			var report_key_text: String = str(report_key)
+			if not collected_report_keys.has(report_key_text):
+				legacy_report_keys[report_key_text] = true
+	var filtered_records: Array = []
+	for record in records:
+		if typeof(record) != TYPE_DICTIONARY:
+			continue
+		if legacy_report_keys.has(str((record as Dictionary).get("report_key", ""))):
+			continue
+		filtered_records.append(record)
+	return filtered_records
+
+
+func _merge_record_keys_into_unlocked_cases(unlocked_cases: Dictionary, records: Array, ending_type: String) -> Dictionary:
+	for record in records:
+		if typeof(record) != TYPE_DICTIONARY:
+			continue
+		var record_data: Dictionary = record as Dictionary
+		var case_id: String = str(record_data.get("case_id", ""))
+		var report_key: String = str(record_data.get("report_key", ""))
+		if case_id.is_empty() or report_key.is_empty():
+			continue
+		var case_data: Dictionary = {}
+		if typeof(unlocked_cases.get(case_id, {})) == TYPE_DICTIONARY:
+			case_data = unlocked_cases.get(case_id, {}) as Dictionary
+		var report_keys: Array = _get_existing_unlocked_report_keys(case_data)
+		if not report_keys.has(report_key):
+			report_keys.append(report_key)
+		var unlock_level: String = str(case_data.get("unlock_level", "partial"))
+		if ending_type == "good":
+			unlock_level = "full"
+		unlocked_cases[case_id] = {
+			"unlock_level": unlock_level,
+			"unlocked_report_keys": report_keys
+		}
+	return unlocked_cases
+
+
+func _make_legacy_run_id(run_data: Dictionary) -> String:
+	var identity_data: Dictionary = {
+		"current_day": int(run_data.get("current_day", 0)),
+		"completed_reports": run_data.get("completed_reports", {})
+	}
+	return "legacy_%s" % JSON.stringify(identity_data).sha256_text()
 
 
 func load_settings() -> Dictionary:
@@ -178,6 +333,8 @@ func _get_default_archive_save() -> Dictionary:
 	return {
 		"save_version": 1,
 		"unlocked_cases": {},
+		"collected_records": [],
+		"applied_run_ids": [],
 		"endings_seen": {
 			"good": false,
 			"bad": false
@@ -279,6 +436,9 @@ func apply_current_run_to_game_state() -> bool:
 		return false
 
 	GameState.current_day = int(save_data.get("current_day"))
+	GameState.run_id = str(save_data.get("run_id", ""))
+	if GameState.run_id.is_empty():
+		GameState.run_id = _make_legacy_run_id(save_data)
 	GameState.remaining_actions = int(save_data.get("remaining_actions"))
 	GameState.max_actions_per_day = int(save_data.get("max_actions_per_day"))
 	var completed_reports: Variant = save_data.get("completed_reports", {})
@@ -286,6 +446,11 @@ func apply_current_run_to_game_state() -> bool:
 		GameState.completed_reports = completed_reports as Dictionary
 	else:
 		GameState.completed_reports = {}
+	var completed_report_days: Variant = save_data.get("completed_report_days", {})
+	if typeof(completed_report_days) == TYPE_DICTIONARY:
+		GameState.completed_report_days = completed_report_days as Dictionary
+	else:
+		GameState.completed_report_days = {}
 	var known_cases: Variant = save_data.get("known_cases", GameState.get_default_known_cases())
 	if typeof(known_cases) == TYPE_ARRAY:
 		GameState.known_cases = known_cases as Array

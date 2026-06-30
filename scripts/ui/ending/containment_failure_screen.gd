@@ -78,7 +78,9 @@ func _move_to_bad_ending() -> void:
 
 func _get_current_run_archive_data() -> Dictionary:
 	return {
+		"run_id": GameState.run_id,
 		"completed_reports": GameState.completed_reports,
+		"completed_report_days": GameState.completed_report_days,
 		"active_reports": GameState.active_reports,
 		"current_day": GameState.current_day,
 		"ending_reason": "containment_failure"

@@ -6,6 +6,8 @@ const SAVE_MANAGER_SCRIPT := preload("res://scripts/save/save_manager.gd")
 const SCREEN_TRANSITION := preload("res://scripts/ui/common/screen_transition.gd")
 const TEXT_REVEAL := preload("res://scripts/ui/common/text_reveal_label.gd")
 const UI_EFFECTS := preload("res://scripts/ui/common/ui_effects.gd")
+const IMAGE_LIGHTBOX := preload("res://scripts/ui/common/image_lightbox.gd")
+const DOCUMENT_RECORDS := preload("res://scripts/ui/common/document_records.gd")
 
 @onready var report_list_container: VBoxContainer = $RootContainer/ContentContainer/ReportListPanel/ReportListContainer
 @onready var report_list_label: Label = $RootContainer/ContentContainer/ReportListPanel/ReportListContainer/ReportListLabel
@@ -35,6 +37,7 @@ var current_choices: Array = []
 var choice_buttons: Array[Button] = []
 var selected_choice_index: int = -1
 var report_completed: bool = false
+var document_records_container: VBoxContainer
 
 
 func _ready() -> void:
@@ -43,9 +46,21 @@ func _ready() -> void:
 	data_manager.free()
 
 	choice_buttons = [choice_button_a, choice_button_b]
+	document_records_container = DOCUMENT_RECORDS.ensure_records_container(pdf_description_text)
+	anomaly_image_rect.mouse_filter = Control.MOUSE_FILTER_STOP
+	anomaly_image_rect.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	anomaly_image_rect.gui_input.connect(_on_anomaly_image_gui_input)
 	report_button.visible = false
 	_update_report_list()
 	_set_report_controls_visible(false)
+
+
+func _on_anomaly_image_gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton:
+		var mouse_event := event as InputEventMouseButton
+		if mouse_event.button_index == MOUSE_BUTTON_LEFT and mouse_event.pressed:
+			anomaly_image_rect.accept_event()
+			IMAGE_LIGHTBOX.show_image(self, anomaly_image_rect.texture)
 
 
 func _update_report_list() -> void:
@@ -77,6 +92,7 @@ func _update_report_list() -> void:
 		report_list_button.add_theme_color_override("font_color", report_button.get_theme_color("font_color"))
 		report_list_button.add_theme_color_override("font_hover_color", report_button.get_theme_color("font_hover_color"))
 		report_list_button.add_theme_font_size_override("font_size", report_button.get_theme_font_size("font_size"))
+		SettingsManager.copy_text_size_baseline(report_button, report_list_button)
 		report_list_button.text = _get_report_list_label(case_id, node_id)
 		report_list_button.pressed.connect(_on_report_list_button_pressed.bind(case_id, node_id))
 		report_list_container.add_child(report_list_button)
@@ -167,7 +183,8 @@ func _show_current_report_detail() -> void:
 		"분류: %s" % str(case_document.get("category", ""))
 	])
 	pdf_meta_text.text = "\n".join(document_meta_lines)
-	pdf_description_text.text = str(case_document.get("basic_description", ""))
+	pdf_description_text.text = "기본 설명\n%s" % str(case_document.get("basic_description", ""))
+	DOCUMENT_RECORDS.populate_records(document_records_container, DOCUMENT_RECORDS.build_current_run_records(current_case_id))
 	var report_body: String = _get_report_body(current_report_node)
 	TEXT_REVEAL.reveal(self, detail_text, report_body, 55.0)
 	_update_anomaly_image(case_document)
@@ -253,6 +270,7 @@ func _ensure_choice_buttons() -> void:
 		choice_button.add_theme_color_override("font_pressed_color", choice_button_a.get_theme_color("font_pressed_color"))
 		choice_button.add_theme_color_override("font_disabled_color", choice_button_a.get_theme_color("font_disabled_color"))
 		choice_button.add_theme_font_size_override("font_size", choice_button_a.get_theme_font_size("font_size"))
+		SettingsManager.copy_text_size_baseline(choice_button_a, choice_button)
 		choice_button.text = ""
 		choice_button.button_pressed = false
 		choice_button.disabled = true
@@ -342,6 +360,7 @@ func _set_report_controls_visible(is_visible: bool) -> void:
 		detail_header_text.text = ""
 		pdf_meta_text.text = ""
 		pdf_description_text.text = ""
+		DOCUMENT_RECORDS.populate_records(document_records_container, [])
 		completed_stamp_label.visible = false
 		confirmed_choice_label.text = ""
 		confirmed_choice_label.visible = false
@@ -435,7 +454,9 @@ func _move_to_bad_ending() -> void:
 
 func _get_current_run_archive_data() -> Dictionary:
 	return {
+		"run_id": GameState.run_id,
 		"completed_reports": GameState.completed_reports,
+		"completed_report_days": GameState.completed_report_days,
 		"active_reports": GameState.active_reports,
 		"current_day": GameState.current_day
 	}

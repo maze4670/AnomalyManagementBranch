@@ -1,16 +1,20 @@
 extends Node
 
 const SAVE_MANAGER_SCRIPT := preload("res://scripts/save/save_manager.gd")
-const TEXT_FONT_SIZES := {
-	"small": 14,
-	"normal": 18,
-	"large": 24
+const TEXT_SIZE_SCALES := {
+	"small": 0.9,
+	"normal": 1.0,
+	"large": 1.15
 }
+const BASE_FONT_META_PREFIX := "settings_base_font_size_"
 
 var current_settings: Dictionary = {}
+var base_fallback_font_size: int = 16
 
 
 func _ready() -> void:
+	base_fallback_font_size = ThemeDB.fallback_font_size
+	get_tree().node_added.connect(_on_node_added)
 	current_settings = load_settings()
 	apply_all_settings(current_settings)
 
@@ -64,11 +68,72 @@ func apply_display_settings(settings_data: Dictionary) -> void:
 
 func apply_text_size_settings(settings_data: Dictionary) -> void:
 	var text_size_key: String = _normalize_text_size(str(settings_data.get("text_size", "normal")))
-	ThemeDB.fallback_font_size = get_text_size_font_size(text_size_key)
+	current_settings["text_size"] = text_size_key
+	var scale: float = _get_text_size_scale(text_size_key)
+	ThemeDB.fallback_font_size = maxi(1, roundi(float(base_fallback_font_size) * scale))
+	if is_inside_tree():
+		apply_text_size_to_tree(get_tree().root)
 
 
 func get_text_size_font_size(text_size_key: String) -> int:
-	return int(TEXT_FONT_SIZES.get(_normalize_text_size(text_size_key), TEXT_FONT_SIZES["normal"]))
+	return maxi(1, roundi(float(base_fallback_font_size) * _get_text_size_scale(text_size_key)))
+
+
+func apply_text_size_to_tree(root_node: Node) -> void:
+	if root_node == null:
+		return
+	if root_node is Control:
+		apply_text_size_to_control(root_node as Control)
+	for child in root_node.get_children():
+		apply_text_size_to_tree(child)
+
+
+func apply_text_size_to_control(control: Control) -> void:
+	if control == null or not is_instance_valid(control):
+		return
+
+	var scale: float = _get_text_size_scale(str(current_settings.get("text_size", "normal")))
+	for font_size_name in _get_font_size_names(control):
+		var metadata_key: String = BASE_FONT_META_PREFIX + str(font_size_name)
+		if not control.has_meta(metadata_key):
+			var initial_font_size: int = base_fallback_font_size
+			if control.has_theme_font_size_override(font_size_name):
+				initial_font_size = control.get_theme_font_size(font_size_name)
+			control.set_meta(metadata_key, initial_font_size)
+		var base_font_size: int = int(control.get_meta(metadata_key, base_fallback_font_size))
+		control.add_theme_font_size_override(font_size_name, maxi(1, roundi(float(base_font_size) * scale)))
+
+
+func copy_text_size_baseline(source: Control, target: Control) -> void:
+	if source == null or target == null:
+		return
+	for font_size_name in _get_font_size_names(source):
+		var metadata_key: String = BASE_FONT_META_PREFIX + str(font_size_name)
+		var base_font_size: int = int(source.get_meta(metadata_key, source.get_theme_font_size(font_size_name)))
+		target.set_meta(metadata_key, base_font_size)
+
+
+func _on_node_added(node: Node) -> void:
+	if node is Control:
+		call_deferred("_apply_added_control", node)
+
+
+func _apply_added_control(control: Control) -> void:
+	if control == null or not is_instance_valid(control) or not control.is_inside_tree():
+		return
+	apply_text_size_to_control(control)
+
+
+func _get_font_size_names(control: Control) -> Array[StringName]:
+	if control is RichTextLabel:
+		return [&"normal_font_size", &"bold_font_size", &"italics_font_size", &"bold_italics_font_size", &"mono_font_size"]
+	if control is Label or control is Button or control is LineEdit or control is TextEdit or control is TabBar or control is ItemList or control is Tree:
+		return [&"font_size"]
+	return []
+
+
+func _get_text_size_scale(text_size_key: String) -> float:
+	return float(TEXT_SIZE_SCALES.get(_normalize_text_size(text_size_key), TEXT_SIZE_SCALES["normal"]))
 
 
 func _normalize_settings(settings_data: Dictionary) -> Dictionary:

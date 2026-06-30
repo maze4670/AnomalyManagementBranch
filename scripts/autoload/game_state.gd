@@ -5,9 +5,11 @@ extends Node
 const DATA_MANAGER_SCRIPT := preload("res://scripts/data/data_manager.gd")
 
 var current_day: int = 1
+var run_id: String = _create_run_id()
 var max_actions_per_day: int = 3
 var remaining_actions: int = 3
 var completed_reports: Dictionary = {}
+var completed_report_days: Dictionary = {}
 var active_reports: Array = get_default_active_reports()
 var scheduled_reports: Array = []
 var pending_completed_choices: Array = []
@@ -23,9 +25,11 @@ var last_anomaly_introduction_day: int = 1
 
 func reset_for_new_run() -> void:
 	current_day = 1
+	run_id = _create_run_id()
 	max_actions_per_day = 3
 	remaining_actions = max_actions_per_day
 	completed_reports = {}
+	completed_report_days = {}
 	active_reports = get_default_active_reports()
 	scheduled_reports = []
 	pending_completed_choices = []
@@ -403,7 +407,14 @@ func make_report_key(case_id: String, node_id: String) -> String:
 
 
 func mark_report_completed(case_id: String, node_id: String, choice_id: String) -> void:
-	completed_reports[make_report_key(case_id, node_id)] = choice_id
+	var report_key: String = make_report_key(case_id, node_id)
+	completed_reports[report_key] = choice_id
+	if not completed_report_days.has(report_key):
+		completed_report_days[report_key] = current_day
+
+
+func _create_run_id() -> String:
+	return "%d_%d" % [int(Time.get_unix_time_from_system()), randi()]
 
 
 func is_report_completed(case_id: String, node_id: String) -> bool:
