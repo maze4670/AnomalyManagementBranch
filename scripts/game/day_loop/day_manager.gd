@@ -26,6 +26,7 @@ func end_day_minimal(scene_tree: SceneTree) -> void:
 	_apply_delay_penalties()
 	_process_pending_completed_choices()
 	GameState.tick_scheduled_reports()
+	GameState.prune_resolved_report_state()
 	_update_trust_value()
 	if _should_move_to_bad_ending():
 		_move_to_ending(scene_tree, "bad")

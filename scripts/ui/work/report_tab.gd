@@ -61,6 +61,8 @@ func _update_report_list() -> void:
 		var node_id: String = str(active_report_data.get("node_id", ""))
 		if case_id.is_empty() or node_id.is_empty():
 			continue
+		if GameState.is_report_completed(case_id, node_id) and not GameState.is_report_pending_end_day(case_id, node_id):
+			continue
 
 		var report_node: Dictionary = _find_report_node(case_id, node_id)
 		if report_node.is_empty():
@@ -397,11 +399,11 @@ func _confirm_terminal_report() -> void:
 	var result: String = str(current_report_node.get("result", ""))
 	GameState.mark_report_completed(current_case_id, current_node_id, "")
 	GameState.clear_delay_for_report(current_case_id, current_node_id)
-	GameState.remove_active_report(current_case_id, current_node_id)
 
 	if result == "stabilized" or result == "returned_to_stable":
 		_apply_terminal_state_delta()
 		GameState.mark_case_stabilized(current_case_id)
+		GameState.record_completed_choice_for_end_day(current_case_id, current_node_id, "", "")
 		report_completed = true
 		_update_report_list()
 		_show_current_report_detail()
@@ -411,6 +413,7 @@ func _confirm_terminal_report() -> void:
 		return
 
 	if result == "containment_failed":
+		GameState.remove_active_report(current_case_id, current_node_id)
 		GameState.clear_case_stabilized(current_case_id)
 		_move_to_bad_ending()
 

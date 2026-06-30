@@ -291,13 +291,11 @@ func apply_current_run_to_game_state() -> bool:
 		GameState.known_cases = known_cases as Array
 	else:
 		GameState.known_cases = GameState.get_default_known_cases()
-	_ensure_known_cases_for_loaded_reports()
 	var active_reports: Variant = save_data.get("active_reports", GameState.get_default_active_reports())
 	if typeof(active_reports) == TYPE_ARRAY:
 		GameState.active_reports = active_reports as Array
 	else:
 		GameState.active_reports = GameState.get_default_active_reports()
-	_ensure_known_cases_for_loaded_reports()
 	var scheduled_reports: Variant = save_data.get("scheduled_reports", [])
 	if typeof(scheduled_reports) == TYPE_ARRAY:
 		GameState.scheduled_reports = scheduled_reports as Array
@@ -308,6 +306,7 @@ func apply_current_run_to_game_state() -> bool:
 		GameState.pending_completed_choices = pending_completed_choices as Array
 	else:
 		GameState.pending_completed_choices = []
+	GameState.prune_resolved_report_state()
 	var pending_special_events: Variant = save_data.get("pending_special_events", [])
 	if typeof(pending_special_events) == TYPE_ARRAY:
 		GameState.pending_special_events = pending_special_events as Array
@@ -339,6 +338,7 @@ func apply_current_run_to_game_state() -> bool:
 		GameState.set_trust_value(int(trust_value))
 	else:
 		GameState.set_trust_value(100)
+	_rebuild_known_cases_from_loaded_progress()
 	return true
 
 
@@ -349,7 +349,8 @@ func _ensure_default_anomaly_states() -> void:
 			GameState.anomaly_states[case_id] = default_anomaly_states[case_id]
 
 
-func _ensure_known_cases_for_loaded_reports() -> void:
+func _rebuild_known_cases_from_loaded_progress() -> void:
+	GameState.known_cases = []
 	for report_key in GameState.completed_reports.keys():
 		var key_parts: PackedStringArray = str(report_key).split(":")
 		if key_parts.size() == 2:
@@ -360,3 +361,11 @@ func _ensure_known_cases_for_loaded_reports() -> void:
 
 		var active_report_data: Dictionary = active_report as Dictionary
 		GameState.mark_case_known(str(active_report_data.get("case_id", "")))
+	for scheduled_report in GameState.scheduled_reports:
+		if typeof(scheduled_report) != TYPE_DICTIONARY:
+			continue
+
+		var scheduled_report_data: Dictionary = scheduled_report as Dictionary
+		GameState.mark_case_known(str(scheduled_report_data.get("case_id", "")))
+	for case_id in GameState.get_stabilized_case_ids():
+		GameState.mark_case_known(str(case_id))

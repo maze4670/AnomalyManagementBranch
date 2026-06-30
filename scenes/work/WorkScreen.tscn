@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3]
+[gd_scene load_steps=23 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/work/work_screen.gd" id="1_work"]
 [ext_resource type="PackedScene" path="res://scenes/work/ReportTab.tscn" id="2_report_tab"]
@@ -7,6 +7,10 @@
 [ext_resource type="Texture2D" path="res://assets/ui/ui_work_terminal_background.png" id="5_background"]
 [ext_resource type="Texture2D" path="res://assets/ui/ui_tab_inactive.png" id="6_tab_inactive"]
 [ext_resource type="Texture2D" path="res://assets/ui/ui_tab_active.png" id="7_tab_active"]
+[ext_resource type="Texture2D" path="res://assets/ui/ui_report_body_panel.png" id="8_settings_panel"]
+[ext_resource type="Texture2D" path="res://assets/ui/ui_action_button_normal.png" id="9_action_normal"]
+[ext_resource type="Texture2D" path="res://assets/ui/ui_action_button_selected.png" id="10_action_selected"]
+[ext_resource type="Texture2D" path="res://assets/ui/ui_danger_button.png" id="11_danger_button"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBox_tab_inactive"]
 texture = ExtResource("6_tab_inactive")
@@ -21,6 +25,86 @@ texture_margin_left = 24.0
 texture_margin_top = 14.0
 texture_margin_right = 24.0
 texture_margin_bottom = 14.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBox_settings_panel"]
+texture = ExtResource("8_settings_panel")
+texture_margin_left = 38.0
+texture_margin_top = 34.0
+texture_margin_right = 38.0
+texture_margin_bottom = 34.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBox_action_normal"]
+texture = ExtResource("9_action_normal")
+texture_margin_left = 22.0
+texture_margin_top = 12.0
+texture_margin_right = 22.0
+texture_margin_bottom = 12.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBox_action_selected"]
+texture = ExtResource("10_action_selected")
+texture_margin_left = 22.0
+texture_margin_top = 12.0
+texture_margin_right = 22.0
+texture_margin_bottom = 12.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBox_danger_normal"]
+texture = ExtResource("11_danger_button")
+texture_margin_left = 22.0
+texture_margin_top = 12.0
+texture_margin_right = 22.0
+texture_margin_bottom = 12.0
+modulate_color = Color(0.72, 0.68, 0.64, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBox_danger_hover"]
+texture = ExtResource("11_danger_button")
+texture_margin_left = 22.0
+texture_margin_top = 12.0
+texture_margin_right = 22.0
+texture_margin_bottom = 12.0
+modulate_color = Color(0.95, 0.86, 0.72, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBox_danger_pressed"]
+texture = ExtResource("11_danger_button")
+texture_margin_left = 22.0
+texture_margin_top = 12.0
+texture_margin_right = 22.0
+texture_margin_bottom = 12.0
+modulate_color = Color(0.58, 0.52, 0.48, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_setting_row"]
+bg_color = Color(0.035, 0.055, 0.06, 0.82)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.25, 0.42, 0.41, 0.65)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+content_margin_left = 18.0
+content_margin_top = 12.0
+content_margin_right = 18.0
+content_margin_bottom = 12.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_slider"]
+bg_color = Color(0.08, 0.12, 0.13, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.28, 0.45, 0.44, 0.8)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_slider_highlight"]
+bg_color = Color(0.28, 0.58, 0.55, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
 
 [node name="WorkScreen" type="Control"]
 layout_mode = 3
@@ -183,6 +267,291 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="SettingsButton" type="Button" parent="."]
+custom_minimum_size = Vector2(128, 42)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -160.0
+offset_top = 24.0
+offset_right = -32.0
+offset_bottom = 66.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(0.78, 0.86, 0.84, 1)
+theme_override_colors/font_hover_color = Color(0.96, 1, 0.98, 1)
+theme_override_colors/font_pressed_color = Color(0.96, 1, 0.98, 1)
+theme_override_colors/font_focus_color = Color(0.96, 1, 0.98, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBox_action_normal")
+theme_override_styles/hover = SubResource("StyleBox_action_selected")
+theme_override_styles/pressed = SubResource("StyleBox_action_selected")
+theme_override_styles/focus = SubResource("StyleBox_action_selected")
+text = "[설정]"
+
+[node name="SettingsOverlay" type="ColorRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+color = Color(0.005, 0.01, 0.012, 0.78)
+
+[node name="CenterContainer" type="CenterContainer" parent="SettingsOverlay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SettingsPanel" type="PanelContainer" parent="SettingsOverlay/CenterContainer"]
+custom_minimum_size = Vector2(700, 650)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBox_settings_panel")
+
+[node name="Content" type="VBoxContainer" parent="SettingsOverlay/CenterContainer/SettingsPanel"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="TitleLabel" type="Label" parent="SettingsOverlay/CenterContainer/SettingsPanel/Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.86, 0.94, 0.92, 1)
+theme_override_font_sizes/font_size = 25
+text = "환경 설정"
+horizontal_alignment = 1
+
+[node name="Divider" type="HSeparator" parent="SettingsOverlay/CenterContainer/SettingsPanel/Content"]
+layout_mode = 2
+modulate = Color(0.42, 0.62, 0.59, 0.75)
+
+[node name="VolumePanel" type="PanelContainer" parent="SettingsOverlay/CenterContainer/SettingsPanel/Content"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBox_setting_row")
+
+[node name="Row" type="HBoxContainer" parent="SettingsOverlay/CenterContainer/SettingsPanel/Content/VolumePanel"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Label" type="Label" parent="SettingsOverlay/CenterContainer/SettingsPanel/Content/VolumePanel/Row"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.78, 0.86, 0.84, 1)
+theme_override_font_sizes/font_size = 17
+text = "음량"
+vertical_alignment = 1
+
+[node name="VolumeSlider" type="HSlider" parent="SettingsOverlay/CenterContainer/SettingsPanel/Content/VolumePanel/Row"]
+custom_minimum_size = Vector2(300, 34)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/slider = SubResource("StyleBox_slider")
+theme_override_styles/grabber_area = SubResource("StyleBox_slider_highlight")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBox_slider_highlight")
+max_value = 100.0
+step = 1.0
+value = 100.0
+
+[node name="ValueLabel" type="Label" parent="SettingsOverlay/CenterContainer/SettingsPanel/Content/VolumePanel/Row"]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.86, 0.94, 0.92, 1)
+theme_override_font_sizes/font_size = 16
+text = "100%"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="ScreenModePanel" type="PanelContainer" parent="SettingsOverlay/CenterContainer/SettingsPanel/Content"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBox_setting_row")
+
+[node name="Row" type="HBoxContainer" parent="SettingsOverlay/CenterContainer/SettingsPanel/Content/ScreenModePanel"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Label" type="Label" parent="SettingsOverlay/CenterContainer/SettingsPanel/Content/ScreenModePanel/Row"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.78, 0.86, 0.84, 1)
+theme_override_font_sizes/font_size = 17
+text = "화면 모드"
+vertical_alignment = 1
+
+[node name="ScreenModeButton" type="Button" parent="SettingsOverlay/CenterContainer/SettingsPanel/Content/ScreenModePanel/Row"]
+custom_minimum_size = Vector2(210, 44)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.78, 0.86, 0.84, 1)
+theme_override_colors/font_hover_color = Color(0.96, 1, 0.98, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBox_action_normal")
+theme_override_styles/hover = SubResource("StyleBox_action_selected")
+theme_override_styles/pressed = SubResource("StyleBox_action_selected")
+theme_override_styles/focus = SubResource("StyleBox_action_selected")
+text = "창 모드"
+
+[node name="TextSizePanel" type="PanelContainer" parent="SettingsOverlay/CenterContainer/SettingsPanel/Content"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBox_setting_row")
+
+[node name="Row" type="HBoxContainer" parent="SettingsOverlay/CenterContainer/SettingsPanel/Content/TextSizePanel"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Label" type="Label" parent="SettingsOverlay/CenterContainer/SettingsPanel/Content/TextSizePanel/Row"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.78, 0.86, 0.84, 1)
+theme_override_font_sizes/font_size = 17
+text = "글자 크기"
+vertical_alignment = 1
+
+[node name="TextSizeButton" type="Button" parent="SettingsOverlay/CenterContainer/SettingsPanel/Content/TextSizePanel/Row"]
+custom_minimum_size = Vector2(210, 44)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.78, 0.86, 0.84, 1)
+theme_override_colors/font_hover_color = Color(0.96, 1, 0.98, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBox_action_normal")
+theme_override_styles/hover = SubResource("StyleBox_action_selected")
+theme_override_styles/pressed = SubResource("StyleBox_action_selected")
+theme_override_styles/focus = SubResource("StyleBox_action_selected")
+text = "보통"
+
+[node name="TextPreviewLabel" type="Label" parent="SettingsOverlay/CenterContainer/SettingsPanel/Content"]
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.69, 0.79, 0.77, 1)
+theme_override_font_sizes/font_size = 18
+text = "설정된 글자 크기 미리보기"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GuideLabel" type="Label" parent="SettingsOverlay/CenterContainer/SettingsPanel/Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.58, 0.68, 0.66, 1)
+theme_override_font_sizes/font_size = 14
+text = "설정값은 자동으로 저장됩니다."
+horizontal_alignment = 1
+
+[node name="Spacer" type="Control" parent="SettingsOverlay/CenterContainer/SettingsPanel/Content"]
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ButtonRow" type="HBoxContainer" parent="SettingsOverlay/CenterContainer/SettingsPanel/Content"]
+layout_mode = 2
+theme_override_constants/separation = 14
+alignment = 1
+
+[node name="QuitRequestButton" type="Button" parent="SettingsOverlay/CenterContainer/SettingsPanel/Content/ButtonRow"]
+custom_minimum_size = Vector2(180, 48)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.88, 0.82, 0.75, 1)
+theme_override_colors/font_hover_color = Color(1, 0.91, 0.78, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBox_danger_normal")
+theme_override_styles/hover = SubResource("StyleBox_danger_hover")
+theme_override_styles/pressed = SubResource("StyleBox_danger_pressed")
+theme_override_styles/focus = SubResource("StyleBox_danger_hover")
+text = "게임 종료"
+
+[node name="CloseButton" type="Button" parent="SettingsOverlay/CenterContainer/SettingsPanel/Content/ButtonRow"]
+custom_minimum_size = Vector2(180, 48)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.78, 0.86, 0.84, 1)
+theme_override_colors/font_hover_color = Color(0.96, 1, 0.98, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBox_action_normal")
+theme_override_styles/hover = SubResource("StyleBox_action_selected")
+theme_override_styles/pressed = SubResource("StyleBox_action_selected")
+theme_override_styles/focus = SubResource("StyleBox_action_selected")
+text = "닫기"
+
+[node name="QuitConfirmOverlay" type="ColorRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+color = Color(0.012, 0.006, 0.004, 0.84)
+
+[node name="CenterContainer" type="CenterContainer" parent="QuitConfirmOverlay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="PanelContainer" parent="QuitConfirmOverlay/CenterContainer"]
+custom_minimum_size = Vector2(620, 320)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBox_settings_panel")
+
+[node name="Content" type="VBoxContainer" parent="QuitConfirmOverlay/CenterContainer/Panel"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="TitleLabel" type="Label" parent="QuitConfirmOverlay/CenterContainer/Panel/Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.91, 0.74, 0.59, 1)
+theme_override_font_sizes/font_size = 24
+text = "게임 종료"
+horizontal_alignment = 1
+
+[node name="MessageLabel" type="Label" parent="QuitConfirmOverlay/CenterContainer/Panel/Content"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.82, 0.84, 0.8, 1)
+theme_override_font_sizes/font_size = 17
+text = "현재 진행 상황은 자동 저장된 시점까지 유지됩니다.\n게임을 종료하시겠습니까?"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="ButtonRow" type="HBoxContainer" parent="QuitConfirmOverlay/CenterContainer/Panel/Content"]
+layout_mode = 2
+theme_override_constants/separation = 14
+alignment = 1
+
+[node name="QuitButton" type="Button" parent="QuitConfirmOverlay/CenterContainer/Panel/Content/ButtonRow"]
+custom_minimum_size = Vector2(160, 48)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.88, 0.82, 0.75, 1)
+theme_override_colors/font_hover_color = Color(1, 0.91, 0.78, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBox_danger_normal")
+theme_override_styles/hover = SubResource("StyleBox_danger_hover")
+theme_override_styles/pressed = SubResource("StyleBox_danger_pressed")
+theme_override_styles/focus = SubResource("StyleBox_danger_hover")
+text = "종료"
+
+[node name="CancelQuitButton" type="Button" parent="QuitConfirmOverlay/CenterContainer/Panel/Content/ButtonRow"]
+custom_minimum_size = Vector2(160, 48)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.78, 0.86, 0.84, 1)
+theme_override_colors/font_hover_color = Color(0.96, 1, 0.98, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBox_action_normal")
+theme_override_styles/hover = SubResource("StyleBox_action_selected")
+theme_override_styles/pressed = SubResource("StyleBox_action_selected")
+theme_override_styles/focus = SubResource("StyleBox_action_selected")
+text = "취소"
+
 [connection signal="pressed" from="RootContainer/TabButtonContainer/ReportTabButton" to="." method="_on_report_tab_button_pressed"]
 [connection signal="pressed" from="RootContainer/TabButtonContainer/CurrentAnomaliesTabButton" to="." method="_on_current_anomalies_tab_button_pressed"]
 [connection signal="pressed" from="RootContainer/TabButtonContainer/EndDayTabButton" to="." method="_on_end_day_tab_button_pressed"]
+[connection signal="pressed" from="SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="value_changed" from="SettingsOverlay/CenterContainer/SettingsPanel/Content/VolumePanel/Row/VolumeSlider" to="." method="_on_ingame_volume_slider_value_changed"]
+[connection signal="pressed" from="SettingsOverlay/CenterContainer/SettingsPanel/Content/ScreenModePanel/Row/ScreenModeButton" to="." method="_on_ingame_screen_mode_button_pressed"]
+[connection signal="pressed" from="SettingsOverlay/CenterContainer/SettingsPanel/Content/TextSizePanel/Row/TextSizeButton" to="." method="_on_ingame_text_size_button_pressed"]
+[connection signal="pressed" from="SettingsOverlay/CenterContainer/SettingsPanel/Content/ButtonRow/QuitRequestButton" to="." method="_on_quit_request_button_pressed"]
+[connection signal="pressed" from="SettingsOverlay/CenterContainer/SettingsPanel/Content/ButtonRow/CloseButton" to="." method="_on_settings_close_button_pressed"]
+[connection signal="pressed" from="QuitConfirmOverlay/CenterContainer/Panel/Content/ButtonRow/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="QuitConfirmOverlay/CenterContainer/Panel/Content/ButtonRow/CancelQuitButton" to="." method="_on_quit_cancel_button_pressed"]

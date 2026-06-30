@@ -1,7 +1,6 @@
 extends Control
 
 const MAIN_MENU_SCENE_PATH := "res://scenes/main_menu/MainMenu.tscn"
-const SAVE_MANAGER_SCRIPT := preload("res://scripts/save/save_manager.gd")
 const SCREEN_TRANSITION := preload("res://scripts/ui/common/screen_transition.gd")
 const BUTTON_FEEDBACK := preload("res://scripts/ui/common/button_feedback.gd")
 const AUDIO_FEEDBACK := preload("res://scripts/ui/common/audio_feedback.gd")
@@ -9,11 +8,6 @@ const SCREEN_MODE_WINDOWED := "창 모드"
 const SCREEN_MODE_FULLSCREEN := "전체 화면"
 const TEXT_SIZE_OPTIONS := ["보통", "크게", "작게"]
 const TEXT_SIZE_KEYS := ["normal", "large", "small"]
-const TEXT_PREVIEW_FONT_SIZES := {
-	"small": 14,
-	"normal": 18,
-	"large": 24
-}
 
 @onready var volume_slider: HSlider = $CenterContainer/SettingsPanel/ContentContainer/VolumePanel/VolumeContainer/VolumeSlider
 @onready var volume_value_label: Label = $CenterContainer/SettingsPanel/ContentContainer/VolumePanel/VolumeContainer/VolumeValueLabel
@@ -63,9 +57,8 @@ func _on_main_menu_button_pressed() -> void:
 
 func _load_settings_to_ui() -> void:
 	is_loading_settings = true
-	var save_manager: Variant = SAVE_MANAGER_SCRIPT.new()
-	var settings_data: Dictionary = save_manager.load_settings()
-	save_manager.free()
+	var settings_data: Dictionary = SettingsManager.load_settings()
+	SettingsManager.apply_all_settings(settings_data)
 
 	var volume: int = clampi(int(settings_data.get("volume", 100)), 0, 100)
 	volume_slider.value = volume
@@ -79,14 +72,12 @@ func _load_settings_to_ui() -> void:
 
 
 func _save_current_settings() -> void:
-	var save_manager: Variant = SAVE_MANAGER_SCRIPT.new()
-	save_manager.save_settings({
+	SettingsManager.save_settings({
 		"save_version": 1,
 		"volume": int(volume_slider.value),
 		"screen_mode": _get_screen_mode_key(),
 		"text_size": TEXT_SIZE_KEYS[text_size_index]
 	})
-	save_manager.free()
 
 
 func _get_screen_mode_key() -> String:
@@ -104,29 +95,16 @@ func _screen_mode_to_label(screen_mode: String) -> String:
 
 
 func _apply_screen_mode(screen_mode: String) -> void:
-	var window: Window = get_window()
-
-	if screen_mode == "fullscreen":
-		window.mode = Window.MODE_EXCLUSIVE_FULLSCREEN
-	else:
-		window.mode = Window.MODE_WINDOWED
+	SettingsManager.apply_display_settings({"screen_mode": screen_mode})
 
 
 func _apply_volume(volume_percent: int) -> void:
-	var master_bus_index: int = AudioServer.get_bus_index("Master")
-	if master_bus_index < 0:
-		return
-
-	var clamped_volume: int = clampi(volume_percent, 0, 100)
-	if clamped_volume <= 0:
-		AudioServer.set_bus_volume_db(master_bus_index, -80.0)
-		return
-
-	AudioServer.set_bus_volume_db(master_bus_index, linear_to_db(float(clamped_volume) / 100.0))
+	SettingsManager.apply_audio_settings({"volume": volume_percent})
 
 
 func _apply_text_preview_size(text_size_key: String) -> void:
-	var font_size: int = int(TEXT_PREVIEW_FONT_SIZES.get(text_size_key, TEXT_PREVIEW_FONT_SIZES["normal"]))
+	SettingsManager.apply_text_size_settings({"text_size": text_size_key})
+	var font_size: int = SettingsManager.get_text_size_font_size(text_size_key)
 	text_preview_label.add_theme_font_size_override("font_size", font_size)
 
 

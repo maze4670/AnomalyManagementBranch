@@ -468,6 +468,62 @@ func record_completed_choice_for_end_day(case_id: String, node_id: String, choic
 	})
 
 
+func is_report_pending_end_day(case_id: String, node_id: String) -> bool:
+	for completed_choice in pending_completed_choices:
+		if typeof(completed_choice) != TYPE_DICTIONARY:
+			continue
+
+		var completed_choice_data: Dictionary = completed_choice as Dictionary
+		if str(completed_choice_data.get("case_id", "")) == case_id and str(completed_choice_data.get("node_id", "")) == node_id:
+			return true
+
+	return false
+
+
+func prune_resolved_report_state() -> void:
+	var remaining_active_reports: Array = []
+	var active_report_keys: Dictionary = {}
+	for report in active_reports:
+		if typeof(report) != TYPE_DICTIONARY:
+			continue
+
+		var report_data: Dictionary = report as Dictionary
+		var case_id: String = str(report_data.get("case_id", ""))
+		var node_id: String = str(report_data.get("node_id", ""))
+		if case_id.is_empty() or node_id.is_empty():
+			continue
+		if is_report_completed(case_id, node_id) and not is_report_pending_end_day(case_id, node_id):
+			continue
+
+		var report_key: String = make_report_key(case_id, node_id)
+		if active_report_keys.has(report_key):
+			continue
+		active_report_keys[report_key] = true
+		remaining_active_reports.append(report_data)
+	active_reports = remaining_active_reports
+
+	var remaining_scheduled_reports: Array = []
+	var scheduled_report_keys: Dictionary = {}
+	for report in scheduled_reports:
+		if typeof(report) != TYPE_DICTIONARY:
+			continue
+
+		var report_data: Dictionary = report as Dictionary
+		var case_id: String = str(report_data.get("case_id", ""))
+		var node_id: String = str(report_data.get("node_id", ""))
+		if case_id.is_empty() or node_id.is_empty():
+			continue
+		if is_report_completed(case_id, node_id) or is_report_active(case_id, node_id):
+			continue
+
+		var report_key: String = make_report_key(case_id, node_id)
+		if scheduled_report_keys.has(report_key):
+			continue
+		scheduled_report_keys[report_key] = true
+		remaining_scheduled_reports.append(report_data)
+	scheduled_reports = remaining_scheduled_reports
+
+
 func is_report_active(case_id: String, node_id: String) -> bool:
 	for report in active_reports:
 		if typeof(report) == TYPE_DICTIONARY:
@@ -491,8 +547,16 @@ func remove_active_report(case_id: String, node_id: String) -> void:
 
 
 func schedule_report(case_id: String, node_id: String, days_remaining: int) -> void:
-	if node_id.is_empty():
+	if case_id.is_empty() or node_id.is_empty():
 		return
+	if is_report_completed(case_id, node_id) or is_report_active(case_id, node_id):
+		return
+	for report in scheduled_reports:
+		if typeof(report) != TYPE_DICTIONARY:
+			continue
+		var report_data: Dictionary = report as Dictionary
+		if str(report_data.get("case_id", "")) == case_id and str(report_data.get("node_id", "")) == node_id:
+			return
 
 	scheduled_reports.append({
 		"case_id": case_id,
@@ -510,14 +574,12 @@ func tick_scheduled_reports() -> void:
 		var report_data: Dictionary = report as Dictionary
 		var case_id: String = str(report_data.get("case_id", ""))
 		var node_id: String = str(report_data.get("node_id", ""))
+		if case_id.is_empty() or node_id.is_empty() or is_report_completed(case_id, node_id):
+			continue
 		var days_remaining: int = int(report_data.get("days_remaining", 0)) - 1
 
 		if days_remaining <= 0:
-			if not is_report_active(case_id, node_id):
-				active_reports.append({
-					"case_id": case_id,
-					"node_id": node_id
-				})
+			introduce_case_report(case_id, node_id)
 		else:
 			report_data["days_remaining"] = days_remaining
 			remaining_scheduled_reports.append(report_data)
